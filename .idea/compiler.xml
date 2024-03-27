@@ -7,6 +7,7 @@
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
         <module name="LibraryProject" />
+        <module name="CE-216" />
       </profile>
     </annotationProcessing>
   </component>

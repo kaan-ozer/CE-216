@@ -122,7 +122,7 @@ public class Library {
         }
     }
 
-    private void loadBooksFromJson() {
+    void loadBooksFromJson() {
         try (BufferedReader reader = new BufferedReader(new FileReader("library.json"))) {
             // Deserialize JSON into Book objects and add them to the books list
             // Assume the structure of library.json is an array of Book objects
