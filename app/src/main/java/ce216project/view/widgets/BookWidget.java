@@ -3,6 +3,7 @@ package ce216project.view.widgets;
 import java.nio.file.Path;
 
 import javafx.geometry.Pos;
+import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
@@ -12,13 +13,17 @@ import javafx.scene.shape.Rectangle;
 
 public class BookWidget extends StackPane {
 
+    private static final int XSIZE = 75;
+    private static final int YSIZE = 150;
 
-    private ImageView imageView;
-    private Path coverImagePath;
+    private ImageView imageView = new ImageView();
+    private Path coverImagePath; 
     private Image coverImage;
 
     private Rectangle rectangle = new Rectangle(75,150);
     private String bookTitle;
+
+    private boolean isClickable;
 
 
     public BookWidget (Path coverImagePath, String bookTitle) {
@@ -30,9 +35,12 @@ public class BookWidget extends StackPane {
             imageView.setImage(coverImage);
             imageView.setSmooth(true);
             imageView.setCache(true);
-            imageView.setX(75);
-            imageView.setY(150);
+            imageView.setX(XSIZE);
+            imageView.setY(YSIZE);
+
             this.getChildren().add(imageView);
+            this.makeClickable();
+
         }
         else{
             if(!bookTitle.equals(null) || bookTitle.isEmpty()){
@@ -41,14 +49,25 @@ public class BookWidget extends StackPane {
                 rectangle.setFill(Color.ALICEBLUE);
                 this.setAlignment(Pos.CENTER);
                 this.getChildren().addAll(rectangle,titleLabel);
+                this.makeClickable();
 
             }
             else{
                 rectangle.setFill(Color.ALICEBLUE);
                 this.getChildren().addAll(rectangle);
+                this.makeClickable();
             }
         }
     }
 
+    public void makeClickable () {
+
+        Button detailsButton = new Button();
+        detailsButton.setVisible(false);
+        detailsButton.setScaleX(XSIZE);
+        detailsButton.setScaleY(YSIZE);
+
+        this.getChildren().add(detailsButton);
+    }
  
 }
