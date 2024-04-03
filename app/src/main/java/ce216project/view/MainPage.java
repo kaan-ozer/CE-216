@@ -9,6 +9,7 @@ import javafx.geometry.Insets;
 import javafx.scene.control.Button;
 import javafx.scene.control.CheckBox;
 import javafx.scene.control.Label;
+import javafx.scene.control.ScrollPane;
 import javafx.scene.control.TextField;
 import javafx.scene.control.TitledPane;
 import javafx.scene.layout.HBox;
@@ -29,8 +30,8 @@ public class MainPage extends VBox{
 
     // Left Container Widgets
     private VBox checkBoxListContainer = new VBox();
-    private TitledPane tagsList = new TitledPane("Tags", new Label());
-    private TitledPane languagesList = new TitledPane("Language",new Label());
+    private TitledPane tagsList = new TitledPane("Tags", new VBox());
+    private TitledPane languagesList = new TitledPane("Language",new VBox());
     
 
     // Right Container Widgets
@@ -80,15 +81,27 @@ public class MainPage extends VBox{
         
     }
 
-    public void fillCheckLists (HashMap<String,Integer> hashmap) {
+    public void fillCheckLists (HashMap<String,Integer> hashmap,TitledPane checkBoxList) {
+
+        VBox checkBoxVBox = new VBox();
+        ScrollPane checkBoxScrollPane = new ScrollPane(checkBoxVBox);
+        checkBoxScrollPane.setMaxHeight(250);
+        
         for(String key : hashmap.keySet()){
             HBox checkBoxItemBox = new HBox();
             CheckBox checkBox = new CheckBox(key);
             Label countLabel = new Label(hashmap.get(key).toString().trim());
             
-            checkBoxItemBox.getChildren().addAll(countLabel,checkBox);
+            checkBoxItemBox.getChildren().addAll(checkBox,countLabel);
             checkBoxItemBox.setSpacing(5);
+            checkBoxItemBox.setPadding(new Insets(0, 0, 5, 5));
+
+            checkBoxVBox.getChildren().add(checkBoxItemBox);
+            checkBoxVBox.setPadding(new Insets(5,0,0,0));
+
         }
+
+        checkBoxList.setContent(checkBoxScrollPane);
     }
 
     public void fillBooks (ArrayList<Book> books) {
@@ -97,7 +110,10 @@ public class MainPage extends VBox{
             BookWidget bookWidget = new BookWidget(book.getCoverImagePath(), book.getTitle());
             booksContainer.getChildren().add(bookWidget);
         }
+    }
 
+    public TitledPane getTagsList(){
+        return tagsList;
     }
 
     
