@@ -3,6 +3,8 @@ package ce216project.view;
 import java.util.ArrayList;
 import java.util.HashMap;
 
+import ce216project.models.Book;
+import ce216project.view.widgets.BookWidget;
 import javafx.geometry.Insets;
 import javafx.scene.control.Button;
 import javafx.scene.control.CheckBox;
@@ -57,7 +59,8 @@ public class MainPage extends VBox{
         searchBarContainer.setPadding(new Insets(5, 10, 0, 10));
 
         // Books Grid View
-
+        booksContainer.setSpacing(15);
+        booksContainer.setPadding(new Insets(10, 10, 10, 0));
 
         
         // Main Containers
@@ -86,10 +89,14 @@ public class MainPage extends VBox{
             checkBoxItemBox.getChildren().addAll(countLabel,checkBox);
             checkBoxItemBox.setSpacing(5);
         }
-
     }
 
-    public void fillBooks (ArrayList books) {
+    public void fillBooks (ArrayList<Book> books) {
+
+        for(Book book : books){
+            BookWidget bookWidget = new BookWidget(book.getCoverImagePath(), book.getTitle());
+            booksContainer.getChildren().add(bookWidget);
+        }
 
     }
 

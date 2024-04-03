@@ -1,6 +1,6 @@
 package ce216project.models;
 
-import java.util.ArrayList;
+import java.nio.file.Path;
 import java.util.Date;
 import java.util.List;
 
@@ -17,8 +17,9 @@ public class Book {
     private String language;
     private double rating;
     private List<String> tags;
+    private Path coverImagePath;
 
-    public Book(String title, String subtitle, List<String> authors, List<String> translators, String isbn, String publisher, Date date, int edition, String cover, String language, double rating, List<String> tags) {
+    public Book(String title, String subtitle, List<String> authors, List<String> translators, String isbn, String publisher, Date date, int edition, String cover, String language, double rating, List<String> tags, Path coverImagePath) {
         this.title = title;
         this.subtitle = subtitle;
         this.authors = authors;
@@ -31,6 +32,7 @@ public class Book {
         this.language = language;
         this.rating = rating;
         this.tags = tags;
+        this.coverImagePath = coverImagePath;
     }
 
     public String getTitle() {
@@ -127,6 +129,14 @@ public class Book {
 
     public void setTags(List<String> tags) {
         this.tags = tags;
+    }
+
+    public Path getCoverImagePath(){
+        return coverImagePath;
+    }
+
+    public void setCoverImagePath(Path coverImagePath){
+        this.coverImagePath = coverImagePath;
     }
 
     @Override
