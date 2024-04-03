@@ -14,7 +14,7 @@ public class App extends Application{
     @Override
     public void start(Stage primaryStage) throws Exception {
         MainPage mainPage = new MainPage();
-        Scene scene = new Scene(mainPage);
+        Scene scene = new Scene(mainPage,800,450);
         primaryStage.setScene(scene);
         primaryStage.setTitle("Librarian");
         primaryStage.show();
