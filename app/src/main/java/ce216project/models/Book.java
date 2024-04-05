@@ -11,7 +11,7 @@ public class Book {
     private List<String> translators;
     private String isbn;
     private String publisher;
-    private Date date;
+    private String date;
     private int edition;
     private String cover;
     private String language;
@@ -19,7 +19,7 @@ public class Book {
     private List<String> tags;
     private Path coverImagePath;
 
-    public Book(String title, String subtitle, List<String> authors, List<String> translators, String isbn, String publisher, Date date, int edition, String cover, String language, double rating, List<String> tags, Path coverImagePath) {
+    public Book(String title, String subtitle, List<String> authors, List<String> translators, String isbn, String publisher, String date, int edition, String cover, String language, double rating, List<String> tags, Path coverImagePath) {
         this.title = title;
         this.subtitle = subtitle;
         this.authors = authors;
@@ -83,11 +83,11 @@ public class Book {
         this.publisher = publisher;
     }
 
-    public Date getDate() {
+    public String getDate() {
         return date;
     }
 
-    public void setDate(Date date) {
+    public void setDate(String date) {
         this.date = date;
     }
 

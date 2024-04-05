@@ -3,6 +3,7 @@ package ce216project.view;
 import java.util.ArrayList;
 import java.util.HashMap;
 
+
 import ce216project.models.Book;
 import ce216project.view.widgets.BookWidget;
 import javafx.geometry.Insets;
@@ -14,6 +15,7 @@ import javafx.scene.control.TextField;
 import javafx.scene.control.TitledPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Priority;
+import javafx.scene.layout.TilePane;
 import javafx.scene.layout.VBox;
 
 
@@ -33,7 +35,6 @@ public class MainPage extends VBox{
     private TitledPane tagsList = new TitledPane("Tags", new VBox());
     private TitledPane languagesList = new TitledPane("Language",new VBox());
     
-
     // Right Container Widgets
     // Search Bar
     private HBox searchBarContainer = new HBox();
@@ -42,8 +43,10 @@ public class MainPage extends VBox{
     private Button searchButton = new Button("Search");                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                  
 
 
-    // Books Grid
-    private VBox booksContainer = new VBox();
+    // Books Views
+    private ScrollPane booksScroll = new ScrollPane();
+    private TilePane booksContainer = new TilePane();
+    
 
 
     public MainPage() {
@@ -59,24 +62,34 @@ public class MainPage extends VBox{
         searchBarContainer.setSpacing(10);
         searchBarContainer.setPadding(new Insets(5, 10, 0, 10));
 
-        // Books Grid View
-        booksContainer.setSpacing(15);
-        booksContainer.setPadding(new Insets(10, 10, 10, 0));
+        // Books Views
+        booksScroll.setContent(booksContainer);
+        booksContainer.setHgap(15);
+        booksContainer.setVgap(10);
+        booksContainer.setPadding(new Insets(10, 10, 10, 10));
 
-        
         // Main Containers
-        rightContainer.getChildren().addAll(searchBarContainer,booksContainer);
+        rightContainer.getChildren().addAll(searchBarContainer,booksScroll);
         leftContainer.getChildren().addAll(checkBoxListContainer);
-
         mainLayout.getChildren().addAll(leftContainer,rightContainer);
-
 
         // Resposive design
         VBox.setVgrow(mainLayout, Priority.ALWAYS);
         HBox.setHgrow(rightContainer, Priority.ALWAYS);
         HBox.setHgrow(searchBar, Priority.ALWAYS);
         
+        // Books TileView Responsive Design
+        booksScroll.viewportBoundsProperty().addListener((observable, oldValue, newValue) -> {
+            double width = newValue.getWidth();
+            int columns = calculateColumns(width); 
+            booksContainer.setPrefColumns(columns);
+        });
 
+        booksContainer.prefWidthProperty().bind(booksScroll.widthProperty()); // Bind width to ScrollPane width
+        booksContainer.maxWidthProperty().bind(booksScroll.widthProperty());
+        
+        
+        
         this.getChildren().addAll(menuBar,mainLayout);
         
     }
@@ -107,13 +120,22 @@ public class MainPage extends VBox{
     public void fillBooks (ArrayList<Book> books) {
 
         for(Book book : books){
-            BookWidget bookWidget = new BookWidget(book.getCoverImagePath(), book.getTitle());
+            BookWidget bookWidget = new BookWidget(book,true);
             booksContainer.getChildren().add(bookWidget);
         }
+
     }
 
     public TitledPane getTagsList(){
         return tagsList;
+    }
+
+    private int calculateColumns(double width) {
+        
+        int columnWidth = 200; 
+        int minColumns = 1; 
+        int maxColumns = (int) width / columnWidth; // Maximum number of columns based on width
+        return Math.max(minColumns, maxColumns);
     }
 
     
