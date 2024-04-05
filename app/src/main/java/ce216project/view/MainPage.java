@@ -7,6 +7,7 @@ import java.util.HashMap;
 import ce216project.models.Book;
 import ce216project.view.widgets.BookWidget;
 import javafx.geometry.Insets;
+import javafx.geometry.Pos;
 import javafx.scene.control.Button;
 import javafx.scene.control.CheckBox;
 import javafx.scene.control.Label;
@@ -36,6 +37,8 @@ public class MainPage extends VBox{
     private VBox checkBoxListContainer = new VBox();
     private TitledPane tagsList = new TitledPane("Tags", new VBox());
     private TitledPane languagesList = new TitledPane("Language",new VBox());
+    private Button addBookButton = new Button("Add");
+    private HBox addBookButtonBox = new HBox(addBookButton);
     
     // Right Container Widgets
     // Search Bar
@@ -57,6 +60,12 @@ public class MainPage extends VBox{
         checkBoxListContainer.getChildren().addAll(tagsList,languagesList);
         checkBoxListContainer.setPadding(new Insets(5, 0, 0, 5));
 
+        // Book add button
+        addBookButtonBox.setAlignment(Pos.CENTER);
+        addBookButton.setPrefWidth(100);
+        addBookButtonBox.setPadding(new Insets(10));
+        
+
         // Search Bar at Right Container
         searchLabel.setPadding(new Insets(5,0,0,0));
         searchBarContainer.getChildren().addAll(searchLabel,searchBar,searchButton);
@@ -71,7 +80,7 @@ public class MainPage extends VBox{
 
         // Main Containers
         rightContainer.getChildren().addAll(searchBarContainer,booksScroll);
-        leftContainer.getChildren().addAll(checkBoxListContainer);
+        leftContainer.getChildren().addAll(checkBoxListContainer,addBookButtonBox);
         mainLayout.getChildren().addAll(leftContainer,rightContainer);
 
         // Resposive design
