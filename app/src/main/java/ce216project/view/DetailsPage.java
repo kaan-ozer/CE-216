@@ -1,6 +1,7 @@
 package ce216project.view;
 
 import ce216project.models.Book;
+import ce216project.view.widgets.BookField;
 import ce216project.view.widgets.BookWidget;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
@@ -8,14 +9,13 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.HBox;
-import javafx.scene.layout.Priority;
 import javafx.scene.layout.VBox;
 
 
 public class DetailsPage extends VBox {
 
     private Book book;
-    private boolean editMode = false;
+    private boolean isEditable = false;
 
     // Main Containers
     private AppMenuBar appMenuBar = new AppMenuBar();
@@ -34,44 +34,58 @@ public class DetailsPage extends VBox {
     private BookWidget bookWidget;
     
     // Right Container Widgets
-    private HBox leftBookFields = new HBox();
-    private VBox leftBookFieldLabels = new VBox();
-    private VBox leftBookFieldTexts = new VBox();
-    private Label lTitle = new Label("Title");
-    private TextField fTitle = new TextField();
-    private Label lSubTitle = new Label("Subtitle");
-    private TextField fSubtitle = new TextField();
-    private Label lPublisher = new Label("Publisher");
-    private TextField fPublisher = new TextField();
-    private Label lDate = new Label("Date");
-    private TextField fDate = new TextField();
-    private Label lISBN = new Label("ISBN");
-    private TextField fISBN = new TextField();
-    private Label lLanguage = new Label("Language");
-    private TextField fLanguage = new TextField();
-    private Label lEdition = new Label("Edition");
-    private TextField fEdition = new TextField();
+    // Left Book Fields
+    private VBox leftBookFields = new VBox();
+    private BookField title;
+    private BookField subtitle;
+    private BookField publisher;
+    private BookField date;
+    private BookField isbn;
+    private BookField language;
+    private BookField edition;
+
+    // Right Book Fields
+    private VBox rightBookFields = new VBox();
+    private BookField authors;
+    private BookField translators;
+    private BookField tags;
+
 
     
-    public DetailsPage(Book book,boolean editMode) {
+    public DetailsPage(Book book,boolean isEditable) {
         this.book = book;
 
         bookWidget = new BookWidget(book,false);
 
         // Right Container Widgets
+        // Left Book Fields Container
+        title = new BookField("Title",book.getTitle(),isEditable,true);
+        subtitle = new BookField("Subtitle", book.getSubtitle(), isEditable, true);
+        publisher= new BookField("Publisher", book.getPublisher(), isEditable, true);
+        date = new BookField("Date", book.getDate(), isEditable, true);
+        isbn= new BookField("ISBN", book.getIsbn(), isEditable, true);
+        language = new BookField("Language", book.getLanguage(), isEditable, true);
+        edition = new BookField("Edition", Integer.toString(book.getEdition()), isEditable, true);
 
-        leftBookFieldLabels.getChildren().addAll(lTitle,lSubTitle,lPublisher,lDate,lISBN,lLanguage,lEdition);
-        leftBookFieldLabels.setSpacing(13);
-        leftBookFieldLabels.setAlignment(Pos.CENTER);
-        leftBookFieldTexts.getChildren().addAll(fTitle,fSubtitle,fPublisher,fDate,fISBN,fLanguage,fEdition);
-        leftBookFieldTexts.setSpacing(5);
-        leftBookFieldTexts.setAlignment(Pos.CENTER);
-        leftBookFields.getChildren().addAll(leftBookFieldLabels,leftBookFieldTexts);
+        leftBookFields.getChildren().addAll(title,subtitle,publisher,date,isbn,language,edition);
         leftBookFields.setSpacing(10);
-        rightContainer.getChildren().addAll(leftBookFields);
+        leftBookFields.setPadding(new Insets(20));
         
+
+        // Right Book Fields Container
+        authors = new BookField("Authors", book.getAuthors().toString(), isEditable, false);
+        translators = new BookField("Translators", book.getTranslators().toString(), isEditable, false);
+        tags = new BookField("Tags", book.getTags().toString(), isEditable, false);
+
+        rightBookFields.getChildren().addAll(authors,translators,tags);
+        rightBookFields.setSpacing(10);
+        rightBookFields.setPadding(new Insets(20));
+
+        rightContainer.getChildren().addAll(leftBookFields,rightBookFields);
         // Left Container Widgets
         buttonsContainer.getChildren().addAll(editButton,deleteButton);
+        editButton.setPrefWidth(100);
+        deleteButton.setPrefWidth(100);
         buttonsContainer.setAlignment(Pos.CENTER);
         buttonsContainer.setSpacing(10);
 
@@ -84,6 +98,16 @@ public class DetailsPage extends VBox {
         mainLayout.setSpacing(20);
 
         this.getChildren().addAll(appMenuBar,mainLayout);
+    }
+
+
+    // Getter and setter for editable property
+    public boolean isEditable() {
+        return isEditable;
+    }
+
+    public void setEditable(boolean isEditable) {
+        this.isEditable = isEditable;
     }
 
     

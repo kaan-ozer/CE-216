@@ -13,11 +13,13 @@ import javafx.scene.control.Label;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.control.TextField;
 import javafx.scene.control.TitledPane;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Priority;
 import javafx.scene.layout.TilePane;
 import javafx.scene.layout.VBox;
-
+import java.io.FileNotFoundException;
 
 
 public class MainPage extends VBox{
@@ -40,8 +42,7 @@ public class MainPage extends VBox{
     private HBox searchBarContainer = new HBox();
     private Label searchLabel = new Label("Search");
     private TextField searchBar = new TextField();
-    private Button searchButton = new Button("Search");                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                  
-
+    private Button searchButton = new Button("Search");
 
     // Books Views
     private ScrollPane booksScroll = new ScrollPane();
@@ -49,7 +50,7 @@ public class MainPage extends VBox{
     
 
 
-    public MainPage() {
+    public MainPage() throws FileNotFoundException {
 
         //Checkbox Lists at Left Container
         tagsList.setMinWidth(100);
@@ -60,7 +61,7 @@ public class MainPage extends VBox{
         searchLabel.setPadding(new Insets(5,0,0,0));
         searchBarContainer.getChildren().addAll(searchLabel,searchBar,searchButton);
         searchBarContainer.setSpacing(10);
-        searchBarContainer.setPadding(new Insets(5, 10, 0, 10));
+        searchBarContainer.setPadding(new Insets(5, 10, 5, 10));
 
         // Books Views
         booksScroll.setContent(booksContainer);
@@ -87,8 +88,6 @@ public class MainPage extends VBox{
 
         booksContainer.prefWidthProperty().bind(booksScroll.widthProperty()); // Bind width to ScrollPane width
         booksContainer.maxWidthProperty().bind(booksScroll.widthProperty());
-        
-        
         
         this.getChildren().addAll(menuBar,mainLayout);
         
@@ -130,6 +129,7 @@ public class MainPage extends VBox{
         return tagsList;
     }
 
+    // Calculates column number for tile pane responsiveness
     private int calculateColumns(double width) {
         
         int columnWidth = 200; 

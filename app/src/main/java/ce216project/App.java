@@ -3,6 +3,7 @@ package ce216project;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.List;
 
 import ce216project.models.Book;
 import ce216project.view.MainPage;
@@ -23,9 +24,10 @@ public class App extends Application{
         MainPage mainPage = new MainPage();
         
         ArrayList<Book> books = new ArrayList<>();
+        
+        
+        Book book1 = new Book("TestTitle", "some subtitle", new ArrayList<String>(), new ArrayList<String>(), "12312312312", "testPublisher", "12.02.2001", 2, "STYLESHEET_MODENA", "STYLESHEET_CASPIAN", 3, new ArrayList<String>(), null);
        
-        Book book1 = new Book("TestTitle", "some subtitle", null, null, "12312312312", "testPublisher", "12.02.2001", 2, "STYLESHEET_MODENA", "STYLESHEET_CASPIAN", 3, null, null);
-        Book book2 = new Book("TestTitle", "some subtitle", null, null, "12312312312", "testPublisher", "12.02.2001", 2, "STYLESHEET_MODENA", "STYLESHEET_CASPIAN", 3, null, null);
 
         for(int i=0; i < 200 ; i++){
             books.add(book1);

@@ -52,6 +52,9 @@ public class Book {
     }
 
     public List<String> getAuthors() {
+        if(authors.isEmpty()){
+        authors.add(" ");
+        }
         return authors;
     }
 
@@ -60,7 +63,10 @@ public class Book {
     }
 
     public List<String> getTranslators() {
-        return translators;
+        if(translators.isEmpty()){
+            translators.add(" ");
+            }
+            return translators;
     }
 
     public void setTranslators(List<String> translators) {
@@ -124,7 +130,10 @@ public class Book {
     }
 
     public List<String> getTags() {
-        return tags;
+        if(tags.isEmpty()){
+            tags.add(" ");
+            }
+            return tags;
     }
 
     public void setTags(List<String> tags) {
