@@ -70,8 +70,14 @@ public class BookWidget extends StackPane {
         Button detailsButton = new Button("button");
         detailsButton.setOpacity(0);
         detailsButton.setPrefSize(XSIZE, YSIZE);
-        detailsButton.setOnAction(e -> PageController.openNewWindow(new DetailsPage(book,false)));
+        detailsButton.setOnAction(e -> openDetailsPage());
         this.getChildren().add(detailsButton);
+    }
+
+    public void openDetailsPage(){
+        int i = PageController.pagesArray.size();
+        PageController.openNewWindow(new DetailsPage(book,false,i));
+
     }
 
 

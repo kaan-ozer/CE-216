@@ -1,13 +1,12 @@
 package ce216project.view;
 
+import ce216project.controller.PageController;
 import ce216project.models.Book;
 import ce216project.view.widgets.BookField;
 import ce216project.view.widgets.BookWidget;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.control.Button;
-import javafx.scene.control.Label;
-import javafx.scene.control.TextField;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 
@@ -16,6 +15,7 @@ public class DetailsPage extends VBox {
 
     private Book book;
     private boolean isEditable = false;
+    private int pageIndex;
 
     // Main Containers
     private AppMenuBar appMenuBar = new AppMenuBar();
@@ -29,6 +29,7 @@ public class DetailsPage extends VBox {
     private VBox buttonsContainer = new VBox();
     private Button editButton = new Button("Edit");
     private Button deleteButton = new Button("Delete");
+    private Button backButton = new Button("Back");
 
     // Cover Image
     private BookWidget bookWidget;
@@ -52,8 +53,9 @@ public class DetailsPage extends VBox {
 
 
     
-    public DetailsPage(Book book,boolean isEditable) {
+    public DetailsPage(Book book,boolean isEditable,int pageIndex) {
         this.book = book;
+        this.pageIndex = pageIndex;
 
         bookWidget = new BookWidget(book,false);
 
@@ -71,7 +73,6 @@ public class DetailsPage extends VBox {
         leftBookFields.setSpacing(10);
         leftBookFields.setPadding(new Insets(20));
         
-
         // Right Book Fields Container
         authors = new BookField("Authors", book.getAuthors().toString(), isEditable, false);
         translators = new BookField("Translators", book.getTranslators().toString(), isEditable, false);
@@ -82,10 +83,16 @@ public class DetailsPage extends VBox {
         rightBookFields.setPadding(new Insets(20));
 
         rightContainer.getChildren().addAll(leftBookFields,rightBookFields);
+
         // Left Container Widgets
-        buttonsContainer.getChildren().addAll(editButton,deleteButton);
+        // Buttons
+        System.out.println(pageIndex);
+        backButton.setOnAction(e -> PageController.closeWindow(PageController.pagesArray.get(pageIndex),pageIndex));
+        editButton.setOnAction(e -> edit());
+        buttonsContainer.getChildren().addAll(editButton,deleteButton,backButton);
         editButton.setPrefWidth(100);
         deleteButton.setPrefWidth(100);
+        backButton.setPrefWidth(100);
         buttonsContainer.setAlignment(Pos.CENTER);
         buttonsContainer.setSpacing(10);
 
@@ -109,6 +116,17 @@ public class DetailsPage extends VBox {
     public void setEditable(boolean isEditable) {
         this.isEditable = isEditable;
     }
+
+    public void edit(){
+        isEditable = true;
+        
+    }
+
+    public void setPageIndex (int pageIndex) {
+        this.pageIndex = pageIndex;
+    }
+
+   
 
     
 }

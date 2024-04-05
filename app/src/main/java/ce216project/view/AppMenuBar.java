@@ -25,9 +25,17 @@ public class AppMenuBar extends MenuBar {
         mImport.setAccelerator(KeyCombination.keyCombination("Ctrl+O"));
         mExport.setAccelerator(KeyCombination.keyCombination("Ctrl+E"));
 
+        mQuit.setOnAction(e -> quit());
+
         fileMenu.getItems().addAll(mNewBook,mImport,mExport,mFileSeperator,mQuit);
         this.getMenus().addAll(fileMenu,helpMenu);
     }
+
+    public void quit() {
+        System.exit(0);
+    }
+
+
 
 
     

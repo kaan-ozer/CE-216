@@ -1,7 +1,6 @@
 package ce216project.models;
 
 import java.nio.file.Path;
-import java.util.Date;
 import java.util.List;
 
 public class Book {

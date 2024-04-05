@@ -5,6 +5,7 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 
+import ce216project.controller.PageController;
 import ce216project.models.Book;
 import ce216project.view.MainPage;
 import javafx.application.Application;
@@ -38,6 +39,7 @@ public class App extends Application{
         Scene scene = new Scene(mainPage,800,450);
         primaryStage.setScene(scene);
         primaryStage.setTitle("Librarian");
+        PageController.pagesArray.add(primaryStage);
         primaryStage.show();
     }
 
