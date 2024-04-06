@@ -1,4 +1,4 @@
-package org.example.models;
+package ce216project.models;
 
 import java.io.*;
 import java.text.ParseException;
