@@ -1,9 +1,6 @@
 package ce216project;
 
 import java.util.ArrayList;
-import java.util.Date;
-import java.util.HashMap;
-import java.util.List;
 
 import ce216project.controller.PageController;
 import ce216project.models.Book;

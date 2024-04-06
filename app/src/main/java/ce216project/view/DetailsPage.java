@@ -4,6 +4,8 @@ import ce216project.controller.PageController;
 import ce216project.models.Book;
 import ce216project.view.widgets.BookField;
 import ce216project.view.widgets.BookWidget;
+import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.control.Button;
@@ -95,6 +97,7 @@ public class DetailsPage extends VBox {
         backButton.setPrefWidth(100);
         buttonsContainer.setAlignment(Pos.CENTER);
         buttonsContainer.setSpacing(10);
+        
 
         leftContainer.getChildren().addAll(bookWidget,buttonsContainer);
         leftContainer.setSpacing(10);
@@ -117,16 +120,38 @@ public class DetailsPage extends VBox {
         this.isEditable = isEditable;
     }
 
-    public void edit(){
-        isEditable = true;
-        
-    }
-
     public void setPageIndex (int pageIndex) {
         this.pageIndex = pageIndex;
     }
 
-   
+    private void edit() {
+        isEditable = true;
+        DetailsPage root = new DetailsPage(book, true, pageIndex);
+        PageController.changeScene(root, PageController.pagesArray.get(pageIndex));
+
+        Button saveButton = new Button("Save");
+        saveButton.setPrefWidth(100);
+        Button cancelButton = new Button("Cancel");
+        cancelButton.setPrefWidth(100);
+        cancelButton.setOnAction(e -> cancel());
+        
+        root.buttonsContainer.getChildren().clear();
+        root.buttonsContainer.getChildren().addAll(saveButton,cancelButton);
+
+    }
+
+    private void cancel() {
+        isEditable = false;
+        DetailsPage root = new DetailsPage(book, false, pageIndex);
+        PageController.changeScene(root, PageController.pagesArray.get(pageIndex));
+    }
+           
+        
+        
+
+    
+
+    
 
     
 }

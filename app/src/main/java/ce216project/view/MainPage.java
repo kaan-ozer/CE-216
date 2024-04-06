@@ -14,8 +14,6 @@ import javafx.scene.control.Label;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.control.TextField;
 import javafx.scene.control.TitledPane;
-import javafx.scene.image.Image;
-import javafx.scene.image.ImageView;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Priority;
 import javafx.scene.layout.TilePane;
@@ -64,6 +62,7 @@ public class MainPage extends VBox{
         addBookButtonBox.setAlignment(Pos.CENTER);
         addBookButton.setPrefWidth(100);
         addBookButtonBox.setPadding(new Insets(10));
+        addBookButton.setOnAction(e -> add());
         
 
         // Search Bar at Right Container
@@ -146,6 +145,10 @@ public class MainPage extends VBox{
         int maxColumns = (int) width / columnWidth; // Maximum number of columns based on width
         return Math.max(minColumns, maxColumns);
     }
+
+    private void add(){}
+
+    
 
     
 

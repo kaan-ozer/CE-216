@@ -22,8 +22,9 @@ public class PageController {
         stage.show();
     }
 
-    public static void changeScene(Parent rootNode){
-
+    public static void changeScene(Parent rootNode, Stage stage){
+        Scene scene = new Scene(rootNode,INITIALPAGEXSIZE,INITIALPAGEYSIZE);
+        stage.setScene(scene);
         
     }
 
