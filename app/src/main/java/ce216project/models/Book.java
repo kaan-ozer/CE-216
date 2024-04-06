@@ -1,7 +1,6 @@
 package ce216project.models;
 
-import java.util.ArrayList;
-import java.util.Date;
+import java.nio.file.Path;
 import java.util.List;
 
 public class Book {
@@ -11,14 +10,15 @@ public class Book {
     private List<String> translators;
     private String isbn;
     private String publisher;
-    private Date date;
+    private String date;
     private int edition;
     private String cover;
     private String language;
     private double rating;
     private List<String> tags;
+    private Path coverImagePath;
 
-    public Book(String title, String subtitle, List<String> authors, List<String> translators, String isbn, String publisher, Date date, int edition, String cover, String language, double rating, List<String> tags) {
+    public Book(String title, String subtitle, List<String> authors, List<String> translators, String isbn, String publisher, String date, int edition, String cover, String language, double rating, List<String> tags, Path coverImagePath) {
         this.title = title;
         this.subtitle = subtitle;
         this.authors = authors;
@@ -31,6 +31,7 @@ public class Book {
         this.language = language;
         this.rating = rating;
         this.tags = tags;
+        this.coverImagePath = coverImagePath;
     }
 
     public String getTitle() {
@@ -50,6 +51,9 @@ public class Book {
     }
 
     public List<String> getAuthors() {
+        if(authors.isEmpty()){
+        authors.add(" ");
+        }
         return authors;
     }
 
@@ -58,7 +62,10 @@ public class Book {
     }
 
     public List<String> getTranslators() {
-        return translators;
+        if(translators.isEmpty()){
+            translators.add(" ");
+            }
+            return translators;
     }
 
     public void setTranslators(List<String> translators) {
@@ -81,11 +88,11 @@ public class Book {
         this.publisher = publisher;
     }
 
-    public Date getDate() {
+    public String getDate() {
         return date;
     }
 
-    public void setDate(Date date) {
+    public void setDate(String date) {
         this.date = date;
     }
 
@@ -122,11 +129,22 @@ public class Book {
     }
 
     public List<String> getTags() {
-        return tags;
+        if(tags.isEmpty()){
+            tags.add(" ");
+            }
+            return tags;
     }
 
     public void setTags(List<String> tags) {
         this.tags = tags;
+    }
+
+    public Path getCoverImagePath(){
+        return coverImagePath;
+    }
+
+    public void setCoverImagePath(Path coverImagePath){
+        this.coverImagePath = coverImagePath;
     }
 
     @Override
