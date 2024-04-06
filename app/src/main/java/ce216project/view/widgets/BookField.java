@@ -33,6 +33,8 @@ public class BookField extends HBox{
             TextArea textArea = new TextArea(content);
             textArea.setEditable(isEditable);
             textArea.setMaxWidth(200);
+            textArea.setMaxHeight(100);
+            this.setSpacing(10);
             this.getChildren().add(textArea);
         }
         

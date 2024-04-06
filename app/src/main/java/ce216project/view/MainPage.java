@@ -3,9 +3,10 @@ package ce216project.view;
 import java.util.ArrayList;
 import java.util.HashMap;
 
-
+import ce216project.controller.PageController;
 import ce216project.models.Book;
-import ce216project.view.widgets.BookWidget;
+import ce216project.view.widgets.BookListWidget;
+import ce216project.view.widgets.BookTileWidget;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.control.Button;
@@ -124,13 +125,27 @@ public class MainPage extends VBox{
         checkBoxList.setContent(checkBoxScrollPane);
     }
 
-    public void fillBooks (ArrayList<Book> books) {
+    public void fillBookTiles (ArrayList<Book> books) {
 
-        for(Book book : books){
-            BookWidget bookWidget = new BookWidget(book,true);
-            booksContainer.getChildren().add(bookWidget);
+        for(Book book : books) {
+            BookTileWidget bookTileWidget = new BookTileWidget(book,true);
+            booksContainer.getChildren().add(bookTileWidget);
         }
 
+    }
+
+    public void fillBookList (ArrayList<Book> books) {
+
+        VBox booksList = new VBox();
+        booksList.setSpacing(5);
+        booksList.setPadding(new Insets(10));
+        
+        for(Book book : books) {
+            BookListWidget bookListWidget = new BookListWidget(book);
+            booksList.getChildren().add(bookListWidget);
+        }
+
+        this.booksScroll.setContent(booksList);
     }
 
     public TitledPane getTagsList(){
@@ -146,7 +161,11 @@ public class MainPage extends VBox{
         return Math.max(minColumns, maxColumns);
     }
 
-    private void add(){}
+    private void add() {
+        
+        NewBookPage newBookPage = new NewBookPage();
+        PageController.openNewWindow(newBookPage);
+    }
 
     
 

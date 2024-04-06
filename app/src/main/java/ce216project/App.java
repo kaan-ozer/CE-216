@@ -31,7 +31,7 @@ public class App extends Application{
             books.add(book1);
         }
 
-        mainPage.fillBooks(books);
+        mainPage.fillBookTiles(books);
         
         Scene scene = new Scene(mainPage,800,450);
         primaryStage.setScene(scene);

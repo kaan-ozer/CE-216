@@ -1,10 +1,9 @@
 package ce216project.view.widgets;
 
-import java.nio.file.Path;
-
 import ce216project.controller.PageController;
 import ce216project.models.Book;
 import ce216project.view.DetailsPage;
+import java.nio.file.Path;
 import javafx.geometry.Pos;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
@@ -14,7 +13,7 @@ import javafx.scene.layout.StackPane;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
 
-public class BookWidget extends StackPane {
+public class BookTileWidget extends StackPane {
 
     private static final int XSIZE = 100;
     private static final int YSIZE = 150;
@@ -30,7 +29,7 @@ public class BookWidget extends StackPane {
     private boolean isClickable;
 
 
-    public BookWidget (Book book, boolean isClickable) {
+    public BookTileWidget (Book book, boolean isClickable) {
         
         this.book = book;
 
@@ -65,7 +64,7 @@ public class BookWidget extends StackPane {
         }
     }
 
-    public void makeClickable () {
+    private void makeClickable () {
 
         Button detailsButton = new Button("button");
         detailsButton.setOpacity(0);
@@ -74,7 +73,7 @@ public class BookWidget extends StackPane {
         this.getChildren().add(detailsButton);
     }
 
-    public void openDetailsPage(){
+    private void openDetailsPage(){
         int i = PageController.pagesArray.size();
         PageController.openNewWindow(new DetailsPage(book,false,i));
 

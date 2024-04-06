@@ -3,9 +3,7 @@ package ce216project.view;
 import ce216project.controller.PageController;
 import ce216project.models.Book;
 import ce216project.view.widgets.BookField;
-import ce216project.view.widgets.BookWidget;
-import javafx.event.ActionEvent;
-import javafx.event.EventHandler;
+import ce216project.view.widgets.BookTileWidget;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.control.Button;
@@ -20,7 +18,7 @@ public class DetailsPage extends VBox {
     private int pageIndex;
 
     // Main Containers
-    private AppMenuBar appMenuBar = new AppMenuBar();
+    private AppMenuBar menuBar = new AppMenuBar();
     private HBox mainLayout = new HBox();
     private HBox rightContainer = new HBox();
     private VBox leftContainer = new VBox();
@@ -34,7 +32,7 @@ public class DetailsPage extends VBox {
     private Button backButton = new Button("Back");
 
     // Cover Image
-    private BookWidget bookWidget;
+    private BookTileWidget bookTileWidget;
     
     // Right Container Widgets
     // Left Book Fields
@@ -59,7 +57,7 @@ public class DetailsPage extends VBox {
         this.book = book;
         this.pageIndex = pageIndex;
 
-        bookWidget = new BookWidget(book,false);
+        bookTileWidget = new BookTileWidget(book,false);
 
         // Right Container Widgets
         // Left Book Fields Container
@@ -83,7 +81,7 @@ public class DetailsPage extends VBox {
         rightBookFields.getChildren().addAll(authors,translators,tags);
         rightBookFields.setSpacing(10);
         rightBookFields.setPadding(new Insets(20));
-
+        
         rightContainer.getChildren().addAll(leftBookFields,rightBookFields);
 
         // Left Container Widgets
@@ -99,7 +97,7 @@ public class DetailsPage extends VBox {
         buttonsContainer.setSpacing(10);
         
 
-        leftContainer.getChildren().addAll(bookWidget,buttonsContainer);
+        leftContainer.getChildren().addAll(bookTileWidget,buttonsContainer);
         leftContainer.setSpacing(10);
         leftContainer.setPadding(new Insets(20));
 
@@ -107,7 +105,7 @@ public class DetailsPage extends VBox {
         mainLayout.getChildren().setAll(leftContainer,rightContainer);
         mainLayout.setSpacing(20);
 
-        this.getChildren().addAll(appMenuBar,mainLayout);
+        this.getChildren().addAll(menuBar,mainLayout);
     }
 
 
