@@ -1,16 +1,14 @@
 package ce216project.utils;
 
-import ce216project.models.Book;
 import com.owlike.genson.Genson;
-import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
-import java.util.Date;
-import java.util.List;
+
 
 public class IOoperations {
+
     public static void writeToJsonFile(String filename, Object object) {
         Genson genson = new Genson();
         String json = genson.serialize(object);
