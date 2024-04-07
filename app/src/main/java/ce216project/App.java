@@ -11,10 +11,8 @@ import javafx.application.Application;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
 
-public class App extends Application{
+public class App extends Application {
 
-
-    
     public static void main(String[] args) {
         launch(args);
     }
@@ -22,28 +20,23 @@ public class App extends Application{
     @Override
     public void start(Stage primaryStage) throws Exception {
 
+        MainPage mainPage = new MainPage();
 
-            IOoperations.resetJsonFile("output/hey.txt");
-            
-            MainPage mainPage = new MainPage();
-            
-            Book book1 = new Book("TestTitle", "some subtitle", new ArrayList<String>(), new ArrayList<String>(), "12312312312", "testPublisher", "12.02.2001", 2, "STYLESHEET_MODENA", "STYLESHEET_CASPIAN", 3, new ArrayList<String>(), null);
-            
-            
-            for(int i=0; i < 200 ; i++){
-                Library.createBook(book1); 
-            } 
-            
+        Book book1 = new Book("TestTitle", "some subtitle", new ArrayList<String>(), new ArrayList<String>(),
+                "12312312312", "testPublisher", "12.02.2001", 2, "STYLESHEET_MODENA", "STYLESHEET_CASPIAN", 3,
+                new ArrayList<String>(), null);
+
+        for (int i = 0; i < 200; i++) {
+            Library.createBook(book1);
+        }
+
         mainPage.fillBookTiles(Library.books);
-        
-        Scene scene = new Scene(mainPage,800,450);
+
+        Scene scene = new Scene(mainPage, 800, 450);
         primaryStage.setScene(scene);
         primaryStage.setTitle("Librarian");
         PageController.pagesArray.add(primaryStage);
         primaryStage.show();
     }
 
-    
-
-   
 }
