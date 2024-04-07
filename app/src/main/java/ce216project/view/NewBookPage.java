@@ -7,8 +7,11 @@ import ce216project.view.widgets.BookField;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.control.Button;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
+import javafx.scene.shape.Rectangle;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 
@@ -24,6 +27,12 @@ public class NewBookPage extends VBox{
 
     private AppMenuBar menuBar = new AppMenuBar();
     private HBox mainLayout = new HBox();
+
+    // Image Preview
+    private VBox imageContainer = new VBox();
+    private ImageView imagePreview = new ImageView();
+    private Rectangle imageRectangle = new Rectangle(100, 150);
+
 
     // Left Book Fields
     private VBox leftBookFields = new VBox();
@@ -51,6 +60,13 @@ public class NewBookPage extends VBox{
 
     public NewBookPage() {
 
+        // Image Preview
+        imageContainer.getChildren().addAll(imageRectangle,chooseCoverButton);
+        imageContainer.setSpacing(15);
+        imageContainer.setPadding(new Insets(20));
+        imagePreview.setX(100);
+        imagePreview.setY(150);
+
         // Left Book Fields
         title = new BookField("Title", "", isEditable, true);
         subtitle = new BookField("Subtitle", "", isEditable, true);
@@ -61,7 +77,7 @@ public class NewBookPage extends VBox{
         edition = new BookField("Edition", "", isEditable, true);
          
 
-        leftBookFields.getChildren().addAll(title,subtitle,publisher,date,isbn,language,edition,chooseCoverButton);
+        leftBookFields.getChildren().addAll(title,subtitle,publisher,date,isbn,language,edition);
         leftBookFields.setSpacing(10);
 
         // Right Book Fields
@@ -84,7 +100,7 @@ public class NewBookPage extends VBox{
 
         mainLayout.setSpacing(15);
         mainLayout.setPadding(new Insets(10,10,20,10));
-        mainLayout.getChildren().addAll(leftBookFields,rightBookFields);
+        mainLayout.getChildren().addAll(imageContainer,leftBookFields,rightBookFields);
         
         this.getChildren().addAll(menuBar,mainLayout,buttonsContainer);
 
@@ -103,7 +119,15 @@ public class NewBookPage extends VBox{
         fileChooser.getExtensionFilters().add(extFilter);
         Path coverImagePathInput = fileChooser.showOpenDialog(new Stage()).toPath();
         this.coverImagePath = coverImagePathInput;
+        System.out.println(coverImagePath);
         System.out.println(coverImagePathInput);
+        
+        // Set Image Preview
+
+        Image prewCoverImage = new Image("file:" + coverImagePath.toString(),100,150,false,true);
+        this.imagePreview.setImage(prewCoverImage);
+        this.imageContainer.getChildren().remove(0);
+        this.imageContainer.getChildren().add(0,imagePreview);
     }
 
     private void save(){
