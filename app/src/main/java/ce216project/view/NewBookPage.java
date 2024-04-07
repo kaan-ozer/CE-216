@@ -2,6 +2,7 @@ package ce216project.view;
 
 import ce216project.controller.PageController;
 import ce216project.models.Book;
+import ce216project.models.Library;
 import ce216project.view.widgets.BookField;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
@@ -12,7 +13,8 @@ import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 
 import java.nio.file.Path;
-import java.util.ArrayList;
+import java.util.List;
+import java.util.Arrays;
 
 public class NewBookPage extends VBox{
 
@@ -72,6 +74,7 @@ public class NewBookPage extends VBox{
 
         // Buttons
         saveButton.setPrefWidth(100);
+        saveButton.setOnAction(e -> save());
         cancelButton.setPrefWidth(100);
         cancelButton.setOnAction(e -> cancel());
         chooseCoverButton.setOnAction(e -> getCoverImage());
@@ -113,14 +116,17 @@ public class NewBookPage extends VBox{
         String languageInput = language.getTextField().getText();
         int editionInput = Integer.parseInt(edition.getTextField().getText());
 
-        
+        String[] authorsInput =  authors.getTextArea().getText().trim().split(",");
+        List<String> authorsList = Arrays.asList(authorsInput);
+        String[] translatorsInput = translators.getTextArea().getText().trim().split(",");
+        List<String> translatorsList = Arrays.asList(translatorsInput);
+        String[] tagsInput = tags.getTextArea().getText().trim().split(",");
+        List<String> tagsList = Arrays.asList(tagsInput);
 
-        String[] authorsInput =  authors.getTextArea().getText().split(",");
-        String[] translatorsInput = translators.getTextArea().getText().split(",");
-        String[] tagsInput = tags.getTextArea().getText().split(",");
-        
+        Book newBook = new Book(titleInput, subTitleInput, authorsList, translatorsList, isbnInput, publisherInput, dateInput, editionInput, languageInput, 5.0, tagsList, coverImagePath);
+        Library.books.add(newBook);
 
-        
+        cancel(); 
     }
     
 }

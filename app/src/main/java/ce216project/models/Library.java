@@ -5,12 +5,12 @@ import java.util.*;
 
 public class Library {
 
-    public static ArrayList<Book> books;
+    public static ArrayList<Book> books = new ArrayList<Book>();
     public static HashMap<String,Integer> tags;
     public static HashMap<String,Integer> languages;
 
     public Library() {
-        loadBooksFromJson();
+        //loadBooksFromJson();
     }
     public void deleteBook(int Isbn) {
         // Find the book to delete

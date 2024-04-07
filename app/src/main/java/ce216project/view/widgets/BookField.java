@@ -46,13 +46,6 @@ public class BookField extends HBox{
          
     }
 
-
-
-
-
-
-
-
     public TextField getTextField() {
         return textField;
     }

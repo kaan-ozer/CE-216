@@ -5,6 +5,7 @@ import java.util.HashMap;
 
 import ce216project.controller.PageController;
 import ce216project.models.Book;
+import ce216project.models.Library;
 import ce216project.view.widgets.BookListWidget;
 import ce216project.view.widgets.BookTileWidget;
 import javafx.geometry.Insets;
@@ -100,6 +101,7 @@ public class MainPage extends VBox{
         this.getChildren().addAll(menuBar,mainLayout);
 
         // Update Main Page
+        this.fillBookTiles(Library.books);
         
         
     }
