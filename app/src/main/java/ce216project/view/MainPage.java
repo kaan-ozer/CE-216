@@ -19,7 +19,6 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.Priority;
 import javafx.scene.layout.TilePane;
 import javafx.scene.layout.VBox;
-import java.io.FileNotFoundException;
 
 
 public class MainPage extends VBox{
@@ -52,7 +51,7 @@ public class MainPage extends VBox{
     
 
 
-    public MainPage() throws FileNotFoundException {
+    public MainPage() {
 
         //Checkbox Lists at Left Container
         tagsList.setMinWidth(100);
@@ -99,6 +98,9 @@ public class MainPage extends VBox{
         booksContainer.maxWidthProperty().bind(booksScroll.widthProperty());
         
         this.getChildren().addAll(menuBar,mainLayout);
+
+        // Update Main Page
+        
         
     }
 
@@ -162,9 +164,8 @@ public class MainPage extends VBox{
     }
 
     private void add() {
-        
         NewBookPage newBookPage = new NewBookPage();
-        PageController.openNewWindow(newBookPage);
+        PageController.changeScene(newBookPage, PageController.pagesArray.get(0));
     }
 
     

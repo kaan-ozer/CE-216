@@ -1,8 +1,6 @@
 package ce216project.models;
 
 import java.io.*;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.util.*;
 
 public class Library {
@@ -56,8 +54,6 @@ public class Library {
                 System.out.print("Enter new edition (press Enter to keep existing): ");
                 String newEdition = scanner.nextLine().trim();
                 System.out.print("Enter new cover type (press Enter to keep existing): ");
-                String newCover = scanner.nextLine().trim();
-                System.out.print("Enter new language (press Enter to keep existing): ");
                 String newLanguage = scanner.nextLine().trim();
                 System.out.print("Enter new rating (press Enter to keep existing): ");
                 String newRating = scanner.nextLine().trim();
@@ -83,20 +79,11 @@ public class Library {
                 if (!newPublisher.isEmpty()) {
                     book.setPublisher(newPublisher);
                 }
-                if (!newDateString.isEmpty()) {
-                    try {
-                        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
-                        Date newDate = dateFormat.parse(newDateString);
-                        book.setDate(newDate);
-                    } catch (ParseException e) {
-                        System.out.println("Invalid date format. Date not updated.");
-                    }
+                if (!newDateString.isEmpty()) {  
+                    book.setDate(newDateString);
                 }
                 if (!newEdition.isEmpty()) {
                     book.setEdition(Integer.parseInt(newEdition));
-                }
-                if (!newCover.isEmpty()) {
-                    book.setCover(newCover);
                 }
                 if (!newLanguage.isEmpty()) {
                     book.setLanguage(newLanguage);

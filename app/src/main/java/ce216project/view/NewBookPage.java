@@ -1,15 +1,24 @@
 package ce216project.view;
 
+import ce216project.controller.PageController;
+import ce216project.models.Book;
 import ce216project.view.widgets.BookField;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.control.Button;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
+import javafx.stage.FileChooser;
+import javafx.stage.Stage;
+
+import java.nio.file.Path;
+import java.util.ArrayList;
 
 public class NewBookPage extends VBox{
 
     private final boolean isEditable = true;
+    
+    private Path coverImagePath;
 
     private AppMenuBar menuBar = new AppMenuBar();
     private HBox mainLayout = new HBox();
@@ -33,7 +42,9 @@ public class NewBookPage extends VBox{
     // Buttons
     private Button saveButton = new Button("Save");
     private Button cancelButton = new Button("Cancel");
+    private Button chooseCoverButton = new Button("Cover Image");
     private HBox buttonsContainer = new HBox();
+    
 
 
     public NewBookPage() {
@@ -46,8 +57,9 @@ public class NewBookPage extends VBox{
         isbn = new BookField("ISBN", "", isEditable, true);
         language = new BookField("Language", "", isEditable, true);
         edition = new BookField("Edition", "", isEditable, true);
+         
 
-        leftBookFields.getChildren().addAll(title,subtitle,publisher,date,isbn,language,edition);
+        leftBookFields.getChildren().addAll(title,subtitle,publisher,date,isbn,language,edition,chooseCoverButton);
         leftBookFields.setSpacing(10);
 
         // Right Book Fields
@@ -61,6 +73,8 @@ public class NewBookPage extends VBox{
         // Buttons
         saveButton.setPrefWidth(100);
         cancelButton.setPrefWidth(100);
+        cancelButton.setOnAction(e -> cancel());
+        chooseCoverButton.setOnAction(e -> getCoverImage());
         buttonsContainer.getChildren().addAll(saveButton,cancelButton);
         buttonsContainer.setSpacing(10);
         buttonsContainer.setAlignment(Pos.CENTER);
@@ -75,6 +89,37 @@ public class NewBookPage extends VBox{
     }   
 
     private void cancel() {
+        MainPage mainPage = new MainPage();
+        PageController.changeScene(mainPage, PageController.pagesArray.get(0));
+    }
+
+    private void getCoverImage() {
+        FileChooser fileChooser = new FileChooser();
+        FileChooser.ExtensionFilter extFilter = new FileChooser.ExtensionFilter("Image files", "*.png","*.jpeg","*.jpg");
+        fileChooser.setTitle("Select Cover Image");
+        fileChooser.getExtensionFilters().add(extFilter);
+        Path coverImagePathInput = fileChooser.showOpenDialog(new Stage()).toPath();
+        this.coverImagePath = coverImagePathInput;
+        System.out.println(coverImagePathInput);
+    }
+
+    private void save(){
+        
+        String titleInput = title.getTextField().getText();
+        String subTitleInput = subtitle.getTextField().getText();
+        String publisherInput = publisher.getTextField().getText();
+        String dateInput = date.getTextField().getText();
+        String isbnInput = isbn.getTextField().getText();
+        String languageInput = language.getTextField().getText();
+        int editionInput = Integer.parseInt(edition.getTextField().getText());
+
+        
+
+        String[] authorsInput =  authors.getTextArea().getText().split(",");
+        String[] translatorsInput = translators.getTextArea().getText().split(",");
+        String[] tagsInput = tags.getTextArea().getText().split(",");
+        
+
         
     }
     

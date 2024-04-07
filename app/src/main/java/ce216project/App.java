@@ -24,7 +24,7 @@ public class App extends Application{
         ArrayList<Book> books = new ArrayList<>();
         
         
-        Book book1 = new Book("TestTitle", "some subtitle", new ArrayList<String>(), new ArrayList<String>(), "12312312312", "testPublisher", "12.02.2001", 2, "STYLESHEET_MODENA", "STYLESHEET_CASPIAN", 3, new ArrayList<String>(), null);
+        Book book1 = new Book("TestTitle", "some subtitle", new ArrayList<String>(), new ArrayList<String>(), "12312312312", "testPublisher", "12.02.2001", 2, "STYLESHEET_CASPIAN", 3, new ArrayList<String>(), null);
        
 
         for(int i=0; i < 200 ; i++){
