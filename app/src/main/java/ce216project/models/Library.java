@@ -4,7 +4,10 @@ import java.io.*;
 import java.util.*;
 
 public class Library {
-    private List<Book> books;
+
+    public static ArrayList<Book> books;
+    public static HashMap<String,Integer> tags;
+    public static HashMap<String,Integer> languages;
 
     public Library() {
         loadBooksFromJson();
