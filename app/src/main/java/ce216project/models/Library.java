@@ -3,17 +3,41 @@ package ce216project.models;
 import java.io.*;
 import java.util.*;
 
+import ce216project.utils.IOoperations;
+
 public class Library {
 
     public static ArrayList<Book> books = new ArrayList<Book>();
     public static HashMap<String,Integer> tags;
     public static HashMap<String,Integer> languages;
 
+
     public Library() {
         //loadBooksFromJson();
     }
-    public void deleteBook(int Isbn) {
-        // Find the book to delete
+
+    private void loadBooksFromJson() {
+        try   {
+            books = IOoperations.readFromJsonFile("app/output/output.txt");
+        } catch (Exception e) {
+            System.err.println("Error loading books from JSON: " + e.getMessage());
+        }
+    }
+
+    public static void saveBooksToJson() {
+        try   {
+            IOoperations.writeToJsonFile("app/output/output.txt", books);
+        } catch (Exception e) {
+            System.err.println("Error saving books to JSON: " + e.getMessage());
+        }
+    }
+
+    public static void createBook(Book book) {
+        books.add(book);
+        saveBooksToJson();
+    }
+
+    public void deleteBook(int Isbn) { 
         Book bookToDelete = null;
         for (Book book : books) {
             if (book.getTitle().equals(Isbn)) {
@@ -23,7 +47,7 @@ public class Library {
         }
 
         if (bookToDelete != null) {
-            // Remove the book from the list
+            // Remove the book from the ArrayList
             books.remove(bookToDelete);
             // Serialize the updated collection back into JSON and overwrite the file
             saveBooksToJson();
@@ -71,10 +95,10 @@ public class Library {
                     book.setSubtitle(newSubtitle);
                 }
                 if (!newAuthors.isEmpty()) {
-                    book.setAuthors(Arrays.asList(newAuthors.split(",")));
+                    // book.setAuthors(Arrays.asArrayList(newAuthors.split(",")));
                 }
                 if (!newTranslators.isEmpty()) {
-                    book.setTranslators(Arrays.asList(newTranslators.split(",")));
+                    // book.setTranslators(Arrays.asArrayList(newTranslators.split(",")));
                 }
                 if (!newIsbn.isEmpty()) {
                     book.setIsbn(newIsbn);
@@ -82,9 +106,11 @@ public class Library {
                 if (!newPublisher.isEmpty()) {
                     book.setPublisher(newPublisher);
                 }
+
                 if (!newDateString.isEmpty()) {  
                     book.setDate(newDateString);
                 }
+
                 if (!newEdition.isEmpty()) {
                     book.setEdition(Integer.parseInt(newEdition));
                 }
@@ -95,7 +121,7 @@ public class Library {
                     book.setRating(Double.parseDouble(newRating));
                 }
                 if (!newTags.isEmpty()) {
-                    book.setTags(Arrays.asList(newTags.split(",")));
+                    // book.setTags(Arrays.asArrayList(newTags.split(",")));
                 }
 
                 bookFound = true;
@@ -112,31 +138,5 @@ public class Library {
         }
     }
 
-    private void loadBooksFromJson() {
-        try (BufferedReader reader = new BufferedReader(new FileReader("library.json"))) {
-            // Deserialize JSON into Book objects and add them to the books list
-            // Assume the structure of library.json is an array of Book objects
-            // Example: [{ "id": 1, "title": "Book1", "author": "Author1", ... }, { ... }]
-            // You may need to adjust the JSON parsing code based on the actual structure
-            // For simplicity, I'll skip the actual JSON parsing logic here.
-            // Just assume that books are loaded into 'books' list.
-            // books = someJsonParsingMethod(reader.readLine());
-            // For demonstration, I'm initializing an empty list here
-            books = new ArrayList<>();
-        } catch (IOException e) {
-            System.err.println("Error loading books from JSON: " + e.getMessage());
-        }
-    }
-
-    private void saveBooksToJson() {
-        try (BufferedWriter writer = new BufferedWriter(new FileWriter("library.json"))) {
-            // Serialize the books list into JSON format and write it to the file
-            // Example: writer.write(someJsonSerializationMethod(books));
-            // For demonstration, I'm just writing a placeholder message
-            writer.write("Updated JSON content with edited book.");
-        } catch (IOException e) {
-            System.err.println("Error saving books to JSON: " + e.getMessage());
-        }
-    }
 }
 
