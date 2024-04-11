@@ -14,6 +14,8 @@ public class BookField extends HBox{
     private boolean isTextField;
 
     private Label fieldLabel;
+    private TextField textField;
+    private TextArea textArea;
     
 
     public BookField(String Label, String content, boolean isEditable, boolean isTextField){
@@ -28,6 +30,7 @@ public class BookField extends HBox{
             TextField textField = new TextField(content);
             textField.setEditable(isEditable);
             this.getChildren().add(textField);
+            this.textField = textField;
             
         } else { 
             TextArea textArea = new TextArea(content);
@@ -36,11 +39,32 @@ public class BookField extends HBox{
             textArea.setMaxHeight(100);
             this.setSpacing(10);
             this.getChildren().add(textArea);
+            this.textArea = textArea;
         }
         
         
          
     }
+
+    public TextField getTextField() {
+        return textField;
+    }
+
+
+    public void setTextField(TextField textField) {
+        this.textField = textField;
+    }
+
+
+    public TextArea getTextArea() {
+        return textArea;
+    }
+
+
+    public void setTextArea(TextArea textArea) {
+        this.textArea = textArea;
+    }
+
 
 
     

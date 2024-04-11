@@ -1,17 +1,19 @@
 package ce216project.models;
 
 import java.io.*;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.util.*;
 
 import ce216project.utils.IOoperations;
 
 public class Library {
-    public static ArrayList<Book> books = new ArrayList<Book> ();
+
+    public static ArrayList<Book> books = new ArrayList<Book>();
+    public static HashMap<String,Integer> tags;
+    public static HashMap<String,Integer> languages;
+
 
     public Library() {
-        loadBooksFromJson();
+        //loadBooksFromJson();
     }
 
     private void loadBooksFromJson() {
@@ -79,8 +81,6 @@ public class Library {
                 System.out.print("Enter new edition (press Enter to keep existing): ");
                 String newEdition = scanner.nextLine().trim();
                 System.out.print("Enter new cover type (press Enter to keep existing): ");
-                String newCover = scanner.nextLine().trim();
-                System.out.print("Enter new language (press Enter to keep existing): ");
                 String newLanguage = scanner.nextLine().trim();
                 System.out.print("Enter new rating (press Enter to keep existing): ");
                 String newRating = scanner.nextLine().trim();
@@ -106,12 +106,13 @@ public class Library {
                 if (!newPublisher.isEmpty()) {
                     book.setPublisher(newPublisher);
                 }
-              
+
+                if (!newDateString.isEmpty()) {  
+                    book.setDate(newDateString);
+                }
+
                 if (!newEdition.isEmpty()) {
                     book.setEdition(Integer.parseInt(newEdition));
-                }
-                if (!newCover.isEmpty()) {
-                    book.setCover(newCover);
                 }
                 if (!newLanguage.isEmpty()) {
                     book.setLanguage(newLanguage);

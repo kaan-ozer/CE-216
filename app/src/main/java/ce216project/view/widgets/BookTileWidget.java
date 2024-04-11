@@ -3,7 +3,6 @@ package ce216project.view.widgets;
 import ce216project.controller.PageController;
 import ce216project.models.Book;
 import ce216project.view.DetailsPage;
-import java.nio.file.Path;
 import javafx.geometry.Pos;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
@@ -19,7 +18,6 @@ public class BookTileWidget extends StackPane {
     private static final int YSIZE = 150;
 
     private ImageView imageView = new ImageView();
-    private Path coverImagePath; 
     private Image coverImage;
     private Button detailsButton = new Button();
 
@@ -32,9 +30,8 @@ public class BookTileWidget extends StackPane {
     public BookTileWidget (Book book, boolean isClickable) {
         
         this.book = book;
-
-        if(coverImagePath != null){
-            coverImage = new Image(coverImagePath.toString());
+        if(book.getCoverImagePath() != null){
+            coverImage = new Image("file:"+book.getCoverImagePath().toString(),XSIZE,YSIZE,false,true);
             imageView.setImage(coverImage);
             imageView.setSmooth(true);
             imageView.setCache(true);
@@ -80,13 +77,6 @@ public class BookTileWidget extends StackPane {
     }
 
 
-    public Path getCoverImagePath() {
-        return coverImagePath;
-    }
-
-    public void setCoverImagePath(Path coverImagePath) {
-        this.coverImagePath = coverImagePath;
-    }
 
     public boolean isClickable() {
         return isClickable;
