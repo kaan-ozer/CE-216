@@ -18,10 +18,11 @@ public class Library {
         loadBooksFromJson();
     }
 
-    private void loadBooksFromJson() {
+    public static void loadBooksFromJson() {
         try {
-            books = IOoperations.readFromJsonFile("app/output/output.txt");
+            books = IOoperations.readFromJsonFile();
         } catch (Exception e) {
+            e.printStackTrace();
             System.err.println("Error loading books from JSON: " + e.getMessage());
         }
     }

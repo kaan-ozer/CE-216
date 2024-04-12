@@ -66,15 +66,19 @@ public class IOoperations {
         }
     }
 
-    public static ArrayList<Book> readFromJsonFile(String filename ) {
+    public static ArrayList<Book> readFromJsonFile() {
         try {
-
-           
-    
-            byte[] jsonData = Files.readAllBytes(Paths.get(filename));
-            String jsonString = new String(jsonData);
+             
+            byte[] jsonData = Files.readAllBytes(Paths.get("output/output.txt"));
+            String jsonString = new String(jsonData); 
             Book[] books =  genson.deserialize(jsonString, Book[].class);
-            return new ArrayList<>(Arrays.asList(books));
+            ArrayList<Book> bookList;
+            if (books == null || books.length == 0) {
+                bookList = new ArrayList<>();  
+            } else {
+                bookList = new ArrayList<>(Arrays.asList(books));
+            }
+            return bookList;
 
         } catch (IOException e) {
             e.printStackTrace();

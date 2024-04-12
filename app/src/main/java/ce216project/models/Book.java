@@ -17,6 +17,10 @@ public class Book {
     private List<String> tags;
     private Path coverImagePath;
 
+    //DON'T DELETE THIS EMPTY CONSTRUCTOR - GENSON USES IT!
+    public Book() {
+    }
+
     public Book(String title, String subtitle, List<String> authors, List<String> translators, String isbn, String publisher, String date, int edition, String language, double rating, List<String> tags, Path coverImagePath) {
         this.title = title;
         this.subtitle = subtitle;

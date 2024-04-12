@@ -26,14 +26,17 @@ public class App extends Application {
 
             
             MainPage mainPage = new MainPage();
-            Book book1 = new Book("TestTitle", "some subtitle", new ArrayList<>(), new ArrayList<>(), "12312312312", "testPublisher", "12.02.2001", 2, "STYLESHEET_MODENA", 3.5, new ArrayList<>(), null);
+
+            Library.loadBooksFromJson();
+
+            // Book book1 = new Book("TestTitle", "some subtitle", new ArrayList<>(), new ArrayList<>(), "12312312312", "testPublisher", "12.02.2001", 2, "STYLESHEET_MODENA", 3.5, new ArrayList<>(), null);
             
             
-            for(int i=0; i < 1 ; i++){
-                Library.createBook(book1); 
-            } 
+            // for(int i=0; i < 1 ; i++){
+            //     Library.createBook(book1); 
+            // } 
             
-        mainPage.fillBookTiles(Library.books);
+           mainPage.fillBookTiles(Library.books);
  
  
         Scene scene = new Scene(mainPage,800,450);
