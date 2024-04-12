@@ -155,8 +155,13 @@ public class Book {
                 ", language='" + language + '\'' +
                 ", rating=" + rating +
                 ", tags=" + tags +
-                ", coverPath" + coverImagePath.toString() +
+                ", coverPath=" + (coverImagePath != null ? coverImagePath.toString() : "null")+
                 '}';
+    }
+
+    public Object getCoverImage() {
+        // TODO Auto-generated method stub
+        throw new UnsupportedOperationException("Unimplemented method 'getCoverImage'");
     }
 
 

@@ -1,1 +1,1 @@
-[{"authors":[" "],"coverImagePath":null,"date":"12.02.2001","edition":2,"isbn":"12312312312","language":"STYLESHEET_MODENA","publisher":"testPublisher","rating":3.5,"subtitle":"some subtitle","tags":[" "],"title":"TestTitle","translators":[" "]}]
+[{"authors":[""],"coverImagePath":null,"date":"","edition":2,"isbn":"12321","language":"asfasf","publisher":"asfasf","rating":5.0,"subtitle":"afsasf","tags":[""],"title":"test","translators":[""]}]

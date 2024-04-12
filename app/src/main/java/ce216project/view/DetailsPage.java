@@ -10,6 +10,7 @@ import javafx.geometry.Pos;
 import javafx.scene.control.Button;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
+import java.util.*;
 
 
 public class DetailsPage extends VBox {
@@ -131,6 +132,10 @@ public class DetailsPage extends VBox {
 
         Button saveButton = new Button("Save");
         saveButton.setPrefWidth(100);
+        saveButton.setOnAction(e -> saveEdit());
+        System.out.println(title.getTextField().getText() + "My Book test 1");
+
+
         Button cancelButton = new Button("Cancel");
         cancelButton.setPrefWidth(100);
         cancelButton.setOnAction(e -> editCancel());
@@ -138,6 +143,31 @@ public class DetailsPage extends VBox {
         root.buttonsContainer.getChildren().clear();
         root.buttonsContainer.getChildren().addAll(saveButton,cancelButton);
 
+    }
+
+    private void saveEdit(){
+        // book.setTitle(title.getTextField().getText());
+        // book.setSubtitle(subtitle.getTextField().getText());
+        // book.setPublisher(publisher.getTextField().getText());
+        // book.setDate(date.getTextField().getText());
+        // book.setIsbn(isbn.getTextField().getText());
+        // book.setLanguage(language.getTextField().getText());
+        // book.setEdition(Integer.parseInt(edition.getTextField().getText()));
+        // String[] authorsInput =  authors.getTextArea().getText().trim().split(",");
+        // List<String> authorsList = Arrays.asList(authorsInput);
+        // book.setAuthors(authorsList);
+        // String[] translatorsInput = translators.getTextArea().getText().trim().split(",");
+        // List<String> translatorsList = Arrays.asList(translatorsInput);
+        // book.setTranslators(translatorsList);
+        // String[] tagsInput = tags.getTextArea().getText().trim().split(",");
+        // List<String> tagsList = Arrays.asList(tagsInput);
+        // book.setTags(tagsList);
+
+        System.out.println(book.getTitle() + "   Book title  ");
+        System.out.println(title.getTextField().getText() + " Text field title");
+        // Library.editBook(book);
+        // this.editCancel();
+       
     }
 
     private void editCancel() {
@@ -152,7 +182,7 @@ public class DetailsPage extends VBox {
 
          
         PageController.closeWindow(PageController.pagesArray.get(pageIndex),pageIndex);
-        
+
         MainPage mainPage = new MainPage();
         PageController.changeScene(mainPage, PageController.pagesArray.get(0));
     }
