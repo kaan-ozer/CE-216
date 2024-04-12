@@ -112,4 +112,52 @@ public class Book {
                 '}';
     }
 
+    public String getTitle() {
+        return title;
+    }
+
+    public String getSubtitle() {
+        return subtitle;
+    }
+
+    public List<String> getAuthors() {
+        return authors;
+    }
+
+    public List<String> getTranslators() {
+        return translators;
+    }
+
+    public String getIsbn() {
+        return isbn;
+    }
+
+    public String getPublisher() {
+        return publisher;
+    }
+
+    public String getDate() {
+        return date;
+    }
+
+    public int getEdition() {
+        return edition;
+    }
+
+    public String getLanguage() {
+        return language;
+    }
+
+    public double getRating() {
+        return rating;
+    }
+
+    public List<String> getTags() {
+        return tags;
+    }
+
+    public Path getCoverImagePath() {
+        return coverImagePath;
+    }
+
 }
