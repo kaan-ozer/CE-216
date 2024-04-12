@@ -21,9 +21,7 @@ public class ItemFieldBody extends HBox{
     
 
     public ItemFieldBody(String Label, String content, boolean isEditable,Button deleteButton){
-        System.out.println("**********************************"  );
-        System.out.println("ItemField created: " + isEditable);
-        System.out.println("**********************************"  );
+       
    
         fieldLabel = new Label(Label);
         fieldLabel.setPrefWidth(30);

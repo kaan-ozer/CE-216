@@ -88,17 +88,11 @@ public class DetailsPage extends VBox {
 
         leftBookFields.getChildren().addAll(title,subtitle,publisher,date,isbn,language,edition);
         leftBookFields.setSpacing(10);
-        leftBookFields.setPadding(new Insets(20));
+        leftBookFields.setPadding(new Insets(20)); 
 
-     
-        translatorsList = new ListView<ItemFieldBody>();
-        tagsList = new ListView<ItemFieldBody>();
-        
         ArrayList<String> authorsArrayList = new ArrayList<>(book.getAuthors());
         ArrayList<String> translatorsArrayList = new ArrayList<>(book.getTranslators());
         ArrayList<String> tagsArrayList = new ArrayList<>(book.getTags());
-
-        
 
         authorsList = new ListView<ItemFieldBody>();
         authorsList.setPrefHeight(120);
@@ -108,9 +102,7 @@ public class DetailsPage extends VBox {
 
         tagsList = new ListView<ItemFieldBody>();
         tagsList.setPrefHeight(120);
-
-
-
+ 
         authors = populateList(authorsArrayList, authorsList,"Authors");
         translators = populateList(translatorsArrayList, translatorsList,"translators");
         tags = populateList(tagsArrayList, tagsList,"Tags");
@@ -152,7 +144,7 @@ public class DetailsPage extends VBox {
 
         int id = 0; 
       
-        for (String author: arrayList) {
+        for (String item: arrayList) {
             
             Button deleteButton = new Button("X");
             deleteButton.setVisible(isEditable);
@@ -160,15 +152,15 @@ public class DetailsPage extends VBox {
             deleteButton.setOnAction(e -> {  
                 ItemFieldBody itemField = listView.getItems().get(listView.getItems().indexOf(deleteButton.getParent()));
                 listView.getSelectionModel().select(itemField);
-                ArrayList<String> newArrayList = new ArrayList<>();
-                newArrayList.addAll(arrayList);
-                newArrayList.remove(listView.getItems().indexOf(deleteButton.getParent()));
-                book.setAuthors(newArrayList);
-                Library.saveBooksToJson();
+                // ArrayList<String> newArrayList = new ArrayList<>();
+                // newArrayList.addAll(arrayList);
+                // newArrayList.remove(listView.getItems().indexOf(deleteButton.getParent()));
+                // book.setAuthors(newArrayList);
+                // Library.saveBooksToJson();
                 listView.getItems().remove(itemField);
             });
 
-            ItemFieldBody itemFieldBody = new ItemFieldBody( "" + (id + 1), author, isEditable, deleteButton);
+            ItemFieldBody itemFieldBody = new ItemFieldBody( "" + (id + 1), item, isEditable, deleteButton);
             HBox.setHgrow(itemFieldBody, Priority.ALWAYS); 
             listView.getItems().add(itemFieldBody);
   
@@ -256,14 +248,9 @@ public class DetailsPage extends VBox {
 
         Button saveButton = new Button("Save");
         saveButton.setPrefWidth(100);
-        System.out.println();
-        System.out.println("--------------------");
-        System.out.println("CONSTRUCTOR: " + translatorsList.getItems() );
-        System.out.println("--------------------");
-        System.out.println();
+      
 
-        saveButton.setOnAction(e ->  {
-            System.out.println(" SAVED  "   );
+        saveButton.setOnAction(e ->  { 
             Book editedBook = new Book();
             editedBook.setTitle(title.getTextField().getText());
             editedBook.setSubtitle(subtitle.getTextField().getText());
