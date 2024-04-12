@@ -15,13 +15,14 @@ public class Library {
  
 
     public Library() {
-        //loadBooksFromJson();
+        loadBooksFromJson();
     }
 
-    private void loadBooksFromJson() {
+    public static void loadBooksFromJson() {
         try {
-            books = IOoperations.readFromJsonFile("app/output/output.txt");
+            books = IOoperations.readFromJsonFile();
         } catch (Exception e) {
+            e.printStackTrace();
             System.err.println("Error loading books from JSON: " + e.getMessage());
         }
     }
@@ -30,7 +31,8 @@ public class Library {
         try {
             IOoperations.writeToJsonFile("app/output/output.txt", books);
         } catch (Exception e) {
-            System.err.println("Error saving books to JSON: " + e.getMessage());
+            e.printStackTrace();
+            System.err.println("Error saving books to JSON: " + e.getMessage() );
         }
     }
 
@@ -39,7 +41,7 @@ public class Library {
         saveBooksToJson();
     }
 
-    public void deleteBook(String isbn) {
+    public static void deleteBook(String isbn) {
         Book bookToDelete = null;
 
         for (Book book : books) {
@@ -58,39 +60,34 @@ public class Library {
         }
     }
 
-    public void editBook(String bookIsbn) {
+    public static void editBook(Book editedBook) {
         Book bookToEdit = null;
 
         for (Book book : books) {
-            if (book.getIsbn().equals(bookIsbn)) {
- 
+            if (book.getIsbn().equals(editedBook.getIsbn())) {
                 bookToEdit = book;
- 
+                bookToEdit.setTitle(editedBook.getTitle());
+                bookToEdit.setSubtitle(editedBook.getSubtitle());
+                bookToEdit.setAuthors(editedBook.getAuthors());
+                bookToEdit.setTranslators(editedBook.getTranslators());
+                bookToEdit.setPublisher(editedBook.getPublisher());
+                bookToEdit.setDate(editedBook.getDate());
+                bookToEdit.setEdition(editedBook.getEdition());
+                bookToEdit.setLanguage(editedBook.getLanguage());
+                bookToEdit.setRating(editedBook.getRating());
+                bookToEdit.setTags(editedBook.getTags());
+                bookToEdit.setCoverImagePath(null);
                 break;
             }
         }
 
         if (bookToEdit != null) {
-            Scanner scanner = new Scanner(System.in);
+            
+           saveBooksToJson();
 
-            System.out.print("Enter new title (press Enter to keep existing): ");
-            String newTitle = scanner.nextLine().trim();
-            if (!newTitle.isEmpty()) {
-                bookToEdit.setTitle(newTitle);
-            }
-
-            System.out.print("Enter new authors (comma-separated, press Enter to keep existing): ");
-            String newAuthors = scanner.nextLine().trim();
-            if (!newAuthors.isEmpty()) {
-                List<String> authorsList = Arrays.asList(newAuthors.split("\\s*,\\s*"));
-                bookToEdit.setAuthors(authorsList);
-            }
-
-            saveBooksToJson();
-
-            System.out.println("Book with ISBN '" + bookIsbn + "' has been updated.");
+            System.out.println("Book with ISBN '" + editedBook + "' has been updated.");
         } else {
-            System.out.println("Book with ISBN '" + bookIsbn + "' not found.");
+            System.out.println("Book with ISBN '" + editedBook + "' not found.");
         }
     }
 

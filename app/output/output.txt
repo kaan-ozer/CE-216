@@ -1,0 +1,1 @@
+[{"authors":[""],"coverImagePath":null,"date":"","edition":2,"isbn":"12321","language":"asfasf","publisher":"asfasf","rating":5.0,"subtitle":"afsasf","tags":[""],"title":"test","translators":[""]}]
