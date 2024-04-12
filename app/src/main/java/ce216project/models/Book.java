@@ -2,142 +2,92 @@ package ce216project.models;
 
 import java.nio.file.Path;
 import java.util.List;
+import java.util.ArrayList;
+import java.util.List;
 
 public class Book {
     private String title;
-    private String subtitle;
-    private List<String> authors;
-    private List<String> translators;
+    private String subtitle = "";
+    private List<String> authors = new ArrayList<>();
+    private List<String> translators = new ArrayList<>();
     private String isbn;
-    private String publisher;
-    private String date;
+    private String publisher = "";
+    private String date = "";
     private int edition;
-    private String language;
+    private String language = "";
     private double rating;
-    private List<String> tags;
+    private List<String> tags = new ArrayList<>();
     private Path coverImagePath;
 
-    // Correctly placed constructors
     public Book() {
-        // Default constructor
     }
 
+    // Main constructor with mandatory fields and handling of optional fields
     public Book(String title, String subtitle, List<String> authors, List<String> translators, String isbn,
             String publisher, String date, int edition, String language, double rating, List<String> tags,
             Path coverImagePath) {
-        this.title = title;
-        this.subtitle = subtitle;
-        this.authors = authors;
-        this.translators = translators;
-        this.isbn = isbn;
-        this.publisher = publisher;
-        this.date = date;
-        this.edition = edition;
-        this.language = language;
-        this.rating = rating;
-        this.tags = tags;
-        this.coverImagePath = coverImagePath;
-    }
-
-    public String getTitle() {
-        return title;
+        this.setTitle(title); // Set title with validation
+        this.setSubtitle(subtitle);
+        this.setAuthors(authors);
+        this.setTranslators(translators);
+        this.setIsbn(isbn); // Set ISBN with validation
+        this.setPublisher(publisher);
+        this.setDate(date);
+        this.setEdition(edition);
+        this.setLanguage(language);
+        this.setRating(rating);
+        this.setTags(tags);
+        this.setCoverImagePath(coverImagePath);
     }
 
     public void setTitle(String title) {
+        if (title == null || title.trim().isEmpty()) {
+            throw new IllegalArgumentException("Title cannot be empty.");
+        }
         this.title = title;
     }
 
-    public String getSubtitle() {
-        return subtitle;
-    }
-
     public void setSubtitle(String subtitle) {
-        this.subtitle = subtitle;
-    }
-
-    public List<String> getAuthors() {
-        if (authors.isEmpty()) {
-            authors.add(" ");
-        }
-        return authors;
+        this.subtitle = subtitle != null ? subtitle : "";
     }
 
     public void setAuthors(List<String> authors) {
-        this.authors = authors;
-    }
-
-    public List<String> getTranslators() {
-        if (translators.isEmpty()) {
-            translators.add(" ");
-        }
-        return translators;
+        this.authors = (authors != null) ? authors : new ArrayList<>();
     }
 
     public void setTranslators(List<String> translators) {
-        this.translators = translators;
-    }
-
-    public String getIsbn() {
-        return isbn;
+        this.translators = (translators != null) ? translators : new ArrayList<>();
     }
 
     public void setIsbn(String isbn) {
+        if (isbn == null || isbn.trim().isEmpty()) {
+            throw new IllegalArgumentException("ISBN cannot be empty.");
+        }
         this.isbn = isbn;
     }
 
-    public String getPublisher() {
-        return publisher;
-    }
-
     public void setPublisher(String publisher) {
-        this.publisher = publisher;
-    }
-
-    public String getDate() {
-        return date;
+        this.publisher = (publisher != null) ? publisher : "";
     }
 
     public void setDate(String date) {
-        this.date = date;
-    }
-
-    public int getEdition() {
-        return edition;
+        this.date = (date != null) ? date : "";
     }
 
     public void setEdition(int edition) {
         this.edition = edition;
     }
 
-    public String getLanguage() {
-        return language;
-    }
-
     public void setLanguage(String language) {
-        this.language = language;
-    }
-
-    public double getRating() {
-        return rating;
+        this.language = (language != null) ? language : "";
     }
 
     public void setRating(double rating) {
         this.rating = rating;
     }
 
-    public List<String> getTags() {
-        if (tags.isEmpty()) {
-            tags.add(" ");
-        }
-        return tags;
-    }
-
     public void setTags(List<String> tags) {
-        this.tags = tags;
-    }
-
-    public Path getCoverImagePath() {
-        return coverImagePath;
+        this.tags = (tags != null) ? tags : new ArrayList<>();
     }
 
     public void setCoverImagePath(Path coverImagePath) {
