@@ -1,17 +1,21 @@
 package ce216project.models;
 
 import java.io.*;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.util.*;
 
 import ce216project.utils.IOoperations;
 
 public class Library {
+ 
+
     public static ArrayList<Book> books = new ArrayList<Book>();
+    public static HashMap<String,Integer> tags;
+    public static HashMap<String,Integer> languages;
+
+ 
 
     public Library() {
-        loadBooksFromJson();
+        //loadBooksFromJson();
     }
 
     private void loadBooksFromJson() {
@@ -59,7 +63,9 @@ public class Library {
 
         for (Book book : books) {
             if (book.getIsbn().equals(bookIsbn)) {
+ 
                 bookToEdit = book;
+ 
                 break;
             }
         }

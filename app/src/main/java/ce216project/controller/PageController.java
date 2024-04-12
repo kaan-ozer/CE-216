@@ -31,5 +31,9 @@ public class PageController {
     public static void closeWindow (Stage stage, int index){
         stage.close();
     }
+
+    public static void closeLastWindow (){
+        pagesArray.get(pagesArray.size() - 1).close();
+    }
     
     }

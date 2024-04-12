@@ -5,6 +5,11 @@ import java.util.ArrayList;
 import ce216project.controller.PageController;
 import ce216project.models.Book;
 import ce216project.models.Library;
+ 
+
+import ce216project.utils.IOoperations;
+
+ 
 import ce216project.view.MainPage;
 import javafx.application.Application;
 import javafx.scene.Scene;
@@ -17,6 +22,7 @@ public class App extends Application {
     }
 
     @Override
+ 
     public void start(Stage primaryStage) throws Exception {
 
         MainPage mainPage = new MainPage();
@@ -30,8 +36,10 @@ public class App extends Application {
         }
 
         mainPage.fillBookTiles(Library.books);
-
-        Scene scene = new Scene(mainPage, 800, 450);
+ 
+ 
+        Scene scene = new Scene(mainPage,800,450);
+ 
         primaryStage.setScene(scene);
         primaryStage.setTitle("Librarian");
         PageController.pagesArray.add(primaryStage);

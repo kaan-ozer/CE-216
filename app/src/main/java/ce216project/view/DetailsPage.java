@@ -131,14 +131,14 @@ public class DetailsPage extends VBox {
         saveButton.setPrefWidth(100);
         Button cancelButton = new Button("Cancel");
         cancelButton.setPrefWidth(100);
-        cancelButton.setOnAction(e -> cancel());
+        cancelButton.setOnAction(e -> editCancel());
         
         root.buttonsContainer.getChildren().clear();
         root.buttonsContainer.getChildren().addAll(saveButton,cancelButton);
 
     }
 
-    private void cancel() {
+    private void editCancel() {
         isEditable = false;
         DetailsPage root = new DetailsPage(book, false, pageIndex);
         PageController.changeScene(root, PageController.pagesArray.get(pageIndex));
