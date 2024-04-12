@@ -1,6 +1,6 @@
 package ce216project.view;
 
-import java.util.Arrays;
+import java.util.*;
 
 import ce216project.controller.PageController;
 import ce216project.models.Book;
@@ -147,10 +147,44 @@ public class DetailsPage extends VBox {
         isEditable = true;
         updateEditable();
 
+     
+       
+
         Button saveButton = new Button("Save");
         saveButton.setPrefWidth(100);
-        saveButton.setOnAction(e -> saveEdit());
-        System.out.println(title.getTextField().getText() + " My Book test 1");
+        System.out.println();
+        System.out.println("--------------------");
+        System.out.println("CONSTRUCTOR: " + title.getTextField().getText());
+        System.out.println("--------------------");
+        System.out.println();
+
+        saveButton.setOnAction(e ->  {
+               book.setTitle(title.getTextField().getText()); 
+               book.setSubtitle(subtitle.getTextField().getText());
+               book.setPublisher(publisher.getTextField().getText());
+               book.setDate(date.getTextField().getText());
+               book.setIsbn(isbn.getTextField().getText());
+               book.setLanguage(language.getTextField().getText());
+               book.setEdition(Integer.parseInt(edition.getTextField().getText()));
+               String[] authorsInput =  authors.getTextArea().getText().trim().split(",");
+               List<String> authorsList = Arrays.asList(authorsInput);
+               book.setAuthors(authorsList);
+               String[] translatorsInput = translators.getTextArea().getText().trim().split(",");
+               List<String> translatorsList = Arrays.asList(translatorsInput);
+               book.setTranslators(translatorsList);
+               String[] tagsInput = tags.getTextArea().getText().trim().split(",");
+               List<String> tagsList = Arrays.asList(tagsInput);
+               book.setTags(tagsList);
+
+         
+            System.out.println();
+            System.out.println("--------------------");
+            System.out.println("Book: " + book );
+            System.out.println("--------------------");
+            System.out.println();
+    
+            saveEdit(book); 
+        }); 
 
 
         Button cancelButton = new Button("Cancel");
@@ -162,52 +196,19 @@ public class DetailsPage extends VBox {
 
     }
 
-    private void saveEdit(){
-
-        title.getTextField().textProperty().addListener((observable, oldValue, newValue) -> {
-            book.setTitle(newValue);
-        });
-
-        subtitle.getTextField().textProperty().addListener((observable, oldValue, newValue) -> {
-            book.setSubtitle(newValue);
-        });
-
-        publisher.getTextField().textProperty().addListener((observable, oldValue, newValue) -> {
-            book.setPublisher(newValue);
-        });
-
-        date.getTextField().textProperty().addListener((observable, oldValue, newValue) -> {
-            book.setDate(newValue);
-        });
-       
-        isbn.getTextField().textProperty().addListener((observable, oldValue, newValue) -> {
-            book.setIsbn(newValue);
-        });
-        
-        language.getTextField().textProperty().addListener((observable, oldValue, newValue) -> {
-            book.setLanguage(newValue);
-        });
-
-        edition.getTextField().textProperty().addListener((observable, oldValue, newValue) -> {
-            book.setEdition(Integer.parseInt(newValue));
-        });
-
-        authors.getTextArea().textProperty().addListener((observable,oldValue,newValue) -> {
-            book.setAuthors(Arrays.asList(newValue.trim().split(",")));
-        });
-
-        translators.getTextArea().textProperty().addListener((observable,oldValue,newValue) -> {
-            book.setTranslators(Arrays.asList(newValue.trim().split(",")));
-        });
-
-        tags.getTextArea().textProperty().addListener((observable,oldValue,newValue) -> {
-            book.setTags(Arrays.asList(newValue.trim().split(",")));
-        });
-
-        bookTileWidget = new BookTileWidget(book, false);
-       
-        Library.editBook(book);
-        this.editCancel();
+    private void saveEdit(Book book){
+        System.out.println();
+        System.out.println("--------------------");
+        System.out.println("IN function : " + book);
+        System.out.println("--------------------");
+        System.out.println();
+         
+  
+        Library.saveBooksToJson();
+        // bookTileWidget = new BookTileWidget(book, false);
+        PageController.closeWindow(PageController.pagesArray.get(pageIndex),pageIndex);
+        MainPage mainPage = new MainPage();
+        PageController.changeScene(mainPage, PageController.pagesArray.get(0));
        
     }
 

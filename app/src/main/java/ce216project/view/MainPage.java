@@ -101,6 +101,8 @@ public class MainPage extends VBox{
         this.getChildren().addAll(menuBar,mainLayout);
 
         // Update Main Page
+        // this.fillCheckLists(Library.tags , tagsList); 
+        // this.fillCheckLists(Library.languages , languagesList); 
         this.fillBookTiles(Library.books);
         
         
