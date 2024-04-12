@@ -13,7 +13,7 @@ public class Library {
 
 
     public Library() {
-        //loadBooksFromJson();
+        loadBooksFromJson();
     }
 
     private void loadBooksFromJson() {
@@ -47,9 +47,9 @@ public class Library {
         }
 
         if (bookToDelete != null) {
-            // Remove the book from the ArrayList
+           
             books.remove(bookToDelete);
-            // Serialize the updated collection back into JSON and overwrite the file
+          
             saveBooksToJson();
             System.out.println("Book '" + Isbn + "' has been deleted.");
         } else {
@@ -59,10 +59,10 @@ public class Library {
     public void editBook(int bookIsbn) {
         boolean bookFound = false;
 
-        // Loop through the books array to find the target object by ID
+       
         for (Book book : books) {
             if (book.getIsbn().equals(bookIsbn)) {
-                // Ask the user for new values for various properties
+             
                 Scanner scanner = new Scanner(System.in);
                 System.out.print("Enter new title (press Enter to keep existing): ");
                 String newTitle = scanner.nextLine().trim();
@@ -130,7 +130,7 @@ public class Library {
         }
 
         if (bookFound) {
-            // Serialize the updated collection back into JSON and overwrite the file
+             
             saveBooksToJson();
             System.out.println("Book with ID " + bookIsbn + " has been updated.");
         } else {

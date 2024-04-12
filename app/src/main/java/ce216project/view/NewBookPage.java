@@ -148,7 +148,7 @@ public class NewBookPage extends VBox{
         List<String> tagsList = Arrays.asList(tagsInput);
 
         Book newBook = new Book(titleInput, subTitleInput, authorsList, translatorsList, isbnInput, publisherInput, dateInput, editionInput, languageInput, 5.0, tagsList, coverImagePath);
-        Library.books.add(newBook);
+        Library.createBook(newBook);
 
         cancel(); 
     }

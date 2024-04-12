@@ -2,6 +2,7 @@ package ce216project.utils;
 
 import com.owlike.genson.Genson;
 
+import ce216project.models.Book;
 
 import java.io.File;
 
@@ -24,10 +25,24 @@ public class IOoperations {
         if (!outputDir.exists()) {
             outputDir.mkdir();
         }
+
+        File outputFile = new File("output/output.txt");
+
+        try {
+            if (outputFile.createNewFile()) {
+                System.out.println("File Created: " + outputFile.getName());
+            } else {
+                System.out.println("Dosya zaten var.");
+            }
+        } catch (IOException e) {
+            System.out.println("File couldn't be created.");
+            e.printStackTrace();
+        }
+
         
         String json = genson.serialize(object);
 
-        try (FileWriter fileWriter = new FileWriter(filename)) {
+        try (FileWriter fileWriter = new FileWriter(outputFile)) {
             fileWriter.write(json);
         } catch (IOException e) {
             e.printStackTrace();
@@ -53,6 +68,9 @@ public class IOoperations {
 
     public static ArrayList<Book> readFromJsonFile(String filename ) {
         try {
+
+           
+    
             byte[] jsonData = Files.readAllBytes(Paths.get(filename));
             String jsonString = new String(jsonData);
             Book[] books =  genson.deserialize(jsonString, Book[].class);
