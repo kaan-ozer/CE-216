@@ -10,7 +10,6 @@ import ce216project.view.widgets.BookTileWidget;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.control.Button;
-import javafx.scene.control.Label;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 
@@ -203,9 +202,8 @@ public class DetailsPage extends VBox {
         tags.getTextArea().textProperty().addListener((observable,oldValue,newValue) -> {
             book.setTags(Arrays.asList(newValue.trim().split(",")));
         });
-
-        bookTileWidget = new BookTileWidget(book, false);
        
+        bookTileWidget.setBook(book);
         Library.editBook(book);
         this.editCancel();
        
@@ -215,8 +213,17 @@ public class DetailsPage extends VBox {
         isEditable = false;
         updateEditable();
 
+        //leftContainer.getChildren().remove(0);
         buttonsContainer.getChildren().clear();
         buttonsContainer.getChildren().addAll(editButton,deleteButton,backButton);
+
+        System.out.println(book.getTitle());
+        BookTileWidget updatedBookTile = new BookTileWidget(book, false);
+        System.out.println(updatedBookTile.getBook().getTitle());
+        bookTileWidget = updatedBookTile;
+
+        //leftContainer.getChildren().add(0, updatedBookTile);
+        //leftContainer.getChildren().add(1,buttonsContainer);
         
     }
 

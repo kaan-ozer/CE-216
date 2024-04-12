@@ -77,8 +77,6 @@ public class BookTileWidget extends StackPane {
 
     }
 
-
-
     public boolean isClickable() {
         return isClickable;
     }
@@ -118,5 +116,15 @@ public class BookTileWidget extends StackPane {
     public void setTitleLabel(Label titleLabel) {
         this.titleLabel = titleLabel;
     }
+
+    public Book getBook() {
+        return book;
+    }
+
+    public void setBook(Book book) {
+        this.book = book;
+    }
+
+    
 
 }

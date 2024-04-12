@@ -102,6 +102,9 @@ public class MainPage extends VBox{
 
         // Update Main Page
         this.fillBookTiles(Library.books);
+        this.fillCheckLists(Library.tags, tagsList);
+        //this.fillCheckLists(Library.languages, languagesList);
+        
         
         
     }

@@ -1,16 +1,14 @@
 package ce216project.models;
 
-import java.io.*;
 import java.util.*;
 
 import ce216project.utils.IOoperations;
 
 public class Library {
  
-
     public static ArrayList<Book> books = new ArrayList<Book>();
-    public static HashMap<String,Integer> tags;
-    public static HashMap<String,Integer> languages;
+    public static HashMap<String,Integer> tags = new HashMap<>();
+    public static HashMap<String,Integer> languages = new HashMap<>();
 
  
 
@@ -88,6 +86,19 @@ public class Library {
             System.out.println("Book with ISBN '" + editedBook + "' has been updated.");
         } else {
             System.out.println("Book with ISBN '" + editedBook + "' not found.");
+        }
+    }
+
+
+    public static void addTags(List<String> tagsInputList){
+
+        for(String tagInput : tagsInputList){
+            if (tags.containsKey(tagInput)) {
+                int newCount = tags.get(tagInput) + 1; 
+                tags.put(tagInput, newCount);
+            } else {
+                tags.put(tagInput, 1); // initialize count to 1 for new tags
+            }
         }
     }
 
