@@ -53,9 +53,9 @@ public class Book {
     }
 
     public List<String> getAuthors() {
-        if(authors.isEmpty()){
-        authors.add(" ");
-        }
+        // if(authors.isEmpty()){
+        // authors.add("Empty Author List");
+        // }
         return authors;
     }
 

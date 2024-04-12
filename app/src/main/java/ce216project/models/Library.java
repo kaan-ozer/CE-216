@@ -67,18 +67,18 @@ public class Library {
 
         for (Book book : books) {
             if (book.getIsbn().equals(editedBook.getIsbn())) {
-                // bookToEdit = book;
-                // bookToEdit.setTitle(editedBook.getTitle());
-                // bookToEdit.setSubtitle(editedBook.getSubtitle());
-                // bookToEdit.setAuthors(editedBook.getAuthors());
-                // bookToEdit.setTranslators(editedBook.getTranslators());
-                // bookToEdit.setPublisher(editedBook.getPublisher());
-                // bookToEdit.setDate(editedBook.getDate());
-                // bookToEdit.setEdition(editedBook.getEdition());
-                // bookToEdit.setLanguage(editedBook.getLanguage());
-                // bookToEdit.setRating(editedBook.getRating());
-                // bookToEdit.setTags(editedBook.getTags());
-                // bookToEdit.setCoverImagePath(null);
+                bookToEdit = book;
+                bookToEdit.setTitle(editedBook.getTitle());
+                bookToEdit.setSubtitle(editedBook.getSubtitle());
+                bookToEdit.setAuthors(editedBook.getAuthors());
+                bookToEdit.setTranslators(editedBook.getTranslators());
+                bookToEdit.setPublisher(editedBook.getPublisher());
+                bookToEdit.setDate(editedBook.getDate());
+                bookToEdit.setEdition(editedBook.getEdition());
+                bookToEdit.setLanguage(editedBook.getLanguage());
+                bookToEdit.setRating(editedBook.getRating());
+                bookToEdit.setTags(editedBook.getTags());
+                bookToEdit.setCoverImagePath(null);
                 break;
             }
         }
