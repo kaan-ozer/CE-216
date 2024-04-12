@@ -17,11 +17,14 @@ public class Book {
     private List<String> tags;
     private Path coverImagePath;
 
-    //DON'T DELETE THIS EMPTY CONSTRUCTOR - GENSON USES IT!
+    // Correctly placed constructors
     public Book() {
+        // Default constructor
     }
 
-    public Book(String title, String subtitle, List<String> authors, List<String> translators, String isbn, String publisher, String date, int edition, String language, double rating, List<String> tags, Path coverImagePath) {
+    public Book(String title, String subtitle, List<String> authors, List<String> translators, String isbn,
+            String publisher, String date, int edition, String language, double rating, List<String> tags,
+            Path coverImagePath) {
         this.title = title;
         this.subtitle = subtitle;
         this.authors = authors;
@@ -53,8 +56,8 @@ public class Book {
     }
 
     public List<String> getAuthors() {
-        if(authors.isEmpty()){
-        authors.add(" ");
+        if (authors.isEmpty()) {
+            authors.add(" ");
         }
         return authors;
     }
@@ -64,10 +67,10 @@ public class Book {
     }
 
     public List<String> getTranslators() {
-        if(translators.isEmpty()){
+        if (translators.isEmpty()) {
             translators.add(" ");
-            }
-            return translators;
+        }
+        return translators;
     }
 
     public void setTranslators(List<String> translators) {
@@ -123,24 +126,21 @@ public class Book {
     }
 
     public List<String> getTags() {
-        if(tags.isEmpty()){
+        if (tags.isEmpty()) {
             tags.add(" ");
-            }
-            return tags;
+        }
+        return tags;
     }
 
     public void setTags(List<String> tags) {
         this.tags = tags;
     }
 
- 
-    
-
-    public Path getCoverImagePath(){
+    public Path getCoverImagePath() {
         return coverImagePath;
     }
 
-    public void setCoverImagePath(Path coverImagePath){
+    public void setCoverImagePath(Path coverImagePath) {
         this.coverImagePath = coverImagePath;
     }
 
@@ -158,11 +158,8 @@ public class Book {
                 ", language='" + language + '\'' +
                 ", rating=" + rating +
                 ", tags=" + tags +
-                ", coverPath=" + (coverImagePath != null ? coverImagePath.toString() : "null")+
+                ", coverPath=" + (coverImagePath != null ? coverImagePath.toString() : "null") +
                 '}';
     }
-
-   
-
 
 }

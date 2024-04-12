@@ -6,13 +6,10 @@ import java.util.*;
 import ce216project.utils.IOoperations;
 
 public class Library {
- 
 
     public static ArrayList<Book> books = new ArrayList<Book>();
-    public static HashMap<String,Integer> tags;
-    public static HashMap<String,Integer> languages;
-
- 
+    public static HashMap<String, Integer> tags;
+    public static HashMap<String, Integer> languages;
 
     public Library() {
         loadBooksFromJson();
@@ -32,11 +29,17 @@ public class Library {
             IOoperations.writeToJsonFile("app/output/output.txt", books);
         } catch (Exception e) {
             e.printStackTrace();
-            System.err.println("Error saving books to JSON: " + e.getMessage() );
+            System.err.println("Error saving books to JSON: " + e.getMessage());
         }
     }
 
     public static void createBook(Book book) {
+        if (book.getIsbn() == null || book.getIsbn().trim().isEmpty() || book.getTitle() == null
+                || book.getTitle().trim().isEmpty()) {
+            System.err.println("Creation failed: ISBN and Title are required.");
+            return; // Prevent creating a book without mandatory fields
+        }
+
         books.add(book);
         saveBooksToJson();
     }
@@ -82,13 +85,29 @@ public class Library {
         }
 
         if (bookToEdit != null) {
-            
-           saveBooksToJson();
+
+            saveBooksToJson();
 
             System.out.println("Book with ISBN '" + editedBook + "' has been updated.");
         } else {
             System.out.println("Book with ISBN '" + editedBook + "' not found.");
         }
+    }
+
+    public static List<Book> filterBooksByTags(String[] tagsToMatch) {
+        List<Book> filteredBooks = new ArrayList<>();
+        List<String> tagsToMatchList = Arrays.asList(tagsToMatch); // Convert array to list for easier matching
+
+        for (Book book : books) {
+
+            for (String tag : book.getTags()) {
+                if (tagsToMatchList.contains(tag)) {
+                    filteredBooks.add(book);
+                    break;
+                }
+            }
+        }
+        return filteredBooks;
     }
 
 }
