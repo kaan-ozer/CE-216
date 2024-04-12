@@ -37,7 +37,7 @@ public class ItemField extends HBox{
         VBox.setMargin(itemField, new Insets(0, 0, 10,0));
 
         this.textField = new TextField(content); 
-        HBox.setMargin(itemField, new Insets(0, 10, 0,0));
+        HBox.setMargin(textField, new Insets(0, 10, 0,0));
         textField.setEditable(isEditable);
         
         inputField = new HBox();

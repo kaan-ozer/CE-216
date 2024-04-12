@@ -57,8 +57,8 @@ public class DetailsPage extends VBox {
     // Right Book Fields
     private VBox rightBookFields = new VBox();
     private ItemField authors;
-    private BookField translators;
-    private BookField tags;
+    private ItemField translators;
+    private ItemField tags;
 
     private ListView<ItemFieldBody> authorsList;
     private ListView<ItemFieldBody> translatorsList;
@@ -89,72 +89,32 @@ public class DetailsPage extends VBox {
         leftBookFields.getChildren().addAll(title,subtitle,publisher,date,isbn,language,edition);
         leftBookFields.setSpacing(10);
         leftBookFields.setPadding(new Insets(20));
-        String authorsAsString = this.joinWithCommas(book.getAuthors());
-        String translatorsAsString = this.joinWithCommas(book.getTranslators());
-        String tagsAsString = this.joinWithCommas(book.getTags());
+
+     
+        translatorsList = new ListView<ItemFieldBody>();
+        tagsList = new ListView<ItemFieldBody>();
+        
+        ArrayList<String> authorsArrayList = new ArrayList<>(book.getAuthors());
+        ArrayList<String> translatorsArrayList = new ArrayList<>(book.getTranslators());
+        ArrayList<String> tagsArrayList = new ArrayList<>(book.getTags());
 
         
 
-       
         authorsList = new ListView<ItemFieldBody>();
         authorsList.setPrefHeight(120);
-        
-        int id = 0; 
-    
 
-        for (String author: book.getAuthors()) {
-            
-            Button deleteButton = new Button("X");
-            deleteButton.setVisible(isEditable);
+        translatorsList = new ListView<ItemFieldBody>();
+        translatorsList.setPrefHeight(120);
 
-            deleteButton.setOnAction(e -> {
-                System.out.println("Delete button clicked");
-                System.out.println("ne abi bu : " + authorsList.getItems().indexOf(deleteButton.getParent()));
-                ItemFieldBody itemField = authorsList.getItems().get(authorsList.getItems().indexOf(deleteButton.getParent()));
-                authorsList.getSelectionModel().select(itemField);
-                List<String> authors = new ArrayList<>(book.getAuthors());
-                authors.remove(authorsList.getItems().indexOf(deleteButton.getParent()));
-                book.setAuthors(authors);
-                Library.saveBooksToJson();
-                authorsList.getItems().remove(itemField);
-            });
-               
-            
-            ItemFieldBody authorField = new ItemFieldBody( "" + (id + 1), author, isEditable, deleteButton);
-            HBox.setHgrow(authorField, Priority.ALWAYS); 
-            authorsList.getItems().add(authorField);
-
-          
-            id++; 
-        }
-        
-        Button addAuthorButton = new Button("+");
- 
-        authors = new ItemField( "Authors","", authorsList, isEditable, addAuthorButton);
-
-       
-         
-        addAuthorButton.setOnAction(e -> {
-
-            Button deleteFromList = new Button("X");
-         
-
-            deleteFromList.setOnAction(a -> {
-                ItemFieldBody itemField = authorsList.getItems().get(authorsList.getItems().indexOf(deleteFromList.getParent()));
-                authorsList.getSelectionModel().select(itemField); 
-                authorsList.getItems().remove(itemField);
-            });
-
-            System.out.println("Add button clicked");
-            System.out.println(authors.getTextField().getText());
-            ItemFieldBody authorField = new ItemFieldBody( "" + (authorsList.getItems().size() + 1), authors.getTextField().getText() , true, deleteFromList);
-            authorsList.getItems().add(authorField);
-        
-        });
+        tagsList = new ListView<ItemFieldBody>();
+        tagsList.setPrefHeight(120);
 
 
-        translators = new BookField("Translators", translatorsAsString, isEditable, false);
-        tags = new BookField("Tags", tagsAsString, isEditable, false);
+
+        authors = populateList(authorsArrayList, authorsList,"Authors");
+        translators = populateList(translatorsArrayList, translatorsList,"translators");
+        tags = populateList(tagsArrayList, tagsList,"Tags");
+
 
         rightBookFields.getChildren().addAll( authors,translators,tags);
         rightBookFields.setSpacing(10);
@@ -186,6 +146,56 @@ public class DetailsPage extends VBox {
         this.getChildren().addAll(menuBar,mainLayout);
     }
 
+    private  ItemField populateList(ArrayList<String> arrayList,ListView<ItemFieldBody> listView, String labelName) {
+    
+        listView.setPrefHeight(120);
+
+        int id = 0; 
+      
+        for (String author: arrayList) {
+            
+            Button deleteButton = new Button("X");
+            deleteButton.setVisible(isEditable);
+
+            deleteButton.setOnAction(e -> {  
+                ItemFieldBody itemField = listView.getItems().get(listView.getItems().indexOf(deleteButton.getParent()));
+                listView.getSelectionModel().select(itemField);
+                ArrayList<String> newArrayList = new ArrayList<>();
+                newArrayList.addAll(arrayList);
+                newArrayList.remove(listView.getItems().indexOf(deleteButton.getParent()));
+                book.setAuthors(newArrayList);
+                Library.saveBooksToJson();
+                listView.getItems().remove(itemField);
+            });
+
+            ItemFieldBody itemFieldBody = new ItemFieldBody( "" + (id + 1), author, isEditable, deleteButton);
+            HBox.setHgrow(itemFieldBody, Priority.ALWAYS); 
+            listView.getItems().add(itemFieldBody);
+  
+            id++; 
+        }
+        
+        Button addItemButton = new Button("+");
+        ItemField newItem = new ItemField( labelName,"", listView, isEditable, addItemButton);   
+
+        addItemButton.setOnAction(e -> {
+            Button deleteFromList = new Button("X");
+
+            deleteFromList.setOnAction(a -> {
+                ItemFieldBody itemField = listView.getItems().get(listView.getItems().indexOf(deleteFromList.getParent()));
+                listView.getSelectionModel().select(itemField); 
+                listView.getItems().remove(itemField);
+            });
+
+          
+            ItemFieldBody newItemField = new ItemFieldBody( "" + (listView.getItems().size() + 1), newItem.getTextField().getText() , true, deleteFromList);
+            listView.getItems().add(newItemField);
+        
+        });
+
+        return newItem;
+    }
+
     // Getter and setter for editable property
     public boolean isEditable() {
         return isEditable;
@@ -204,22 +214,35 @@ public class DetailsPage extends VBox {
         date.getTextField().setEditable(isEditable);
         isbn.getTextField().setEditable(isEditable);
         language.getTextField().setEditable(isEditable);
-        edition.getTextField().setEditable(isEditable)
-        ;
+        edition.getTextField().setEditable(isEditable);
          
         authors.getTextField().setEditable(isEditable);
         authors.getInputField().setVisible(isEditable);
-        
+
         for(ItemFieldBody itemfield : authorsList.getItems()){
+            itemfield.getTextField().setEditable(isEditable);
+            itemfield.getButton().setVisible(isEditable);
+        }
+
+        translators.getTextField().setEditable(isEditable);
+        translators.getInputField().setVisible(isEditable);
+        
+      
+        for(ItemFieldBody itemfield : translatorsList.getItems()){
+            itemfield.getTextField().setEditable(isEditable);
+            itemfield.getButton().setVisible(isEditable);
+        }
+       
+        tags.getTextField().setEditable(isEditable);
+        tags.getInputField().setVisible(isEditable);
+        
+      
+        for(ItemFieldBody itemfield : tagsList.getItems()){
             itemfield.getTextField().setEditable(isEditable);
             itemfield.getButton().setVisible(isEditable);
         }
        
        
-        
-       
-        translators.getTextArea().setEditable(isEditable);
-        tags.getTextArea().setEditable(isEditable);
     }
 
     public void setPageIndex (int pageIndex) {
@@ -235,11 +258,12 @@ public class DetailsPage extends VBox {
         saveButton.setPrefWidth(100);
         System.out.println();
         System.out.println("--------------------");
-        System.out.println("CONSTRUCTOR: " + title.getTextField().getText());
+        System.out.println("CONSTRUCTOR: " + translatorsList.getItems() );
         System.out.println("--------------------");
         System.out.println();
 
         saveButton.setOnAction(e ->  {
+            System.out.println(" SAVED  "   );
             Book editedBook = new Book();
             editedBook.setTitle(title.getTextField().getText());
             editedBook.setSubtitle(subtitle.getTextField().getText());
@@ -251,27 +275,43 @@ public class DetailsPage extends VBox {
 
 
             String[] updatedAuthors = new String[authorsList.getItems().size()];
-            System.out.println(authorsList.getItems().size() + "size");
+          
             for(int i = 0 ; i < authorsList.getItems().size() ; i++ ){
-                updatedAuthors[i] =  authorsList.getItems().get(i).getTextField().getText();
-                System.out.println(updatedAuthors[i] + "updatedAuthors");
+                updatedAuthors[i] =  authorsList.getItems().get(i).getTextField().getText(); 
             }
-            book.setAuthors(Arrays.asList(updatedAuthors));
-         
-            // String[] authorsInput = authors.getTextArea().getText().trim().split(",");
-            String[] authorsInput = updatedAuthors;
-            List<String> authorsList = Arrays.asList(authorsInput);
+      
+            List<String> authorsList = Arrays.asList(updatedAuthors);
             editedBook.setAuthors(authorsList);
-            String[] translatorsInput = translators.getTextArea().getText().trim().split(",");
-            List<String> translatorsList = Arrays.asList(translatorsInput);
-            editedBook.setTranslators(translatorsList);
-            String[] tagsInput = tags.getTextArea().getText().trim().split(",");
-            List<String> tagsList = Arrays.asList(tagsInput);
-            editedBook.setTags(tagsList);
+
+        
+            String[] updatedTranslators = new String[translatorsList.getItems().size()];
+          
+            for(int i = 0 ; i < translatorsList.getItems().size() ; i++ ){
+                updatedTranslators[i] =  translatorsList.getItems().get(i).getTextField().getText();
+                
+            }
+        
+            
+            editedBook.setTranslators(Arrays.asList(updatedTranslators));
+
+            String[] updatedTags = new String[tagsList.getItems().size()];
+          
+            for(int i = 0 ; i < tagsList.getItems().size() ; i++ ){
+                updatedTags[i] =  tagsList.getItems().get(i).getTextField().getText();
+              
+            }
+        
+
+            editedBook.setTags(Arrays.asList(updatedTags));
+
+            // String[] tagsInput = tags.getTextArea().getText().trim().split(",");
+            // List<String> tagsList = Arrays.asList(tagsInput);
+            // editedBook.setTags(tagsList);
 
      
             saveEdit(editedBook); 
         }); 
+
 
 
         Button cancelButton = new Button("Cancel");
@@ -284,11 +324,7 @@ public class DetailsPage extends VBox {
     }
 
     private void saveEdit(Book editedBook){
-        System.out.println();
-        System.out.println("--------------------");
-        System.out.println("IN function : " + editedBook);
-        System.out.println("--------------------");
-        System.out.println();
+       
          
         Library.editBook(editedBook);
         PageController.closeWindow(PageController.pagesArray.get(pageIndex),pageIndex);
@@ -322,21 +358,6 @@ public class DetailsPage extends VBox {
         PageController.changeScene(mainPage, PageController.pagesArray.get(0));
     }
 
-    private  String joinWithCommas(List<String> items) {
-        if (items == null || items.isEmpty()) {
-            return "";
-        }
-        
-        StringBuilder result = new StringBuilder();
-        for (int i = 0; i < items.size(); i++) {
-            result.append(items.get(i));
-            if (i < items.size() - 1) {
-                result.append(",");
-            }
-        }
-        
-        return result.toString();
-    }
     
     
 
