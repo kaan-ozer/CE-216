@@ -17,6 +17,10 @@ public class Book {
     private List<String> tags;
     private Path coverImagePath;
 
+    //DON'T DELETE THIS EMPTY CONSTRUCTOR - GENSON USES IT!
+    public Book() {
+    }
+
     public Book(String title, String subtitle, List<String> authors, List<String> translators, String isbn, String publisher, String date, int edition, String language, double rating, List<String> tags, Path coverImagePath) {
         this.title = title;
         this.subtitle = subtitle;
@@ -151,8 +155,13 @@ public class Book {
                 ", language='" + language + '\'' +
                 ", rating=" + rating +
                 ", tags=" + tags +
-                ", coverPath" + coverImagePath.toString() +
+                ", coverPath=" + (coverImagePath != null ? coverImagePath.toString() : "null")+
                 '}';
+    }
+
+    public Object getCoverImage() {
+        // TODO Auto-generated method stub
+        throw new UnsupportedOperationException("Unimplemented method 'getCoverImage'");
     }
 
 

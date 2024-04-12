@@ -1,7 +1,6 @@
 package ce216project;
 
 import java.util.ArrayList;
-
 import ce216project.controller.PageController;
 import ce216project.models.Book;
 import ce216project.models.Library;
@@ -25,17 +24,19 @@ public class App extends Application {
  
     public void start(Stage primaryStage) throws Exception {
 
-        MainPage mainPage = new MainPage();
+            
+            MainPage mainPage = new MainPage();
 
-        Book book1 = new Book("TestTitle", "some subtitle", new ArrayList<String>(), new ArrayList<String>(),
-                "12312312312", "testPublisher", "12.02.2001", 2, "STYLESHEET_MODENA", "STYLESHEET_CASPIAN", 3,
-                new ArrayList<String>(), null);
+            Library.loadBooksFromJson();
 
-        for (int i = 0; i < 200; i++) {
-            Library.createBook(book1);
-        }
-
-        mainPage.fillBookTiles(Library.books);
+            // Book book1 = new Book("TestTitle", "some subtitle", new ArrayList<>(), new ArrayList<>(), "12312312312", "testPublisher", "12.02.2001", 2, "STYLESHEET_MODENA", 3.5, new ArrayList<>(), null);
+            
+            
+            // for(int i=0; i < 1 ; i++){
+            //     Library.createBook(book1); 
+            // } 
+            
+           mainPage.fillBookTiles(Library.books);
  
  
         Scene scene = new Scene(mainPage,800,450);
