@@ -5,6 +5,7 @@ import java.util.HashMap;
 
 import ce216project.controller.PageController;
 import ce216project.models.Book;
+import ce216project.models.Library;
 import ce216project.view.widgets.BookListWidget;
 import ce216project.view.widgets.BookTileWidget;
 import javafx.geometry.Insets;
@@ -19,7 +20,6 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.Priority;
 import javafx.scene.layout.TilePane;
 import javafx.scene.layout.VBox;
-import java.io.FileNotFoundException;
 
 
 public class MainPage extends VBox{
@@ -52,7 +52,7 @@ public class MainPage extends VBox{
     
 
 
-    public MainPage() throws FileNotFoundException {
+    public MainPage() {
 
         //Checkbox Lists at Left Container
         tagsList.setMinWidth(100);
@@ -99,6 +99,10 @@ public class MainPage extends VBox{
         booksContainer.maxWidthProperty().bind(booksScroll.widthProperty());
         
         this.getChildren().addAll(menuBar,mainLayout);
+
+        // Update Main Page
+        this.fillBookTiles(Library.books);
+        
         
     }
 
@@ -162,9 +166,8 @@ public class MainPage extends VBox{
     }
 
     private void add() {
-        
         NewBookPage newBookPage = new NewBookPage();
-        PageController.openNewWindow(newBookPage);
+        PageController.changeScene(newBookPage, PageController.pagesArray.get(0));
     }
 
     

@@ -1,14 +1,19 @@
 package ce216project.view;
 
+import java.util.Arrays;
+
 import ce216project.controller.PageController;
 import ce216project.models.Book;
+import ce216project.models.Library;
 import ce216project.view.widgets.BookField;
 import ce216project.view.widgets.BookTileWidget;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.control.Button;
+import javafx.scene.control.Label;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
+
 
 
 public class DetailsPage extends VBox {
@@ -86,13 +91,13 @@ public class DetailsPage extends VBox {
 
         // Left Container Widgets
         // Buttons
-        System.out.println(pageIndex);
-        backButton.setOnAction(e -> PageController.closeWindow(PageController.pagesArray.get(pageIndex),pageIndex));
+        backButton.setOnAction(e -> back());
+        backButton.setPrefWidth(100);
         editButton.setOnAction(e -> edit());
-        buttonsContainer.getChildren().addAll(editButton,deleteButton,backButton);
         editButton.setPrefWidth(100);
         deleteButton.setPrefWidth(100);
-        backButton.setPrefWidth(100);
+        deleteButton.setOnAction(e -> delete(book.getIsbn()));
+        buttonsContainer.getChildren().addAll(editButton,deleteButton,backButton);
         buttonsContainer.setAlignment(Pos.CENTER);
         buttonsContainer.setSpacing(10);
         
@@ -108,7 +113,6 @@ public class DetailsPage extends VBox {
         this.getChildren().addAll(menuBar,mainLayout);
     }
 
-
     // Getter and setter for editable property
     public boolean isEditable() {
         return isEditable;
@@ -118,34 +122,121 @@ public class DetailsPage extends VBox {
         this.isEditable = isEditable;
     }
 
+    // Update editable property for UI
+    private void updateEditable(){
+
+        title.getTextField().setEditable(isEditable);
+        subtitle.getTextField().setEditable(isEditable);
+        publisher.getTextField().setEditable(isEditable);
+        date.getTextField().setEditable(isEditable);
+        isbn.getTextField().setEditable(isEditable);
+        language.getTextField().setEditable(isEditable);
+        edition.getTextField().setEditable(isEditable);
+
+        authors.getTextArea().setEditable(isEditable);
+        translators.getTextArea().setEditable(isEditable);
+        tags.getTextArea().setEditable(isEditable);
+    }
+
     public void setPageIndex (int pageIndex) {
         this.pageIndex = pageIndex;
     }
 
     private void edit() {
+
         isEditable = true;
-        DetailsPage root = new DetailsPage(book, true, pageIndex);
-        PageController.changeScene(root, PageController.pagesArray.get(pageIndex));
+        updateEditable();
 
         Button saveButton = new Button("Save");
         saveButton.setPrefWidth(100);
+        saveButton.setOnAction(e -> saveEdit());
+        System.out.println(title.getTextField().getText() + " My Book test 1");
+
+
         Button cancelButton = new Button("Cancel");
         cancelButton.setPrefWidth(100);
-        cancelButton.setOnAction(e -> cancel());
+        cancelButton.setOnAction(e -> editCancel());
         
-        root.buttonsContainer.getChildren().clear();
-        root.buttonsContainer.getChildren().addAll(saveButton,cancelButton);
+        buttonsContainer.getChildren().clear();
+        buttonsContainer.getChildren().addAll(saveButton,cancelButton);
 
     }
 
-    private void cancel() {
+    private void saveEdit(){
+
+        title.getTextField().textProperty().addListener((observable, oldValue, newValue) -> {
+            book.setTitle(newValue);
+        });
+
+        subtitle.getTextField().textProperty().addListener((observable, oldValue, newValue) -> {
+            book.setSubtitle(newValue);
+        });
+
+        publisher.getTextField().textProperty().addListener((observable, oldValue, newValue) -> {
+            book.setPublisher(newValue);
+        });
+
+        date.getTextField().textProperty().addListener((observable, oldValue, newValue) -> {
+            book.setDate(newValue);
+        });
+       
+        isbn.getTextField().textProperty().addListener((observable, oldValue, newValue) -> {
+            book.setIsbn(newValue);
+        });
+        
+        language.getTextField().textProperty().addListener((observable, oldValue, newValue) -> {
+            book.setLanguage(newValue);
+        });
+
+        edition.getTextField().textProperty().addListener((observable, oldValue, newValue) -> {
+            book.setEdition(Integer.parseInt(newValue));
+        });
+
+        authors.getTextArea().textProperty().addListener((observable,oldValue,newValue) -> {
+            book.setAuthors(Arrays.asList(newValue.trim().split(",")));
+        });
+
+        translators.getTextArea().textProperty().addListener((observable,oldValue,newValue) -> {
+            book.setTranslators(Arrays.asList(newValue.trim().split(",")));
+        });
+
+        tags.getTextArea().textProperty().addListener((observable,oldValue,newValue) -> {
+            book.setTags(Arrays.asList(newValue.trim().split(",")));
+        });
+
+        bookTileWidget = new BookTileWidget(book, false);
+       
+        Library.editBook(book);
+        this.editCancel();
+       
+    }
+
+    private void editCancel() {
         isEditable = false;
-        DetailsPage root = new DetailsPage(book, false, pageIndex);
-        PageController.changeScene(root, PageController.pagesArray.get(pageIndex));
+        updateEditable();
+
+        buttonsContainer.getChildren().clear();
+        buttonsContainer.getChildren().addAll(editButton,deleteButton,backButton);
+        
     }
+
+    private void delete(String isbn) {
+
+        Library.deleteBook(isbn);
+
+        PageController.closeWindow(PageController.pagesArray.get(pageIndex),pageIndex);
+        MainPage mainPage = new MainPage();
+        PageController.changeScene(mainPage, PageController.pagesArray.get(0));
+    }
+
            
         
+    private void back(){
         
+        PageController.closeWindow(PageController.pagesArray.get(pageIndex),pageIndex);
+        MainPage mainPage = new MainPage();
+        PageController.changeScene(mainPage, PageController.pagesArray.get(0));
+    }
 
     
 

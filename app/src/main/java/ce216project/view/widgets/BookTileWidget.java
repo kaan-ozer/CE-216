@@ -3,7 +3,6 @@ package ce216project.view.widgets;
 import ce216project.controller.PageController;
 import ce216project.models.Book;
 import ce216project.view.DetailsPage;
-import java.nio.file.Path;
 import javafx.geometry.Pos;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
@@ -19,11 +18,11 @@ public class BookTileWidget extends StackPane {
     private static final int YSIZE = 150;
 
     private ImageView imageView = new ImageView();
-    private Path coverImagePath; 
     private Image coverImage;
     private Button detailsButton = new Button();
 
     private Rectangle rectangle = new Rectangle(XSIZE,YSIZE);
+    private Label titleLabel = new Label();
     private Book book;
 
     private boolean isClickable;
@@ -32,9 +31,8 @@ public class BookTileWidget extends StackPane {
     public BookTileWidget (Book book, boolean isClickable) {
         
         this.book = book;
-
-        if(coverImagePath != null){
-            coverImage = new Image(coverImagePath.toString());
+        if(book.getCoverImagePath() != null){
+            coverImage = new Image("file:"+book.getCoverImagePath().toString(),XSIZE,YSIZE,false,true);
             imageView.setImage(coverImage);
             imageView.setSmooth(true);
             imageView.setCache(true);
@@ -48,7 +46,7 @@ public class BookTileWidget extends StackPane {
         else{
             rectangle.setFill(Color.RED);
             if(!book.getTitle().isBlank() || !book.getTitle().isEmpty()){
-                Label titleLabel = new Label(book.getTitle());
+                titleLabel = new Label(book.getTitle());
                 this.setAlignment(Pos.CENTER);
                 this.getChildren().addAll(rectangle,titleLabel);
                 if(isClickable == true){
@@ -80,13 +78,6 @@ public class BookTileWidget extends StackPane {
     }
 
 
-    public Path getCoverImagePath() {
-        return coverImagePath;
-    }
-
-    public void setCoverImagePath(Path coverImagePath) {
-        this.coverImagePath = coverImagePath;
-    }
 
     public boolean isClickable() {
         return isClickable;
@@ -102,6 +93,30 @@ public class BookTileWidget extends StackPane {
 
     public void setDetailsButton(Button detailsButton) {
         this.detailsButton = detailsButton;
+    }
+
+    public ImageView getImageView() {
+        return imageView;
+    }
+
+    public void setImageView(ImageView imageView) {
+        this.imageView = imageView;
+    }
+
+    public Image getCoverImage() {
+        return coverImage;
+    }
+
+    public void setCoverImage(Image coverImage) {
+        this.coverImage = coverImage;
+    }
+
+    public Label getTitleLabel() {
+        return titleLabel;
+    }
+
+    public void setTitleLabel(Label titleLabel) {
+        this.titleLabel = titleLabel;
     }
 
 }

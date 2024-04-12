@@ -51,10 +51,7 @@ public class BookListWidget extends StackPane {
         this.getChildren().addAll(mainContainer,detailsButton);
         HBox.setHgrow(this, Priority.ALWAYS);
 
-
-
     }
-
 
     private void openDetailsPage(){
         int i = PageController.pagesArray.size();

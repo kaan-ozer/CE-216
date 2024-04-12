@@ -12,13 +12,16 @@ public class Book {
     private String publisher;
     private String date;
     private int edition;
-    private String cover;
     private String language;
     private double rating;
     private List<String> tags;
     private Path coverImagePath;
 
-    public Book(String title, String subtitle, List<String> authors, List<String> translators, String isbn, String publisher, String date, int edition, String cover, String language, double rating, List<String> tags, Path coverImagePath) {
+    //DON'T DELETE THIS EMPTY CONSTRUCTOR - GENSON USES IT!
+    public Book() {
+    }
+
+    public Book(String title, String subtitle, List<String> authors, List<String> translators, String isbn, String publisher, String date, int edition, String language, double rating, List<String> tags, Path coverImagePath) {
         this.title = title;
         this.subtitle = subtitle;
         this.authors = authors;
@@ -27,7 +30,6 @@ public class Book {
         this.publisher = publisher;
         this.date = date;
         this.edition = edition;
-        this.cover = cover;
         this.language = language;
         this.rating = rating;
         this.tags = tags;
@@ -104,14 +106,6 @@ public class Book {
         this.edition = edition;
     }
 
-    public String getCover() {
-        return cover;
-    }
-
-    public void setCover(String cover) {
-        this.cover = cover;
-    }
-
     public String getLanguage() {
         return language;
     }
@@ -139,6 +133,9 @@ public class Book {
         this.tags = tags;
     }
 
+ 
+    
+
     public Path getCoverImagePath(){
         return coverImagePath;
     }
@@ -158,12 +155,14 @@ public class Book {
                 ", publisher='" + publisher + '\'' +
                 ", date=" + date +
                 ", edition=" + edition +
-                ", cover='" + cover + '\'' +
                 ", language='" + language + '\'' +
                 ", rating=" + rating +
                 ", tags=" + tags +
+                ", coverPath=" + (coverImagePath != null ? coverImagePath.toString() : "null")+
                 '}';
     }
+
+   
 
 
 }
