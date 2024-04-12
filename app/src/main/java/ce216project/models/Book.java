@@ -133,6 +133,9 @@ public class Book {
         this.tags = tags;
     }
 
+ 
+    
+
     public Path getCoverImagePath(){
         return coverImagePath;
     }
@@ -159,10 +162,7 @@ public class Book {
                 '}';
     }
 
-    public Object getCoverImage() {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'getCoverImage'");
-    }
+   
 
 
 }
