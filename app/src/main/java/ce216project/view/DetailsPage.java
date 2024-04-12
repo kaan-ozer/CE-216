@@ -91,7 +91,7 @@ public class DetailsPage extends VBox {
 
         // Left Container Widgets
         // Buttons
-        backButton.setOnAction(e -> PageController.closeWindow(PageController.pagesArray.get(pageIndex),pageIndex));
+        backButton.setOnAction(e -> back());
         backButton.setPrefWidth(100);
         editButton.setOnAction(e -> edit());
         editButton.setPrefWidth(100);
@@ -225,14 +225,18 @@ public class DetailsPage extends VBox {
         Library.deleteBook(isbn);
 
         PageController.closeWindow(PageController.pagesArray.get(pageIndex),pageIndex);
-
         MainPage mainPage = new MainPage();
         PageController.changeScene(mainPage, PageController.pagesArray.get(0));
     }
 
            
         
+    private void back(){
         
+        PageController.closeWindow(PageController.pagesArray.get(pageIndex),pageIndex);
+        MainPage mainPage = new MainPage();
+        PageController.changeScene(mainPage, PageController.pagesArray.get(0));
+    }
 
     
 
