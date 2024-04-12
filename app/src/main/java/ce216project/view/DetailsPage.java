@@ -2,6 +2,7 @@ package ce216project.view;
 
 import ce216project.controller.PageController;
 import ce216project.models.Book;
+import ce216project.models.Library;
 import ce216project.view.widgets.BookField;
 import ce216project.view.widgets.BookTileWidget;
 import javafx.geometry.Insets;
@@ -92,6 +93,7 @@ public class DetailsPage extends VBox {
         buttonsContainer.getChildren().addAll(editButton,deleteButton,backButton);
         editButton.setPrefWidth(100);
         deleteButton.setPrefWidth(100);
+        deleteButton.setOnAction(e -> delete(book.getIsbn()));
         backButton.setPrefWidth(100);
         buttonsContainer.setAlignment(Pos.CENTER);
         buttonsContainer.setSpacing(10);
@@ -142,6 +144,17 @@ public class DetailsPage extends VBox {
         isEditable = false;
         DetailsPage root = new DetailsPage(book, false, pageIndex);
         PageController.changeScene(root, PageController.pagesArray.get(pageIndex));
+    }
+
+    private void delete(String isbn) {
+
+        Library.deleteBook(isbn);
+
+         
+        PageController.closeWindow(PageController.pagesArray.get(pageIndex),pageIndex);
+        
+        MainPage mainPage = new MainPage();
+        PageController.changeScene(mainPage, PageController.pagesArray.get(0));
     }
            
         

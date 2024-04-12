@@ -40,7 +40,7 @@ public class Library {
         saveBooksToJson();
     }
 
-    public void deleteBook(String isbn) {
+    public static void deleteBook(String isbn) {
         Book bookToDelete = null;
 
         for (Book book : books) {
