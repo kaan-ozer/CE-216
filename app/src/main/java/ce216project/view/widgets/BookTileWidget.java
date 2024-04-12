@@ -22,6 +22,7 @@ public class BookTileWidget extends StackPane {
     private Button detailsButton = new Button();
 
     private Rectangle rectangle = new Rectangle(XSIZE,YSIZE);
+    private Label titleLabel = new Label();
     private Book book;
 
     private boolean isClickable;
@@ -45,7 +46,7 @@ public class BookTileWidget extends StackPane {
         else{
             rectangle.setFill(Color.RED);
             if(!book.getTitle().isBlank() || !book.getTitle().isEmpty()){
-                Label titleLabel = new Label(book.getTitle());
+                titleLabel = new Label(book.getTitle());
                 this.setAlignment(Pos.CENTER);
                 this.getChildren().addAll(rectangle,titleLabel);
                 if(isClickable == true){
@@ -92,6 +93,30 @@ public class BookTileWidget extends StackPane {
 
     public void setDetailsButton(Button detailsButton) {
         this.detailsButton = detailsButton;
+    }
+
+    public ImageView getImageView() {
+        return imageView;
+    }
+
+    public void setImageView(ImageView imageView) {
+        this.imageView = imageView;
+    }
+
+    public Image getCoverImage() {
+        return coverImage;
+    }
+
+    public void setCoverImage(Image coverImage) {
+        this.coverImage = coverImage;
+    }
+
+    public Label getTitleLabel() {
+        return titleLabel;
+    }
+
+    public void setTitleLabel(Label titleLabel) {
+        this.titleLabel = titleLabel;
     }
 
 }
