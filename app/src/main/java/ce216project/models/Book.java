@@ -14,7 +14,7 @@ public class Book {
     private int edition;
     private String language;
     private double rating;
-    private List<String> tags = new java.util.ArrayList<>();
+    private List<String> tags;
     private Path coverImagePath;
 
     //DON'T DELETE THIS EMPTY CONSTRUCTOR - GENSON USES IT!
@@ -53,9 +53,9 @@ public class Book {
     }
 
     public List<String> getAuthors() {
-        // if(authors.isEmpty()){
-        // authors.add("Empty Author List");
-        // }
+        if(authors.isEmpty()){
+        authors.add(" ");
+        }
         return authors;
     }
 
@@ -64,9 +64,9 @@ public class Book {
     }
 
     public List<String> getTranslators() {
-        // if(translators.isEmpty()){
-        //     translators.add(" ");
-        //     }
+        if(translators.isEmpty()){
+            translators.add(" ");
+            }
             return translators;
     }
 
@@ -123,7 +123,6 @@ public class Book {
     }
 
     public List<String> getTags() {
-     
         if(tags.isEmpty()){
             tags.add(" ");
             }
