@@ -15,13 +15,13 @@ public class Book {
     private String language;
     private double rating;
     private List<String> tags;
-    private Path coverImagePath;
+    private String coverImagePath;
 
     //DON'T DELETE THIS EMPTY CONSTRUCTOR - GENSON USES IT!
     public Book() {
     }
 
-    public Book(String title, String subtitle, List<String> authors, List<String> translators, String isbn, String publisher, String date, int edition, String language, double rating, List<String> tags, Path coverImagePath) {
+    public Book(String title, String subtitle, List<String> authors, List<String> translators, String isbn, String publisher, String date, int edition, String language, double rating, List<String> tags, String coverImagePath) {
         this.title = title;
         this.subtitle = subtitle;
         this.authors = authors;
@@ -53,9 +53,6 @@ public class Book {
     }
 
     public List<String> getAuthors() {
-        if(authors.isEmpty()){
-        authors.add(" ");
-        }
         return authors;
     }
 
@@ -64,9 +61,6 @@ public class Book {
     }
 
     public List<String> getTranslators() {
-        if(translators.isEmpty()){
-            translators.add(" ");
-            }
             return translators;
     }
 
@@ -123,10 +117,8 @@ public class Book {
     }
 
     public List<String> getTags() {
-        if(tags.isEmpty()){
-            tags.add(" ");
-            }
-            return tags;
+       
+        return tags;
     }
 
     public void setTags(List<String> tags) {
@@ -136,11 +128,11 @@ public class Book {
  
     
 
-    public Path getCoverImagePath(){
+    public String getCoverImagePath(){
         return coverImagePath;
     }
 
-    public void setCoverImagePath(Path coverImagePath){
+    public void setCoverImagePath(String coverImagePath){
         this.coverImagePath = coverImagePath;
     }
 

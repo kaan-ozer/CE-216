@@ -8,6 +8,7 @@ import javafx.scene.control.ButtonType;
 
 public class Library {
  
+   
     public static ArrayList<Book> books = new ArrayList<Book>();
     public static HashMap<String,Integer> tags = new HashMap<>();
     public static HashMap<String,Integer> languages = new HashMap<>();
@@ -20,7 +21,16 @@ public class Library {
 
     public static void loadBooksFromJson() {
         try {
+            
             books = IOoperations.readFromJsonFile();
+            String projectPath = System.getProperty("user.dir");
+            String imagesPath = projectPath + "/shared/images";
+            books.forEach(item ->{
+            if (item.getCoverImagePath() != null) {
+                item.setCoverImagePath(imagesPath + item.getCoverImagePath().trim().split(imagesPath)[1]);
+            }
+               
+            } );
         } catch (Exception e) {
             e.printStackTrace();
             System.err.println("Error loading books from JSON: " + e.getMessage());
@@ -29,6 +39,8 @@ public class Library {
 
     public static void saveBooksToJson() {
         try {
+
+            System.out.println(books.get(0).getCoverImagePath());
             IOoperations.writeToJsonFile("app/output/output.txt", books);
         } catch (Exception e) {
             e.printStackTrace();
@@ -61,20 +73,13 @@ public class Library {
         saveBooksToJson();
     }
 
-    public static void editBook(Book editedBook) {
-        if (editedBook.getIsbn() == null || editedBook.getIsbn().trim().isEmpty() || editedBook.getTitle() == null || editedBook.getTitle().trim().isEmpty()) {
-            Alert alert = new Alert(Alert.AlertType.ERROR);
-            alert.setTitle("Error");
-            alert.setHeaderText(null);
-            alert.setContentText("Update failed: ISBN and Title are required.");
-            alert.showAndWait();
-            return;
-        }
-
+    public static void editBook(Book editedBook, String newISBN) {
+     
         Book bookToEdit = null;
         for (Book book : books) {
             if (book.getIsbn().equals(editedBook.getIsbn())) {
                 bookToEdit = book;
+                bookToEdit.setIsbn(newISBN);
                 bookToEdit.setTitle(editedBook.getTitle());
                 bookToEdit.setSubtitle(editedBook.getSubtitle());
                 bookToEdit.setAuthors(editedBook.getAuthors());
@@ -84,8 +89,7 @@ public class Library {
                 bookToEdit.setEdition(editedBook.getEdition());
                 bookToEdit.setLanguage(editedBook.getLanguage());
                 bookToEdit.setRating(editedBook.getRating());
-                bookToEdit.setTags(editedBook.getTags());
-                bookToEdit.setCoverImagePath(null);
+                bookToEdit.setTags(editedBook.getTags()); 
                 break;
             }
         }
