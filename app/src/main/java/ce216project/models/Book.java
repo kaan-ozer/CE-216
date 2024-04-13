@@ -1,27 +1,27 @@
 package ce216project.models;
 
 import java.nio.file.Path;
-import java.util.List;
+import java.util.Set;
 
 public class Book {
     private String title;
     private String subtitle;
-    private List<String> authors;
-    private List<String> translators;
+    private Set<String> authors;
+    private Set<String> translators;
     private String isbn;
     private String publisher;
     private String date;
     private int edition;
     private String language;
     private double rating;
-    private List<String> tags;
+    private Set<String> tags;
     private String coverImagePath;
 
     //DON'T DELETE THIS EMPTY CONSTRUCTOR - GENSON USES IT!
     public Book() {
     }
 
-    public Book(String title, String subtitle, List<String> authors, List<String> translators, String isbn, String publisher, String date, int edition, String language, double rating, List<String> tags, String coverImagePath) {
+    public Book(String title, String subtitle, Set<String> authors, Set<String> translators, String isbn, String publisher, String date, int edition, String language, double rating, Set<String> tags, String coverImagePath) {
         this.title = title;
         this.subtitle = subtitle;
         this.authors = authors;
@@ -52,19 +52,19 @@ public class Book {
         this.subtitle = subtitle;
     }
 
-    public List<String> getAuthors() {
+    public Set<String> getAuthors() {
         return authors;
     }
 
-    public void setAuthors(List<String> authors) {
+    public void setAuthors(Set<String> authors) {
         this.authors = authors;
     }
 
-    public List<String> getTranslators() {
+    public Set<String> getTranslators() {
             return translators;
     }
 
-    public void setTranslators(List<String> translators) {
+    public void setTranslators(Set<String> translators) {
         this.translators = translators;
     }
 
@@ -116,17 +116,14 @@ public class Book {
         this.rating = rating;
     }
 
-    public List<String> getTags() {
+    public Set<String> getTags() {
        
         return tags;
     }
 
-    public void setTags(List<String> tags) {
+    public void setTags(Set<String> tags) {
         this.tags = tags;
     }
-
- 
-    
 
     public String getCoverImagePath(){
         return coverImagePath;

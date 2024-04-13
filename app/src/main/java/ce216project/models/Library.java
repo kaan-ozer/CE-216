@@ -1,5 +1,6 @@
 package ce216project.models;
 
+import java.io.File;
 import java.util.*;
 
 import ce216project.utils.IOoperations;
@@ -24,7 +25,7 @@ public class Library {
             
             books = IOoperations.readFromJsonFile();
             String projectPath = System.getProperty("user.dir");
-            String imagesPath = projectPath + "/shared/images";
+            String imagesPath = projectPath + File.separator + "shared" + File.separator + "images" + File.separator;
             books.forEach(item ->{
             if (item.getCoverImagePath() != null) {
                 item.setCoverImagePath(imagesPath + item.getCoverImagePath().trim().split(imagesPath)[1]);
@@ -35,6 +36,10 @@ public class Library {
             e.printStackTrace();
             System.err.println("Error loading books from JSON: " + e.getMessage());
         }
+    }
+
+    public static void loadTagsFromJson(){
+
     }
 
     public static void saveBooksToJson() {
@@ -49,7 +54,7 @@ public class Library {
     }
 
 
-    public static void addTags(List<String> tagsInputList){
+    public static void addTags(Set<String> tagsInputList){
 
         for(String tagInput : tagsInputList){
             if (tags.containsKey(tagInput)) {
@@ -60,6 +65,7 @@ public class Library {
             }
         }
     }
+
     public static void createBook(Book book) {
         if (book.getIsbn() == null || book.getIsbn().trim().isEmpty() || book.getTitle() == null || book.getTitle().trim().isEmpty()) {
             Alert alert = new Alert(Alert.AlertType.ERROR);
@@ -145,27 +151,33 @@ public class Library {
     public static ArrayList<Book> filterBooks(ArrayList<String> tagFilters, ArrayList<String> languageFilters){
         
         ArrayList<Book> filteredBooks = new ArrayList<>();
+        
         System.out.println("Filter at Library class");
         for (Book book : books) {
-            boolean tagMatch = true;
-            boolean languageMatch = true;
+            boolean tagMatch = false;
+            boolean languageMatch = false;
     
             // Check if the book matches any of the selected tags
             if (!tagFilters.isEmpty()) {
-                tagMatch = book.getTags().containsAll(tagFilters);
+                for (String tag : tagFilters) {
+                    if (book.getTags().contains(tag)) {
+                        tagMatch = true;
+                        break;
+                    }
+                }
             }
     
             // Check if the book matches any of the selected languages
-            if (!languageFilters.isEmpty()) {
-                languageMatch = languageFilters.contains(book.getLanguage());
+            else if (languageFilters.isEmpty() || languageFilters.contains(book.getLanguage())) {
+                languageMatch = true;
             }
     
-            if (tagMatch && languageMatch) {
+            if (tagMatch || languageMatch) {
                 filteredBooks.add(book);
             }
+    
         }
     
-
         return filteredBooks;
     }
 

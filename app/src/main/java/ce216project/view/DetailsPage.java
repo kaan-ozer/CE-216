@@ -13,7 +13,6 @@ import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
-import javafx.scene.control.Label;
 import javafx.scene.control.ListView;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Priority;
@@ -61,9 +60,9 @@ public class DetailsPage extends VBox {
     private ItemField translators;
     private ItemField tags;
 
-    private ListView<ItemFieldBody> authorsList;
-    private ListView<ItemFieldBody> translatorsList;
-    private ListView<ItemFieldBody> tagsList;
+    private ListView<ItemFieldBody> authorsListView;
+    private ListView<ItemFieldBody> translatorsListView;
+    private ListView<ItemFieldBody> tagsListView;
 
 
     
@@ -98,18 +97,18 @@ public class DetailsPage extends VBox {
         ArrayList<String> translatorsArrayList = new ArrayList<>(book.getTranslators());
         ArrayList<String> tagsArrayList = new ArrayList<>(book.getTags());
 
-        authorsList = new ListView<ItemFieldBody>();
-        authorsList.setPrefHeight(120);
+        authorsListView = new ListView<ItemFieldBody>();
+        authorsListView.setPrefHeight(120);
 
-        translatorsList = new ListView<ItemFieldBody>();
-        translatorsList.setPrefHeight(120);
+        translatorsListView = new ListView<ItemFieldBody>();
+        translatorsListView.setPrefHeight(120);
 
-        tagsList = new ListView<ItemFieldBody>();
-        tagsList.setPrefHeight(120);
+        tagsListView = new ListView<ItemFieldBody>();
+        tagsListView.setPrefHeight(120);
  
-        authors = populateList(authorsArrayList, authorsList,"Authors");
-        translators = populateList(translatorsArrayList, translatorsList,"translators");
-        tags = populateList(tagsArrayList, tagsList,"Tags");
+        authors = populateList(authorsArrayList, authorsListView,"Authors");
+        translators = populateList(translatorsArrayList, translatorsListView,"translators");
+        tags = populateList(tagsArrayList, tagsListView,"Tags");
 
 
         rightBookFields.getChildren().addAll( authors,translators,tags);
@@ -183,7 +182,6 @@ public class DetailsPage extends VBox {
                 listView.getItems().remove(itemField);
             });
 
-          
             ItemFieldBody newItemField = new ItemFieldBody( "" + (listView.getItems().size() + 1), newItem.getTextField().getText() , true, deleteFromList);
             listView.getItems().add(newItemField);
         
@@ -214,7 +212,7 @@ public class DetailsPage extends VBox {
         authors.getTextField().setEditable(isEditable);
         authors.getInputField().setVisible(isEditable);
 
-        for(ItemFieldBody itemfield : authorsList.getItems()){
+        for(ItemFieldBody itemfield : authorsListView.getItems()){
             itemfield.getTextField().setEditable(isEditable);
             itemfield.getButton().setVisible(isEditable);
         }
@@ -223,7 +221,7 @@ public class DetailsPage extends VBox {
         translators.getInputField().setVisible(isEditable);
         
       
-        for(ItemFieldBody itemfield : translatorsList.getItems()){
+        for(ItemFieldBody itemfield : translatorsListView.getItems()){
             itemfield.getTextField().setEditable(isEditable);
             itemfield.getButton().setVisible(isEditable);
         }
@@ -232,7 +230,7 @@ public class DetailsPage extends VBox {
         tags.getInputField().setVisible(isEditable);
         
       
-        for(ItemFieldBody itemfield : tagsList.getItems()){
+        for(ItemFieldBody itemfield : tagsListView.getItems()){
             itemfield.getTextField().setEditable(isEditable);
             itemfield.getButton().setVisible(isEditable);
         }
@@ -285,35 +283,36 @@ public class DetailsPage extends VBox {
                     alert.showAndWait();
                     return;
                 }
-    
-                String[] updatedAuthors = new String[authorsList.getItems().size()];
-            
-                for(int i = 0 ; i < authorsList.getItems().size() ; i++ ){
-                    updatedAuthors[i] =  authorsList.getItems().get(i).getTextField().getText(); 
-                }
-        
-                List<String> authorsList = Arrays.asList(updatedAuthors);
-                editedBook.setAuthors(authorsList);
-
- 
-            
-                String[] updatedTranslators = new String[translatorsList.getItems().size()];
-            
-                for(int i = 0 ; i < translatorsList.getItems().size() ; i++ ){
-                    updatedTranslators[i] =  translatorsList.getItems().get(i).getTextField().getText();
-                    
-                }
-            
                 
-                editedBook.setTranslators(Arrays.asList(updatedTranslators));
-
-                String[] updatedTags = new String[tagsList.getItems().size()];
+                // Authors
+                String[] updatedAuthors = new String[authorsListView.getItems().size()];
             
-                for(int i = 0 ; i < tagsList.getItems().size() ; i++ ){
-                    updatedTags[i] =  tagsList.getItems().get(i).getTextField().getText();
+                for(int i = 0 ; i < authorsListView.getItems().size() ; i++ ){
+                    updatedAuthors[i] =  authorsListView.getItems().get(i).getTextField().getText(); 
+                }
+
+                Set<String> authorsSet = new HashSet<>(Arrays.asList(updatedAuthors));
+                editedBook.setAuthors(authorsSet);
+
+                // Translators
+                String[] updatedTranslators = new String[translatorsListView.getItems().size()];
+            
+                for(int i = 0 ; i < translatorsListView.getItems().size() ; i++ ){
+                    updatedTranslators[i] =  translatorsListView.getItems().get(i).getTextField().getText(); 
+                }
+            
+                Set<String> translatorsSet = new HashSet<>(Arrays.asList(updatedTranslators));
+                editedBook.setTranslators(translatorsSet);
+
+                String[] updatedTags = new String[tagsListView.getItems().size()];
+            
+                for(int i = 0 ; i < tagsListView.getItems().size() ; i++ ){
+                    updatedTags[i] =  tagsListView.getItems().get(i).getTextField().getText();
                 
                 }
-                editedBook.setTags(Arrays.asList(updatedTags));
+
+                Set<String> tagsSet = new HashSet<>(Arrays.asList(updatedTags));
+                editedBook.setTags(tagsSet);
  
 
                
@@ -374,9 +373,9 @@ public class DetailsPage extends VBox {
         language.getTextField().setText(book.getLanguage()); 
         edition.getTextField().setText  (Integer.toString(book.getEdition()));
 
-        authorsList.getItems().clear();
-        translatorsList.getItems().clear();
-        tagsList.getItems().clear();
+        authorsListView.getItems().clear();
+        translatorsListView.getItems().clear();
+        tagsListView.getItems().clear();
 
 
         // System.out.println(book.getTitle());

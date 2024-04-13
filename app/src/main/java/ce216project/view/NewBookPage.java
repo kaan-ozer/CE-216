@@ -25,6 +25,7 @@ import java.nio.file.Path;
 import java.util.List;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.*;
 
 public class NewBookPage extends VBox{
 
@@ -95,9 +96,9 @@ public class NewBookPage extends VBox{
         leftBookFields.setSpacing(10);
 
 
-        ArrayList<String> authorsArrayList = new ArrayList<>();
-        ArrayList<String> translatorsArrayList = new ArrayList<>();
-        ArrayList<String> tagsArrayList = new ArrayList<>();
+        Set<String> authorsArrayList = new HashSet<>();
+        Set<String> translatorsArrayList = new HashSet<>();
+        Set<String> tagsArrayList = new HashSet<>();
 
         authorsList = new ListView<ItemFieldBody>();
         authorsList.setPrefHeight(120);
@@ -195,41 +196,32 @@ public class NewBookPage extends VBox{
       
         int editionInput =   Integer.parseInt(edition.getTextField().getText());
  
-
+        // Authors
         String[] updatedAuthors = new String[authorsList.getItems().size()];
           
         for(int i = 0 ; i < authorsList.getItems().size() ; i++ ){
             updatedAuthors[i] =  authorsList.getItems().get(i).getTextField().getText(); 
         }
     
-        List<String> authorsList = Arrays.asList(updatedAuthors);
+        Set<String> authorsList = new HashSet<>(Arrays.asList(updatedAuthors));
    
         String[] updatedTranslators = new String[translatorsList.getItems().size()];
         
+        // Translators
         for(int i = 0 ; i < translatorsList.getItems().size() ; i++ ){
-            updatedTranslators[i] =  translatorsList.getItems().get(i).getTextField().getText();
-            
+            updatedTranslators[i] =  translatorsList.getItems().get(i).getTextField().getText(); 
         }
-        List<String> translatorsList = Arrays.asList(updatedTranslators);
-    
+        Set<String> translatorsList = new HashSet<>(Arrays.asList(updatedTranslators));
+        
+        // Tags
         String[] updatedTags = new String[tagsList.getItems().size()];
         
         for(int i = 0 ; i < tagsList.getItems().size() ; i++ ){
             updatedTags[i] =  tagsList.getItems().get(i).getTextField().getText(); 
         }
 
-        List<String> tagsList = Arrays.asList(updatedTags);
+        Set<String> tagsList = new HashSet<>(Arrays.asList(updatedTags));
         Library.addTags(tagsList);
-    
-
-
-        // String[] authorsInput =  authors.getTextArea().getText().trim().split(",");
-        // List<String> authorsList = Arrays.asList(authorsInput);
-        // String[] translatorsInput = translators.getTextArea().getText().trim().split(",");
-        // List<String> translatorsList = Arrays.asList(translatorsInput);
-        // String[] tagsInput = tags.getTextArea().getText().trim().split(",");
-        // List<String> tagsList = Arrays.asList(tagsInput);
-
        
 
         Book newBook = new Book(titleInput, subTitleInput, authorsList, translatorsList, isbnInput, publisherInput, dateInput, editionInput, languageInput, 5.0, tagsList,  this.coverImagePath);
@@ -238,7 +230,7 @@ public class NewBookPage extends VBox{
         cancel(); 
     }
 
-    private  ItemField populateList(ArrayList<String> arrayList,ListView<ItemFieldBody> listView, String labelName) {
+    private  ItemField populateList(Set<String> arrayList,ListView<ItemFieldBody> listView, String labelName) {
     
         listView.setPrefHeight(120);
 

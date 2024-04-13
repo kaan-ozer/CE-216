@@ -23,7 +23,6 @@ public class BookListWidget extends StackPane {
     private Label lTile = new Label();
     private Label lsubtitle = new Label();
     private Label lpublisher = new Label();
-    private Label lFirstAuthor = new Label();
     private Label lDate = new Label();
 
     private Button detailsButton = new Button();
@@ -35,10 +34,9 @@ public class BookListWidget extends StackPane {
         lTile = new Label(book.getTitle());
         lsubtitle = new Label(book.getSubtitle());
         lpublisher = new Label(book.getPublisher());
-        lFirstAuthor = new Label(book.getAuthors().get(0));
         lDate = new Label(book.getDate());
 
-        mainContainer.getChildren().addAll(lTile,lsubtitle,lpublisher,lFirstAuthor,lDate);
+        mainContainer.getChildren().addAll(lTile,lsubtitle,lpublisher,lDate);
         mainContainer.setSpacing(5);
         mainContainer.setPadding(new Insets(5));
         mainContainer.setBackground(new Background(new BackgroundFill(Color.ANTIQUEWHITE,CornerRadii.EMPTY,Insets.EMPTY)));
