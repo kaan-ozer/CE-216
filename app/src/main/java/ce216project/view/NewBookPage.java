@@ -161,6 +161,7 @@ public class NewBookPage extends VBox{
         String dateInput = date.getTextField().getText();
         String isbnInput = isbn.getTextField().getText();
         String languageInput = language.getTextField().getText();
+        Library.addLanguages(languageInput);
         int editionInput = Integer.parseInt(edition.getTextField().getText());
 
 

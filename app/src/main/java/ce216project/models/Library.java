@@ -104,4 +104,14 @@ public class Library {
         }
     }
 
+    public static void addLanguages(String languageInput) {
+
+        if(languages.containsKey(languageInput)) {
+            int newCount = languages.get(languageInput) + 1;
+            languages.put(languageInput, newCount);
+        } else {
+            languages.put(languageInput,1);
+        }
+    }
+
 }
