@@ -3,6 +3,8 @@ package ce216project.models;
 import java.util.*;
 
 import ce216project.utils.IOoperations;
+import javafx.scene.control.Alert;
+import javafx.scene.control.ButtonType;
 
 public class Library {
  
@@ -34,35 +36,42 @@ public class Library {
         }
     }
 
+
+    public static void addTags(List<String> tagsInputList){
+
+        for(String tagInput : tagsInputList){
+            if (tags.containsKey(tagInput)) {
+                int newCount = tags.get(tagInput) + 1; 
+                tags.put(tagInput, newCount);
+            } else {
+                tags.put(tagInput, 1); // initialize count to 1 for new tags
+            }
+        }
+    }
     public static void createBook(Book book) {
+        if (book.getIsbn() == null || book.getIsbn().trim().isEmpty() || book.getTitle() == null || book.getTitle().trim().isEmpty()) {
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setTitle("Error");
+            alert.setHeaderText(null);
+            alert.setContentText("Creation failed: ISBN and Title are required.");
+            alert.showAndWait();
+            return;
+        }
         books.add(book);
         saveBooksToJson();
     }
 
-    public static void deleteBook(String isbn) {
-        Book bookToDelete = null;
-
-        for (Book book : books) {
-            if (book.getIsbn().equals(isbn)) {
-                bookToDelete = book;
-                break;
-            }
-        }
-
-        if (bookToDelete != null) {
-            books.remove(bookToDelete);
-            saveBooksToJson(); // Persist the updated books list to JSON
-            System.out.println("Book with ISBN '" + isbn + "' has been deleted.");
-        } else {
-            System.out.println("Book with ISBN '" + isbn + "' not found.");
-        }
-    }
-
     public static void editBook(Book editedBook) {
+        if (editedBook.getIsbn() == null || editedBook.getIsbn().trim().isEmpty() || editedBook.getTitle() == null || editedBook.getTitle().trim().isEmpty()) {
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setTitle("Error");
+            alert.setHeaderText(null);
+            alert.setContentText("Update failed: ISBN and Title are required.");
+            alert.showAndWait();
+            return;
+        }
 
-        System.out.println("Edit book method called: " + editedBook);
         Book bookToEdit = null;
-
         for (Book book : books) {
             if (book.getIsbn().equals(editedBook.getIsbn())) {
                 bookToEdit = book;
@@ -82,25 +91,40 @@ public class Library {
         }
 
         if (bookToEdit != null) {
-            
-           saveBooksToJson();
-
-            System.out.println("Book with ISBN '" + editedBook + "' has been updated.");
+            saveBooksToJson();
+            System.out.println("Book with ISBN '" + editedBook.getIsbn() + "' has been updated.");
         } else {
-            System.out.println("Book with ISBN '" + editedBook + "' not found.");
+            System.out.println("Book with ISBN '" + editedBook.getIsbn() + "' not found.");
         }
     }
+    public static void deleteBook(String isbn) {
+        Book bookToDelete = null;
 
-
-    public static void addTags(List<String> tagsInputList){
-
-        for(String tagInput : tagsInputList){
-            if (tags.containsKey(tagInput)) {
-                int newCount = tags.get(tagInput) + 1; 
-                tags.put(tagInput, newCount);
-            } else {
-                tags.put(tagInput, 1); // initialize count to 1 for new tags
+        for (Book book : books) {
+            if (book.getIsbn().equals(isbn)) {
+                bookToDelete = book;
+                break;
             }
+        }
+
+        if (bookToDelete != null) {
+            Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+            alert.setTitle("Confirmation Dialog");
+            alert.setHeaderText(null);
+            alert.setContentText("Are you sure you want to delete the book with ISBN '" + isbn + "'?");
+
+            Book finalBookToDelete = bookToDelete;
+            alert.showAndWait().ifPresent(response -> {
+                if (response == ButtonType.OK) {
+                    books.remove(finalBookToDelete);
+                    saveBooksToJson();
+                    System.out.println("Book with ISBN '" + isbn + "' has been deleted.");
+                } else {
+                    System.out.println("Deletion canceled. Book with ISBN '" + isbn + "' was not deleted.");
+                }
+            });
+        } else {
+            System.out.println("Book with ISBN '" + isbn + "' not found.");
         }
     }
 
