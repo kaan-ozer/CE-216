@@ -254,6 +254,7 @@ public class DetailsPage extends VBox {
       
 
         saveButton.setOnAction(e ->  { 
+ 
 
             int editionNumber;
             try {
@@ -294,6 +295,7 @@ public class DetailsPage extends VBox {
                 List<String> authorsList = Arrays.asList(updatedAuthors);
                 editedBook.setAuthors(authorsList);
 
+ 
             
                 String[] updatedTranslators = new String[translatorsList.getItems().size()];
             
@@ -311,9 +313,10 @@ public class DetailsPage extends VBox {
                     updatedTags[i] =  tagsList.getItems().get(i).getTextField().getText();
                 
                 }
-            
-
                 editedBook.setTags(Arrays.asList(updatedTags));
+ 
+
+               
 
                 // String[] tagsInput = tags.getTextArea().getText().trim().split(",");
                 // List<String> tagsList = Arrays.asList(tagsInput);
@@ -370,7 +373,7 @@ public class DetailsPage extends VBox {
         isbn.getTextField().setText(book.getIsbn());
         language.getTextField().setText(book.getLanguage()); 
         edition.getTextField().setText  (Integer.toString(book.getEdition()));
-        
+
         authorsList.getItems().clear();
         translatorsList.getItems().clear();
         tagsList.getItems().clear();
