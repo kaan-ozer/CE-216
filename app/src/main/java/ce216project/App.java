@@ -28,12 +28,12 @@ public class App extends Application {
     public void start(Stage primaryStage) throws Exception {
 
             
-
+        Library.loadBooksFromJson();
        
 
             MainPage mainPage = new MainPage();
 
-            Library.loadBooksFromJson();
+         
 
         Book book1 = new Book("TestTitle", "some subtitle", new ArrayList<>(), new ArrayList<>(), "12312312312", "testPublisher", "12.02.2001", 2, "STYLESHEET_MODENA", 3.5, new ArrayList<>(), null);
             

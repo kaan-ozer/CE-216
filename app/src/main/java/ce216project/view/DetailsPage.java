@@ -275,7 +275,7 @@ public class DetailsPage extends VBox {
                 editedBook.setPublisher(publisher.getTextField().getText());
                 editedBook.setDate(date.getTextField().getText());
                 editedBook.setIsbn(this.book.getIsbn());
-                editedBook.setLanguage(language.getTextField().getText());
+                editedBook.setLanguage(language.getTextField().getText().toLowerCase());
               
                 if (isbn.getTextField().getText() == null || isbn.getTextField().getText().trim().isEmpty()  || editedBook.getTitle() == null || editedBook.getTitle().trim().isEmpty() ) {
                     Alert alert = new Alert(Alert.AlertType.ERROR);
@@ -289,7 +289,7 @@ public class DetailsPage extends VBox {
                 String[] updatedAuthors = new String[authorsList.getItems().size()];
             
                 for(int i = 0 ; i < authorsList.getItems().size() ; i++ ){
-                    updatedAuthors[i] =  authorsList.getItems().get(i).getTextField().getText(); 
+                    updatedAuthors[i] =  authorsList.getItems().get(i).getTextField().getText().toLowerCase(); 
                 }
         
                 List<String> authorsList = Arrays.asList(updatedAuthors);
@@ -300,7 +300,7 @@ public class DetailsPage extends VBox {
                 String[] updatedTranslators = new String[translatorsList.getItems().size()];
             
                 for(int i = 0 ; i < translatorsList.getItems().size() ; i++ ){
-                    updatedTranslators[i] =  translatorsList.getItems().get(i).getTextField().getText();
+                    updatedTranslators[i] =  translatorsList.getItems().get(i).getTextField().getText().toLowerCase();
                     
                 }
             
@@ -310,7 +310,7 @@ public class DetailsPage extends VBox {
                 String[] updatedTags = new String[tagsList.getItems().size()];
             
                 for(int i = 0 ; i < tagsList.getItems().size() ; i++ ){
-                    updatedTags[i] =  tagsList.getItems().get(i).getTextField().getText();
+                    updatedTags[i] =  tagsList.getItems().get(i).getTextField().getText().toLowerCase();
                 
                 }
                 editedBook.setTags(Arrays.asList(updatedTags));

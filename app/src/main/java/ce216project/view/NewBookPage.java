@@ -185,7 +185,7 @@ public class NewBookPage extends VBox{
         String publisherInput = publisher.getTextField().getText();
         String dateInput = date.getTextField().getText();
         String isbnInput = isbn.getTextField().getText();
-        String languageInput = language.getTextField().getText();
+        String languageInput = language.getTextField().getText().toLowerCase();
  
         Library.addLanguages(languageInput);
         if ( edition.getTextField().getText().isEmpty() ||
@@ -199,7 +199,7 @@ public class NewBookPage extends VBox{
         String[] updatedAuthors = new String[authorsList.getItems().size()];
           
         for(int i = 0 ; i < authorsList.getItems().size() ; i++ ){
-            updatedAuthors[i] =  authorsList.getItems().get(i).getTextField().getText(); 
+            updatedAuthors[i] =  authorsList.getItems().get(i).getTextField().getText().toLowerCase(); 
         }
     
         List<String> authorsList = Arrays.asList(updatedAuthors);
@@ -207,7 +207,7 @@ public class NewBookPage extends VBox{
         String[] updatedTranslators = new String[translatorsList.getItems().size()];
         
         for(int i = 0 ; i < translatorsList.getItems().size() ; i++ ){
-            updatedTranslators[i] =  translatorsList.getItems().get(i).getTextField().getText();
+            updatedTranslators[i] =  translatorsList.getItems().get(i).getTextField().getText().toLowerCase();
             
         }
         List<String> translatorsList = Arrays.asList(updatedTranslators);
@@ -215,7 +215,7 @@ public class NewBookPage extends VBox{
         String[] updatedTags = new String[tagsList.getItems().size()];
         
         for(int i = 0 ; i < tagsList.getItems().size() ; i++ ){
-            updatedTags[i] =  tagsList.getItems().get(i).getTextField().getText(); 
+            updatedTags[i] =  tagsList.getItems().get(i).getTextField().getText().toLowerCase(); 
         }
 
         List<String> tagsList = Arrays.asList(updatedTags);

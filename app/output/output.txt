@@ -1,1 +1,1 @@
-[{"authors":["qwqwe"],"coverImagePath":"/Users/kaanozer/Desktop/CE-216/CE-216/app/shared/images/test.jpg","date":"231321","edition":0,"isbn":"231231","language":"231213","publisher":"321","rating":0.0,"subtitle":"123","tags":["qwe"],"title":"312","translators":["qweqwe"]}]
+[{"authors":[],"coverImagePath":null,"date":" ","edition":0,"isbn":"1232124241","language":"english","publisher":" ","rating":0.0,"subtitle":" ","tags":["horror"],"title":"horrorBook","translators":[]}]
