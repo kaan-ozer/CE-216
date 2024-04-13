@@ -8,6 +8,8 @@ import ce216project.models.Book;
 import ce216project.models.Library;
 import ce216project.view.widgets.BookListWidget;
 import ce216project.view.widgets.BookTileWidget;
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.control.Button;
@@ -49,7 +51,12 @@ public class MainPage extends VBox{
     // Books Views
     private ScrollPane booksScroll = new ScrollPane();
     private TilePane booksContainer = new TilePane();
-    
+
+    //Filtering
+    private ArrayList<String> selectedTags = new ArrayList<>();
+    private ArrayList<String> selectedLanguages = new ArrayList<>();
+    private ArrayList<CheckBox> tagCheckboxes = new ArrayList<>();
+    private ArrayList<CheckBox> languageCheckboxes = new ArrayList<>();
 
 
     public MainPage() {
@@ -60,11 +67,10 @@ public class MainPage extends VBox{
         checkBoxListContainer.setPadding(new Insets(5, 0, 0, 5));
 
         // Book add button
-        addBookButtonBox.setAlignment(Pos.CENTER);
         addBookButton.setPrefWidth(100);
-        addBookButtonBox.setPadding(new Insets(10));
         addBookButton.setOnAction(e -> add());
-        
+        addBookButtonBox.setPadding(new Insets(10));
+        addBookButtonBox.setAlignment(Pos.CENTER);
 
         // Search Bar at Right Container
         searchLabel.setPadding(new Insets(5,0,0,0));
@@ -102,18 +108,44 @@ public class MainPage extends VBox{
         this.getChildren().addAll(menuBar,mainLayout);
 
         // Update Main Page
-        // this.fillCheckLists(Library.tags , tagsList); 
-        // this.fillCheckLists(Library.languages , languagesList); 
         this.fillBookTiles(Library.books);
-        this.fillCheckLists(Library.tags, tagsList);
-        this.fillCheckLists(Library.languages, languagesList);
-        //this.fillCheckLists(Library.languages, languagesList);
+        this.fillCheckLists(Library.tags, tagsList,"tag");
+        this.fillCheckLists(Library.languages, languagesList,"language");
         
+        // Listeners for tag checkboxes
+        for (CheckBox tagCheckBox : tagCheckboxes) {
+            tagCheckBox.selectedProperty().addListener(new ChangeListener<Boolean>() {
+                @Override
+                public void changed(ObservableValue<? extends Boolean> observable, Boolean oldValue, Boolean newValue) {
+                    System.out.println("Checkbox state changed: " + tagCheckBox.getText() + ", Selected: " + newValue);
+                    if (newValue) {
+                        selectedTags.add(tagCheckBox.getText());
+                    } else {
+                        selectedTags.remove(tagCheckBox.getText());
+                    }
+                    updateFilteredBooks();
+                }
+            });
+        }
+
+        for (CheckBox langCheckBox : languageCheckboxes) {
+            langCheckBox.selectedProperty().addListener(new ChangeListener<Boolean>() {
+                @Override
+                public void changed(ObservableValue<? extends Boolean> observable, Boolean oldValue, Boolean newValue) {
+                    if (newValue) {
+                        selectedLanguages.add(langCheckBox.getText());
+                    } else {
+                        selectedLanguages.remove(langCheckBox.getText());
+                    }
+                    updateFilteredBooks();
+                }
+            });
+        }        
         
-        
+        updateFilteredBooks();
     }
 
-    public void fillCheckLists (HashMap<String,Integer> hashmap,TitledPane checkBoxList) {
+    public void fillCheckLists (HashMap<String,Integer> hashmap,TitledPane checkBoxList,String type) {
 
         VBox checkBoxVBox = new VBox();
         ScrollPane checkBoxScrollPane = new ScrollPane(checkBoxVBox);
@@ -123,7 +155,13 @@ public class MainPage extends VBox{
             HBox checkBoxItemBox = new HBox();
             CheckBox checkBox = new CheckBox(key);
             Label countLabel = new Label(hashmap.get(key).toString().trim());
-            
+
+            if(type.equals("tag")){
+                tagCheckboxes.add(checkBox);
+            } else if (type.equals("language")){
+                languageCheckboxes.add(checkBox);
+            }
+
             checkBoxItemBox.getChildren().addAll(checkBox,countLabel);
             checkBoxItemBox.setSpacing(5);
             checkBoxItemBox.setPadding(new Insets(0, 0, 5, 5));
@@ -137,7 +175,8 @@ public class MainPage extends VBox{
     }
 
     public void fillBookTiles (ArrayList<Book> books) {
-
+        booksContainer.getChildren().clear();
+        System.out.println("Filling");
         for(Book book : books) {
             BookTileWidget bookTileWidget = new BookTileWidget(book,true);
             booksContainer.getChildren().add(bookTileWidget);
@@ -177,14 +216,11 @@ public class MainPage extends VBox{
         PageController.changeScene(newBookPage, PageController.pagesArray.get(0));
     }
 
-    
-
-    
-
-
-
-
-    
-
+    private void updateFilteredBooks() {
+        System.out.println("Updating filtered books...");
+        ArrayList<Book> filteredBooks = Library.filterBooks(selectedTags, selectedLanguages);
+        System.out.println("Filtered books: " + filteredBooks);
+        fillBookTiles(filteredBooks);
+    }
     
 }

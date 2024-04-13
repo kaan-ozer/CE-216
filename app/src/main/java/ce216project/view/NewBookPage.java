@@ -104,7 +104,7 @@ public class NewBookPage extends VBox{
         tagsList.setPrefHeight(120);
 
         authors = populateList(authorsArrayList, authorsList,"Authors");
-        translators = populateList(translatorsArrayList, translatorsList,"translators");
+        translators = populateList(translatorsArrayList, translatorsList,"Translators");
         tags = populateList(tagsArrayList, tagsList,"Tags");
 
         rightBookFields.getChildren().addAll(authors,translators,tags);
@@ -118,6 +118,7 @@ public class NewBookPage extends VBox{
         chooseCoverButton.setOnAction(e -> getCoverImage());
         buttonsContainer.getChildren().addAll(saveButton,cancelButton);
         buttonsContainer.setSpacing(10);
+        buttonsContainer.setPadding(new Insets(0,0,10,0));
         buttonsContainer.setAlignment(Pos.CENTER);
 
         mainLayout.setSpacing(15);
