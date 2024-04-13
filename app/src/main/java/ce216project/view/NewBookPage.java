@@ -104,7 +104,7 @@ public class NewBookPage extends VBox{
         tagsList.setPrefHeight(120);
 
         authors = populateList(authorsArrayList, authorsList,"Authors");
-        translators = populateList(translatorsArrayList, translatorsList,"translators");
+        translators = populateList(translatorsArrayList, translatorsList,"Translators");
         tags = populateList(tagsArrayList, tagsList,"Tags");
 
         rightBookFields.getChildren().addAll(authors,translators,tags);
@@ -118,11 +118,14 @@ public class NewBookPage extends VBox{
         chooseCoverButton.setOnAction(e -> getCoverImage());
         buttonsContainer.getChildren().addAll(saveButton,cancelButton);
         buttonsContainer.setSpacing(10);
+        buttonsContainer.setPadding(new Insets(0,0,10,0));
         buttonsContainer.setAlignment(Pos.CENTER);
 
         mainLayout.setSpacing(15);
         mainLayout.setPadding(new Insets(10,10,20,10));
+        mainLayout.setAlignment(Pos.CENTER);
         mainLayout.getChildren().addAll(imageContainer,leftBookFields,rightBookFields);
+
         
         this.getChildren().addAll(menuBar,mainLayout,buttonsContainer);
 
@@ -159,6 +162,7 @@ public class NewBookPage extends VBox{
         String dateInput = date.getTextField().getText();
         String isbnInput = isbn.getTextField().getText();
         String languageInput = language.getTextField().getText();
+        Library.addLanguages(languageInput);
         int editionInput = Integer.parseInt(edition.getTextField().getText());
 
 
@@ -170,8 +174,6 @@ public class NewBookPage extends VBox{
     
         List<String> authorsList = Arrays.asList(updatedAuthors);
    
-
-    
         String[] updatedTranslators = new String[translatorsList.getItems().size()];
         
         for(int i = 0 ; i < translatorsList.getItems().size() ; i++ ){
@@ -187,6 +189,7 @@ public class NewBookPage extends VBox{
         }
 
         List<String> tagsList = Arrays.asList(updatedTags);
+        Library.addTags(tagsList);
     
 
 

@@ -128,4 +128,44 @@ public class Library {
         }
     }
 
+    public static void addLanguages(String languageInput) {
+
+        if(languages.containsKey(languageInput)) {
+            int newCount = languages.get(languageInput) + 1;
+            languages.put(languageInput, newCount);
+        } else {
+            languages.put(languageInput,1);
+        }
+    }
+
+    public static ArrayList<Book> filterBooks(ArrayList<String> tagFilters, ArrayList<String> languageFilters){
+        
+        ArrayList<Book> filteredBooks = new ArrayList<>();
+        System.out.println("Filter at Library class");
+        for (Book book : books) {
+            boolean tagMatch = true;
+            boolean languageMatch = true;
+    
+            // Check if the book matches any of the selected tags
+            if (!tagFilters.isEmpty()) {
+                tagMatch = book.getTags().containsAll(tagFilters);
+            }
+    
+            // Check if the book matches any of the selected languages
+            if (!languageFilters.isEmpty()) {
+                languageMatch = languageFilters.contains(book.getLanguage());
+            }
+    
+            if (tagMatch && languageMatch) {
+                filteredBooks.add(book);
+            }
+        }
+    
+
+        return filteredBooks;
+    }
+
+
 }
+
+
