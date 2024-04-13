@@ -122,7 +122,9 @@ public class NewBookPage extends VBox{
 
         mainLayout.setSpacing(15);
         mainLayout.setPadding(new Insets(10,10,20,10));
+        mainLayout.setAlignment(Pos.CENTER);
         mainLayout.getChildren().addAll(imageContainer,leftBookFields,rightBookFields);
+
         
         this.getChildren().addAll(menuBar,mainLayout,buttonsContainer);
 
