@@ -31,9 +31,7 @@ public class IOoperations {
         try {
             if (outputFile.createNewFile()) {
                 System.out.println("File Created: " + outputFile.getName());
-            } else {
-                System.out.println("Dosya zaten var.");
-            }
+            } 
         } catch (IOException e) {
             System.out.println("File couldn't be created.");
             e.printStackTrace();

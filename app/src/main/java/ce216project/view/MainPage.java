@@ -73,7 +73,7 @@ public class MainPage extends VBox{
         searchBarContainer.setPadding(new Insets(5, 10, 5, 10));
 
         // Books Views
-        booksScroll.setContent(booksContainer);
+        booksScroll.setContent(booksContainer); 
         booksContainer.setHgap(15);
         booksContainer.setVgap(10);
         booksContainer.setPadding(new Insets(10, 10, 10, 10));
@@ -85,7 +85,7 @@ public class MainPage extends VBox{
 
         // Resposive design
         VBox.setVgrow(mainLayout, Priority.ALWAYS);
-        HBox.setHgrow(rightContainer, Priority.ALWAYS);
+        HBox.setHgrow(rightContainer, Priority.ALWAYS); 
         HBox.setHgrow(searchBar, Priority.ALWAYS);
         
         // Books TileView Responsive Design
@@ -93,6 +93,7 @@ public class MainPage extends VBox{
             double width = newValue.getWidth();
             int columns = calculateColumns(width); 
             booksContainer.setPrefColumns(columns);
+ 
         });
 
         booksContainer.prefWidthProperty().bind(booksScroll.widthProperty()); // Bind width to ScrollPane width
@@ -101,6 +102,8 @@ public class MainPage extends VBox{
         this.getChildren().addAll(menuBar,mainLayout);
 
         // Update Main Page
+        // this.fillCheckLists(Library.tags , tagsList); 
+        // this.fillCheckLists(Library.languages , languagesList); 
         this.fillBookTiles(Library.books);
         this.fillCheckLists(Library.tags, tagsList);
         //this.fillCheckLists(Library.languages, languagesList);
@@ -113,7 +116,7 @@ public class MainPage extends VBox{
 
         VBox checkBoxVBox = new VBox();
         ScrollPane checkBoxScrollPane = new ScrollPane(checkBoxVBox);
-        checkBoxScrollPane.setMaxHeight(250);
+        checkBoxScrollPane.setMaxHeight(800);
         
         for(String key : hashmap.keySet()){
             HBox checkBoxItemBox = new HBox();
@@ -162,7 +165,7 @@ public class MainPage extends VBox{
     // Calculates column number for tile pane responsiveness
     private int calculateColumns(double width) {
         
-        int columnWidth = 200; 
+        int columnWidth = 600; 
         int minColumns = 1; 
         int maxColumns = (int) width / columnWidth; // Maximum number of columns based on width
         return Math.max(minColumns, maxColumns);

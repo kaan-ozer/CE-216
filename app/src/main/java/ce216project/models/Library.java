@@ -59,6 +59,8 @@ public class Library {
     }
 
     public static void editBook(Book editedBook) {
+
+        System.out.println("Edit book method called: " + editedBook);
         Book bookToEdit = null;
 
         for (Book book : books) {

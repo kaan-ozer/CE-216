@@ -4,12 +4,16 @@ import ce216project.controller.PageController;
 import ce216project.models.Book;
 import ce216project.models.Library;
 import ce216project.view.widgets.BookField;
+import ce216project.view.widgets.ItemField;
+import ce216project.view.widgets.ItemFieldBody;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.control.Button;
+import javafx.scene.control.ListView;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.HBox;
+import javafx.scene.layout.Priority;
 import javafx.scene.layout.VBox;
 import javafx.scene.shape.Rectangle;
 import javafx.stage.FileChooser;
@@ -17,6 +21,7 @@ import javafx.stage.Stage;
 
 import java.nio.file.Path;
 import java.util.List;
+import java.util.ArrayList;
 import java.util.Arrays;
 
 public class NewBookPage extends VBox{
@@ -46,9 +51,13 @@ public class NewBookPage extends VBox{
 
     // Right Book Fields
     private VBox rightBookFields = new VBox();
-    private BookField authors;
-    private BookField translators;
-    private BookField tags;
+    private ItemField authors;
+    private ItemField translators;
+    private ItemField tags;
+
+    private ListView<ItemFieldBody> authorsList;
+    private ListView<ItemFieldBody> translatorsList;
+    private ListView<ItemFieldBody> tagsList;
 
     // Buttons
     private Button saveButton = new Button("Save");
@@ -80,10 +89,23 @@ public class NewBookPage extends VBox{
         leftBookFields.getChildren().addAll(title,subtitle,publisher,date,isbn,language,edition);
         leftBookFields.setSpacing(10);
 
-        // Right Book Fields
-        authors = new BookField("Authors", "", isEditable, false);
-        translators = new BookField("Translators", "", isEditable, false);
-        tags = new BookField("Tags", "", isEditable, false);
+
+        ArrayList<String> authorsArrayList = new ArrayList<>();
+        ArrayList<String> translatorsArrayList = new ArrayList<>();
+        ArrayList<String> tagsArrayList = new ArrayList<>();
+
+        authorsList = new ListView<ItemFieldBody>();
+        authorsList.setPrefHeight(120);
+
+        translatorsList = new ListView<ItemFieldBody>();
+        translatorsList.setPrefHeight(120);
+
+        tagsList = new ListView<ItemFieldBody>();
+        tagsList.setPrefHeight(120);
+
+        authors = populateList(authorsArrayList, authorsList,"Authors");
+        translators = populateList(translatorsArrayList, translatorsList,"translators");
+        tags = populateList(tagsArrayList, tagsList,"Tags");
 
         rightBookFields.getChildren().addAll(authors,translators,tags);
         rightBookFields.setSpacing(10);
@@ -119,8 +141,7 @@ public class NewBookPage extends VBox{
         fileChooser.getExtensionFilters().add(extFilter);
         Path coverImagePathInput = fileChooser.showOpenDialog(new Stage()).toPath();
         this.coverImagePath = coverImagePathInput;
-        System.out.println(coverImagePath);
-        System.out.println(coverImagePathInput);
+   
         
         // Set Image Preview
 
@@ -140,24 +161,95 @@ public class NewBookPage extends VBox{
         String languageInput = language.getTextField().getText();
         int editionInput = Integer.parseInt(edition.getTextField().getText());
 
-        String[] authorsInput =  authors.getTextArea().getText().trim().split(",");
-        List<String> authorsList = Arrays.asList(authorsInput);
-        String[] translatorsInput = translators.getTextArea().getText().trim().split(",");
-        List<String> translatorsList = Arrays.asList(translatorsInput);
-        String[] tagsInput = tags.getTextArea().getText().trim().split(",");
-        List<String> tagsList = Arrays.asList(tagsInput);
+
+        String[] updatedAuthors = new String[authorsList.getItems().size()];
+          
+        for(int i = 0 ; i < authorsList.getItems().size() ; i++ ){
+            updatedAuthors[i] =  authorsList.getItems().get(i).getTextField().getText(); 
+        }
+    
+        List<String> authorsList = Arrays.asList(updatedAuthors);
+   
+
+    
+        String[] updatedTranslators = new String[translatorsList.getItems().size()];
         
-        System.out.println(tagsInput.toString());
-        System.out.println(tagsList.toString());
+        for(int i = 0 ; i < translatorsList.getItems().size() ; i++ ){
+            updatedTranslators[i] =  translatorsList.getItems().get(i).getTextField().getText();
+            
+        }
+        List<String> translatorsList = Arrays.asList(updatedTranslators);
+    
+        String[] updatedTags = new String[tagsList.getItems().size()];
+        
+        for(int i = 0 ; i < tagsList.getItems().size() ; i++ ){
+            updatedTags[i] =  tagsList.getItems().get(i).getTextField().getText(); 
+        }
 
-        Library.addTags(tagsList);
+        List<String> tagsList = Arrays.asList(updatedTags);
+    
 
-        System.out.println(Library.tags.entrySet().toString());
+
+        // String[] authorsInput =  authors.getTextArea().getText().trim().split(",");
+        // List<String> authorsList = Arrays.asList(authorsInput);
+        // String[] translatorsInput = translators.getTextArea().getText().trim().split(",");
+        // List<String> translatorsList = Arrays.asList(translatorsInput);
+        // String[] tagsInput = tags.getTextArea().getText().trim().split(",");
+        // List<String> tagsList = Arrays.asList(tagsInput);
+
+
 
         Book newBook = new Book(titleInput, subTitleInput, authorsList, translatorsList, isbnInput, publisherInput, dateInput, editionInput, languageInput, 5.0, tagsList, coverImagePath);
         Library.createBook(newBook);
 
         cancel(); 
     }
+
+    private  ItemField populateList(ArrayList<String> arrayList,ListView<ItemFieldBody> listView, String labelName) {
+    
+        listView.setPrefHeight(120);
+
+        int id = 0; 
+      
+        for (String item: arrayList) {
+            
+            Button deleteButton = new Button("X");
+            deleteButton.setVisible(isEditable);
+
+            deleteButton.setOnAction(e -> {  
+                ItemFieldBody itemField = listView.getItems().get(listView.getItems().indexOf(deleteButton.getParent()));
+                listView.getSelectionModel().select(itemField); 
+                listView.getItems().remove(itemField);
+            });
+
+            ItemFieldBody itemFieldBody = new ItemFieldBody( "" + (id + 1), item, isEditable, deleteButton);
+            HBox.setHgrow(itemFieldBody, Priority.ALWAYS); 
+            listView.getItems().add(itemFieldBody);
+  
+            id++; 
+        }
+        
+        Button addItemButton = new Button("+");
+        ItemField newItem = new ItemField( labelName,"", listView, isEditable, addItemButton);   
+
+        addItemButton.setOnAction(e -> {
+            Button deleteFromList = new Button("X");
+
+            deleteFromList.setOnAction(a -> {
+                ItemFieldBody itemField = listView.getItems().get(listView.getItems().indexOf(deleteFromList.getParent()));
+                listView.getSelectionModel().select(itemField); 
+                listView.getItems().remove(itemField);
+            });
+
+          
+            ItemFieldBody newItemField = new ItemFieldBody( "" + (listView.getItems().size() + 1), newItem.getTextField().getText() , true, deleteFromList);
+            listView.getItems().add(newItemField);
+        
+        });
+
+        return newItem;
+    }
+
+    
     
 }
