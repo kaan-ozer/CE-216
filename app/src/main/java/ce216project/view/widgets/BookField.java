@@ -41,9 +41,7 @@ public class BookField extends HBox{
             this.getChildren().add(textArea);
             this.textArea = textArea;
         }
-        
-        
-         
+               
     }
 
     public TextField getTextField() {

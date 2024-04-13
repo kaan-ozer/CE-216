@@ -170,8 +170,6 @@ public class NewBookPage extends VBox{
     
         List<String> authorsList = Arrays.asList(updatedAuthors);
    
-
-    
         String[] updatedTranslators = new String[translatorsList.getItems().size()];
         
         for(int i = 0 ; i < translatorsList.getItems().size() ; i++ ){
@@ -187,6 +185,7 @@ public class NewBookPage extends VBox{
         }
 
         List<String> tagsList = Arrays.asList(updatedTags);
+        Library.addTags(tagsList);
     
 
 
