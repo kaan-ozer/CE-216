@@ -78,6 +78,7 @@ public class DetailsPage extends VBox {
         this.pageIndex = pageIndex;
 
         bookTileWidget = new BookTileWidget(book,false);
+        bookTileWidget.getChildren().remove(1);
 
         // Right Container Widgets
         // Left Book Fields Container
@@ -149,6 +150,7 @@ public class DetailsPage extends VBox {
         // Main Layout
         mainLayout.getChildren().setAll(leftContainer,rightContainer);
         mainLayout.setSpacing(20);
+        mainLayout.setAlignment(Pos.CENTER);
 
         this.getChildren().addAll(menuBar,mainLayout);
     }
@@ -243,9 +245,7 @@ public class DetailsPage extends VBox {
         for(ItemFieldBody itemfield : tagsListView.getItems()){
             itemfield.getTextField().setEditable(isEditable);
             itemfield.getButton().setVisible(isEditable);
-        }
-       
-       
+        } 
     }
 
     public void setPageIndex (int pageIndex) {
@@ -277,11 +277,8 @@ public class DetailsPage extends VBox {
                     edition.getTextField().setText("0"); 
                 }  
                 
-               
                 editionNumber = Integer.parseInt(edition.getTextField().getText());
                   
-
-                
                 editedBook.setEdition(editionNumber);
               
                 editedBook.setTitle(title.getTextField().getText());
@@ -351,6 +348,7 @@ public class DetailsPage extends VBox {
         
         buttonsContainer.getChildren().clear();
         buttonsContainer.getChildren().addAll(saveButton,cancelButton);
+
 
     }
 
@@ -433,8 +431,6 @@ public class DetailsPage extends VBox {
             tagsListView.getItems().add(itemFieldBody);
         });
 
-
-       
         BookTileWidget updatedBookTile = new BookTileWidget(book, false);
        
         bookTileWidget = updatedBookTile;

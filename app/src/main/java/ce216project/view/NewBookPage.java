@@ -240,7 +240,6 @@ public class NewBookPage extends VBox{
                 listView.getItems().remove(itemField);
             });
 
-          
             ItemFieldBody newItemField = new ItemFieldBody( "" + (listView.getItems().size() + 1), newItem.getTextField().getText() , true, deleteFromList);
             listView.getItems().add(newItemField);
         
