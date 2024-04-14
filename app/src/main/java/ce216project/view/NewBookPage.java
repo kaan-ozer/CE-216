@@ -180,7 +180,7 @@ public class NewBookPage extends VBox{
         String coverImagePath = imagePicker.getImagePath();
 
         Book newBook = new Book(titleInput, subTitleInput, authorsList, translatorsList, isbnInput, publisherInput, dateInput, editionInput, languageInput, rateInput, tagsList,coverImagePath);
-        Library.createBook(newBook);
+ 
 
             if (newBook.getIsbn() == null || newBook.getIsbn().trim().isEmpty() || newBook.getTitle() == null || newBook.getTitle().trim().isEmpty()) {
                 Alert alert = new Alert(Alert.AlertType.ERROR);
@@ -191,7 +191,7 @@ public class NewBookPage extends VBox{
                 return;
             }
 
-
+            Library.createBook(newBook);
             cancel(); 
         }
         catch ( NumberFormatException e1) {
