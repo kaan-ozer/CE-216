@@ -166,12 +166,7 @@ public class DetailsPage extends VBox {
 
             deleteButton.setOnAction(e -> {  
                 ItemFieldBody itemField = listView.getItems().get(listView.getItems().indexOf(deleteButton.getParent()));
-                listView.getSelectionModel().select(itemField);
-                // ArrayList<String> newArrayList = new ArrayList<>();
-                // newArrayList.addAll(arrayList);
-                // newArrayList.remove(listView.getItems().indexOf(deleteButton.getParent()));
-                // book.setAuthors(newArrayList);
-                // Library.saveBooksToJson();
+                listView.getSelectionModel().select(itemField); 
                 listView.getItems().remove(itemField);
             });
 
@@ -387,10 +382,57 @@ public class DetailsPage extends VBox {
         language.getTextField().setText(book.getLanguage()); 
         edition.getTextField().setText  (Integer.toString(book.getEdition()));
     
-
         authorsListView.getItems().clear();
+        book.getAuthors().forEach(author -> {
+
+            Button deleteButton = new Button("X");
+            deleteButton.setVisible(isEditable);
+
+            deleteButton.setOnAction(e -> {  
+                ItemFieldBody itemField = authorsListView.getItems().get(authorsListView.getItems().indexOf(deleteButton.getParent()));
+                authorsListView.getSelectionModel().select(itemField); 
+                authorsListView.getItems().remove(itemField);
+            });
+
+            ItemFieldBody itemFieldBody = new ItemFieldBody("" + (authorsListView.getItems().size() + 1), author, isEditable, deleteButton);
+            
+            authorsListView.getItems().add(itemFieldBody);
+        });
+       
         translatorsListView.getItems().clear();
+        book.getTranslators().forEach(author -> {
+
+            Button deleteButton = new Button("X");
+            deleteButton.setVisible(isEditable);
+
+            deleteButton.setOnAction(e -> {  
+                ItemFieldBody itemField = translatorsListView.getItems().get(translatorsListView.getItems().indexOf(deleteButton.getParent()));
+                translatorsListView.getSelectionModel().select(itemField); 
+                translatorsListView.getItems().remove(itemField);
+            });
+
+            ItemFieldBody itemFieldBody = new ItemFieldBody("" + (translatorsListView.getItems().size() + 1), author, isEditable, deleteButton);
+            
+            translatorsListView.getItems().add(itemFieldBody);
+        });
+
         tagsListView.getItems().clear();
+
+        book.getTags().forEach(author -> {
+
+            Button deleteButton = new Button("X");
+            deleteButton.setVisible(isEditable);
+
+            deleteButton.setOnAction(e -> {  
+                ItemFieldBody itemField = tagsListView.getItems().get(tagsListView.getItems().indexOf(deleteButton.getParent()));
+                tagsListView.getSelectionModel().select(itemField); 
+                tagsListView.getItems().remove(itemField);
+            });
+
+            ItemFieldBody itemFieldBody = new ItemFieldBody("" + (tagsListView.getItems().size() + 1), author, isEditable, deleteButton);
+            
+            tagsListView.getItems().add(itemFieldBody);
+        });
 
 
        
