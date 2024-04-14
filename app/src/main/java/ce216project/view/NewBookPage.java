@@ -75,14 +75,13 @@ public class NewBookPage extends VBox{
     private Button chooseCoverButton = new Button("Cover Image");
     private HBox buttonsContainer = new HBox();
     
-
-
     public NewBookPage() {
 
         // Image Preview
         imageContainer.getChildren().addAll(imageRectangle,chooseCoverButton);
         imageContainer.setSpacing(15);
         imageContainer.setPadding(new Insets(20));
+        imageContainer.setAlignment(Pos.TOP_CENTER);
         imagePreview.setX(100);
         imagePreview.setY(150);
 
@@ -140,10 +139,8 @@ public class NewBookPage extends VBox{
         mainLayout.setPadding(new Insets(10,10,20,10));
         mainLayout.setAlignment(Pos.CENTER);
         mainLayout.getChildren().addAll(imageContainer,leftBookFields,rightBookFields);
-
-        
+ 
         this.getChildren().addAll(menuBar,mainLayout,buttonsContainer);
-
 
     }   
 
