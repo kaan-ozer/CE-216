@@ -13,7 +13,10 @@ import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
+import javafx.scene.control.Label;
 import javafx.scene.control.ListView;
+import javafx.scene.control.Spinner;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Priority;
 import javafx.scene.layout.VBox;
@@ -53,6 +56,10 @@ public class DetailsPage extends VBox {
     private BookField isbn;
     private BookField language;
     private BookField edition;
+    private HBox rateBox = new HBox();
+    private Label rateLabel = new Label("Rating");
+    private Spinner<Double> ratingSpinner;
+    
 
     // Right Book Fields
     private VBox rightBookFields = new VBox();
@@ -79,17 +86,19 @@ public class DetailsPage extends VBox {
         publisher= new BookField("Publisher", book.getPublisher(), isEditable, true);
         date = new BookField("Date", book.getDate(), isEditable, true);
         isbn= new BookField("ISBN", book.getIsbn(), isEditable, true);
-
-       
-        
-        
         language = new BookField("Language",  book.getLanguage() , isEditable, true);
  
         String editionNumber = book.getEdition() == 0 ? ""  : Integer.toString(book.getEdition());
-
         edition = new BookField("Edition", editionNumber, isEditable, true);
 
-        leftBookFields.getChildren().addAll(title,subtitle,publisher,date,isbn,language,edition);
+        // Rating Spinner
+        ratingSpinner = new Spinner<>(0.0, 5.0, book.getRating(), 0.5);
+        ratingSpinner.setEditable(false);
+        ratingSpinner.setPrefWidth(150);
+        rateLabel.setPrefWidth(60);
+        rateBox.getChildren().addAll(rateLabel,ratingSpinner);
+
+        leftBookFields.getChildren().addAll(title,subtitle,publisher,date,isbn,language,edition,rateBox);
         leftBookFields.setSpacing(10);
         leftBookFields.setPadding(new Insets(20)); 
 
@@ -211,6 +220,8 @@ public class DetailsPage extends VBox {
         edition.getTextField().setEditable(isEditable);
         authors.getTextField().setEditable(isEditable);
         authors.getInputField().setVisible(isEditable);
+        ratingSpinner.setEditable(isEditable);
+
 
         for(ItemFieldBody itemfield : authorsListView.getItems()){
             itemfield.getTextField().setEditable(isEditable);
@@ -274,7 +285,8 @@ public class DetailsPage extends VBox {
                 editedBook.setDate(date.getTextField().getText());
                 editedBook.setIsbn(this.book.getIsbn());
                 editedBook.setLanguage(language.getTextField().getText().toLowerCase());
-              
+                editedBook.setRating(ratingSpinner.getValue());
+
                 if (isbn.getTextField().getText() == null || isbn.getTextField().getText().trim().isEmpty()  || editedBook.getTitle() == null || editedBook.getTitle().trim().isEmpty() ) {
                     Alert alert = new Alert(Alert.AlertType.ERROR);
                     alert.setTitle("Error");
@@ -304,6 +316,7 @@ public class DetailsPage extends VBox {
                 Set<String> translatorsSet = new HashSet<>(Arrays.asList(updatedTranslators));
                 editedBook.setTranslators(translatorsSet);
 
+                // Tags
                 String[] updatedTags = new String[tagsListView.getItems().size()];
             
                 for(int i = 0 ; i < tagsListView.getItems().size() ; i++ ){
@@ -333,8 +346,6 @@ public class DetailsPage extends VBox {
            
         
         }); 
-
-
 
         Button cancelButton = new Button("Cancel");
         cancelButton.setPrefWidth(100);
@@ -370,6 +381,7 @@ public class DetailsPage extends VBox {
         isbn.getTextField().setText(book.getIsbn());
         language.getTextField().setText(book.getLanguage()); 
         edition.getTextField().setText  (Integer.toString(book.getEdition()));
+    
 
         authorsListView.getItems().clear();
         translatorsListView.getItems().clear();

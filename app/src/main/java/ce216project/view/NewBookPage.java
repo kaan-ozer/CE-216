@@ -6,11 +6,14 @@ import ce216project.models.Library;
 import ce216project.view.widgets.BookField;
 import ce216project.view.widgets.ItemField;
 import ce216project.view.widgets.ItemFieldBody;
+
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
+import javafx.scene.control.Label;
 import javafx.scene.control.ListView;
+import javafx.scene.control.Spinner;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.HBox;
@@ -21,8 +24,9 @@ import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 
 import java.io.File;
-import java.util.Arrays;
 import java.util.*;
+
+
 
 public class NewBookPage extends VBox{
 
@@ -51,6 +55,9 @@ public class NewBookPage extends VBox{
     private BookField isbn;
     private BookField language;
     private BookField edition;
+    private HBox rateBox = new HBox();
+    private Label rateLabel = new Label("Rating");
+    private Spinner<Double> ratingSpinner;
 
     // Right Book Fields
     private VBox rightBookFields = new VBox();
@@ -87,11 +94,16 @@ public class NewBookPage extends VBox{
         isbn = new BookField("ISBN", "", isEditable, true);
         language = new BookField("Language", "", isEditable, true);
         edition = new BookField("Edition", "", isEditable, true);
-         
 
-        leftBookFields.getChildren().addAll(title,subtitle,publisher,date,isbn,language,edition);
+        // Rating Spinner
+        ratingSpinner = new Spinner<>(0.0, 5.0, 0.0, 0.5);
+        ratingSpinner.setEditable(true);
+        ratingSpinner.setPrefWidth(150);
+        rateLabel.setPrefWidth(60);
+        rateBox.getChildren().addAll(rateLabel,ratingSpinner);
+        
+        leftBookFields.getChildren().addAll(title,subtitle,publisher,date,isbn,language,edition,rateBox);
         leftBookFields.setSpacing(10);
-
 
         Set<String> authorsArrayList = new HashSet<>();
         Set<String> translatorsArrayList = new HashSet<>();
@@ -142,8 +154,6 @@ public class NewBookPage extends VBox{
 
     private void getCoverImage() {
 
- 
-        
         FileChooser fileChooser = new FileChooser();
         FileChooser.ExtensionFilter extFilter = new FileChooser.ExtensionFilter("Image files", "*.png","*.jpeg","*.jpg");
         fileChooser.setTitle("Select Cover Image");
@@ -189,6 +199,7 @@ public class NewBookPage extends VBox{
         }  
       
         int editionInput =   Integer.parseInt(edition.getTextField().getText());
+        double rateInput = ratingSpinner.getValue();
  
         // Authors
         String[] updatedAuthors = new String[authorsListView.getItems().size()];
@@ -218,7 +229,7 @@ public class NewBookPage extends VBox{
         Library.addTags(tagsList);
        
 
-        Book newBook = new Book(titleInput, subTitleInput, authorsList, translatorsList, isbnInput, publisherInput, dateInput, editionInput, languageInput, 5.0, tagsList,  this.coverImagePath);
+        Book newBook = new Book(titleInput, subTitleInput, authorsList, translatorsList, isbnInput, publisherInput, dateInput, editionInput, languageInput, rateInput, tagsList,  this.coverImagePath);
         Library.createBook(newBook);
 
         cancel(); 
