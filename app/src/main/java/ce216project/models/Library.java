@@ -55,7 +55,7 @@ public class Library {
                     
                 if (book.getCoverImagePath() != null) {
                     book.setCoverImagePath(imagesPath + book.getCoverImagePath().trim().split(imagesPath)[1]);
-                }
+                }  
 
                
             });

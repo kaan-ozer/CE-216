@@ -21,9 +21,6 @@ import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 
 import java.io.File;
-import java.nio.file.Path;
-import java.util.List;
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.*;
 
@@ -61,9 +58,9 @@ public class NewBookPage extends VBox{
     private ItemField translators;
     private ItemField tags;
 
-    private ListView<ItemFieldBody> authorsList;
-    private ListView<ItemFieldBody> translatorsList;
-    private ListView<ItemFieldBody> tagsList;
+    private ListView<ItemFieldBody> authorsListView;
+    private ListView<ItemFieldBody> translatorsListView;
+    private ListView<ItemFieldBody> tagsListView;
 
     // Buttons
     private Button saveButton = new Button("Save");
@@ -100,18 +97,18 @@ public class NewBookPage extends VBox{
         Set<String> translatorsArrayList = new HashSet<>();
         Set<String> tagsArrayList = new HashSet<>();
 
-        authorsList = new ListView<ItemFieldBody>();
-        authorsList.setPrefHeight(120);
+        authorsListView = new ListView<ItemFieldBody>();
+        authorsListView.setPrefHeight(120);
 
-        translatorsList = new ListView<ItemFieldBody>();
-        translatorsList.setPrefHeight(120);
+        translatorsListView = new ListView<ItemFieldBody>();
+        translatorsListView.setPrefHeight(120);
 
-        tagsList = new ListView<ItemFieldBody>();
-        tagsList.setPrefHeight(120);
+        tagsListView = new ListView<ItemFieldBody>();
+        tagsListView.setPrefHeight(120);
 
-        authors = populateList(authorsArrayList, authorsList,"Authors");
-        translators = populateList(translatorsArrayList, translatorsList,"Translators");
-        tags = populateList(tagsArrayList, tagsList,"Tags");
+        authors = populateList(authorsArrayList, authorsListView,"Authors");
+        translators = populateList(translatorsArrayList, translatorsListView,"Translators");
+        tags = populateList(tagsArrayList, tagsListView,"Tags");
 
         rightBookFields.getChildren().addAll(authors,translators,tags);
         rightBookFields.setSpacing(10);
@@ -173,9 +170,6 @@ public class NewBookPage extends VBox{
             alert.setContentText("Selected photo must be inside of the project under images folder!");
             alert.showAndWait();
         }
-        
-         
-
       
     }
 
@@ -197,27 +191,27 @@ public class NewBookPage extends VBox{
         int editionInput =   Integer.parseInt(edition.getTextField().getText());
  
         // Authors
-        String[] updatedAuthors = new String[authorsList.getItems().size()];
+        String[] updatedAuthors = new String[authorsListView.getItems().size()];
           
-        for(int i = 0 ; i < authorsList.getItems().size() ; i++ ){
-            updatedAuthors[i] =  authorsList.getItems().get(i).getTextField().getText().toLowerCase(); 
+        for(int i = 0 ; i < authorsListView.getItems().size() ; i++ ){
+            updatedAuthors[i] =  authorsListView.getItems().get(i).getTextField().getText().toLowerCase(); 
         }
     
         Set<String> authorsList = new HashSet<>(Arrays.asList(updatedAuthors));
    
-        String[] updatedTranslators = new String[translatorsList.getItems().size()];
+        String[] updatedTranslators = new String[translatorsListView.getItems().size()];
         
         // Translators
-        for(int i = 0 ; i < translatorsList.getItems().size() ; i++ ){
-        updatedTranslators[i] =  translatorsList.getItems().get(i).getTextField().getText().toLowerCase();
+        for(int i = 0 ; i < translatorsListView.getItems().size() ; i++ ){
+        updatedTranslators[i] =  translatorsListView.getItems().get(i).getTextField().getText().toLowerCase();
         }
         Set<String> translatorsList = new HashSet<>(Arrays.asList(updatedTranslators));
         
         // Tags
-        String[] updatedTags = new String[tagsList.getItems().size()];
+        String[] updatedTags = new String[tagsListView.getItems().size()];
         
-        for(int i = 0 ; i < tagsList.getItems().size() ; i++ ){
-            updatedTags[i] =  tagsList.getItems().get(i).getTextField().getText().toLowerCase(); 
+        for(int i = 0 ; i < tagsListView.getItems().size() ; i++ ){
+            updatedTags[i] =  tagsListView.getItems().get(i).getTextField().getText().toLowerCase(); 
         }
 
         Set<String> tagsList = new HashSet<>(Arrays.asList(updatedTags));
