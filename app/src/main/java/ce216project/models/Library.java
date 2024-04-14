@@ -150,6 +150,10 @@ public class Library {
 
     public static void addLanguages(String languageInput) {
 
+        if (languageInput == null || languageInput.isEmpty()) {
+            return;
+        }
+
       
         if(languages.containsKey(languageInput)) {
             int newCount = languages.get(languageInput) + 1;
