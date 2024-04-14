@@ -128,6 +128,7 @@ public class MainPage extends VBox{
             });
         }
 
+        // Listeners for language checkboxes
         for (CheckBox langCheckBox : languageCheckboxes) {
             langCheckBox.selectedProperty().addListener(new ChangeListener<Boolean>() {
                 @Override

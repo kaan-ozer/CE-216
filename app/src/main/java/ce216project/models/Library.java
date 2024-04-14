@@ -24,9 +24,10 @@ public class Library {
     public static void loadBooksFromJson() {
         try {
 
-            tags = new HashMap<>();
-            languages = new HashMap<>();
+            //tags = new HashMap<>();
+            //languages = new HashMap<>();
 
+            // Initial tags and languages
             if(languages.size() == 0){
                 languages.put("english", 0);
                 languages.put("turkish", 0);
@@ -66,10 +67,6 @@ public class Library {
         }
     }
 
-    public static void loadTagsFromJson(){
-
-    }
-
     public static void saveBooksToJson() {
         try {
             System.out.println(books.get(0).getCoverImagePath());
@@ -82,7 +79,6 @@ public class Library {
 
 
     public static void addTags(Set<String> tagsInputList){
-
 
         for(String tagInput : tagsInputList){
             if (tags.containsKey(tagInput)) {
@@ -167,7 +163,7 @@ public class Library {
 
     public static void addLanguages(String languageInput) {
 
-      
+
         if(languages.containsKey(languageInput)) {
             int newCount = languages.get(languageInput) + 1;
             languages.put(languageInput, newCount);
@@ -196,7 +192,7 @@ public class Library {
             }
     
             // Check if the book matches any of the selected languages
-            else if (languageFilters.isEmpty() || languageFilters.contains(book.getLanguage())) {
+            if (languageFilters.contains(book.getLanguage())) {
                 languageMatch = true;
             }
     
