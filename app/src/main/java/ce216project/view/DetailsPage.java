@@ -265,7 +265,12 @@ public class DetailsPage extends VBox {
                     edition.getTextField().setText("0"); 
                 }  
                 
-                editionNumber = Integer.parseInt(edition.getTextField().getText());
+               
+
+                    editionNumber = Integer.parseInt(edition.getTextField().getText());
+                  
+
+                
               
                 
                 editedBook.setEdition(editionNumber);

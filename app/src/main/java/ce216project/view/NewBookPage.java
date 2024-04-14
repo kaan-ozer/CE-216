@@ -193,49 +193,70 @@ public class NewBookPage extends VBox{
             edition.getTextField().setText("0"); 
         }  
       
-        int editionInput =   Integer.parseInt(edition.getTextField().getText());
- 
+        try {
+            int editionInput =   Integer.parseInt(edition.getTextField().getText());
 
-        String[] updatedAuthors = new String[authorsList.getItems().size()];
-          
-        for(int i = 0 ; i < authorsList.getItems().size() ; i++ ){
-            updatedAuthors[i] =  authorsList.getItems().get(i).getTextField().getText().toLowerCase(); 
-        }
-    
-        List<String> authorsList = Arrays.asList(updatedAuthors);
-   
-        String[] updatedTranslators = new String[translatorsList.getItems().size()];
-        
-        for(int i = 0 ; i < translatorsList.getItems().size() ; i++ ){
-            updatedTranslators[i] =  translatorsList.getItems().get(i).getTextField().getText().toLowerCase();
+
+            String[] updatedAuthors = new String[authorsList.getItems().size()];
             
-        }
-        List<String> translatorsList = Arrays.asList(updatedTranslators);
-    
-        String[] updatedTags = new String[tagsList.getItems().size()];
+            for(int i = 0 ; i < authorsList.getItems().size() ; i++ ){
+                updatedAuthors[i] =  authorsList.getItems().get(i).getTextField().getText().toLowerCase(); 
+            }
         
-        for(int i = 0 ; i < tagsList.getItems().size() ; i++ ){
-            updatedTags[i] =  tagsList.getItems().get(i).getTextField().getText().toLowerCase(); 
-        }
-
-        List<String> tagsList = Arrays.asList(updatedTags);
-        Library.addTags(tagsList);
+            List<String> authorsList = Arrays.asList(updatedAuthors);
     
+            String[] updatedTranslators = new String[translatorsList.getItems().size()];
+            
+            for(int i = 0 ; i < translatorsList.getItems().size() ; i++ ){
+                updatedTranslators[i] =  translatorsList.getItems().get(i).getTextField().getText().toLowerCase();
+                
+            }
+            List<String> translatorsList = Arrays.asList(updatedTranslators);
+        
+            String[] updatedTags = new String[tagsList.getItems().size()];
+            
+            for(int i = 0 ; i < tagsList.getItems().size() ; i++ ){
+                updatedTags[i] =  tagsList.getItems().get(i).getTextField().getText().toLowerCase(); 
+            }
+
+            List<String> tagsList = Arrays.asList(updatedTags);
+            Library.addTags(tagsList);
+        
 
 
-        // String[] authorsInput =  authors.getTextArea().getText().trim().split(",");
-        // List<String> authorsList = Arrays.asList(authorsInput);
-        // String[] translatorsInput = translators.getTextArea().getText().trim().split(",");
-        // List<String> translatorsList = Arrays.asList(translatorsInput);
-        // String[] tagsInput = tags.getTextArea().getText().trim().split(",");
-        // List<String> tagsList = Arrays.asList(tagsInput);
+            // String[] authorsInput =  authors.getTextArea().getText().trim().split(",");
+            // List<String> authorsList = Arrays.asList(authorsInput);
+            // String[] translatorsInput = translators.getTextArea().getText().trim().split(",");
+            // List<String> translatorsList = Arrays.asList(translatorsInput);
+            // String[] tagsInput = tags.getTextArea().getText().trim().split(",");
+            // List<String> tagsList = Arrays.asList(tagsInput);
 
-       
+        
 
-        Book newBook = new Book(titleInput, subTitleInput, authorsList, translatorsList, isbnInput, publisherInput, dateInput, editionInput, languageInput, 5.0, tagsList,  this.coverImagePath);
-        Library.createBook(newBook);
+            Book newBook = new Book(titleInput, subTitleInput, authorsList, translatorsList, isbnInput, publisherInput, dateInput, editionInput, languageInput, 5.0, tagsList,  this.coverImagePath);
+            Library.createBook(newBook);
 
-        cancel(); 
+            if (newBook.getIsbn() == null || newBook.getIsbn().trim().isEmpty() || newBook.getTitle() == null || newBook.getTitle().trim().isEmpty()) {
+                Alert alert = new Alert(Alert.AlertType.ERROR);
+                alert.setTitle("Error");
+                alert.setHeaderText(null);
+                alert.setContentText("Creation failed: ISBN and Title are required.");
+                alert.showAndWait();
+                return;
+            }
+
+            cancel(); 
+        }
+        catch ( NumberFormatException e1) {
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setTitle("Error");
+            alert.setHeaderText(null);
+            alert.setContentText("Edition field must contain only number values.");
+            alert.showAndWait();
+            return;
+        }
+     
+ 
     }
 
     private  ItemField populateList(ArrayList<String> arrayList,ListView<ItemFieldBody> listView, String labelName) {
