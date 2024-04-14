@@ -42,20 +42,22 @@ public class Library {
     
             
             books = IOoperations.readFromJsonFile();
-            String projectPath = System.getProperty("user.dir");
-            String imagesPath = projectPath + File.separator + "shared" + File.separator + "images" + File.separator;
+        
             books.forEach(book ->{
-            if (book.getCoverImagePath() != null) {
-                book.setCoverImagePath(imagesPath + book.getCoverImagePath().trim().split(imagesPath)[1]);
-            }
+                if (book.getCoverImagePath() != null) {
+                    try {
+
+                        book.setCoverImagePath(book.getCoverImagePath());
+                    }catch(ArrayIndexOutOfBoundsException err) {
+
+                        // err.printStackTrace();
+                        System.err.println("Error loading book cover image: " + err.getMessage());
+                    }
+                }
 
                 addLanguages(book.getLanguage());
                 addTags(book.getTags());
-                    
-                if (book.getCoverImagePath() != null) {
-                    book.setCoverImagePath(imagesPath + book.getCoverImagePath().trim().split(imagesPath)[1]);
-                }  
-
+             
                
          
         });

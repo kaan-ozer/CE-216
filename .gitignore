@@ -76,3 +76,4 @@ out/
 *.vsix
 
 .save
+.DS_Store
