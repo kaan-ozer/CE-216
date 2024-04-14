@@ -15,6 +15,8 @@ import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.ListView;
+import javafx.scene.control.Spinner;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Priority;
 import javafx.scene.layout.VBox;
@@ -54,6 +56,10 @@ public class DetailsPage extends VBox {
     private BookField isbn;
     private BookField language;
     private BookField edition;
+    private HBox rateBox = new HBox();
+    private Label rateLabel = new Label("Rating");
+    private Spinner<Double> ratingSpinner;
+    
 
     // Right Book Fields
     private VBox rightBookFields = new VBox();
@@ -61,9 +67,9 @@ public class DetailsPage extends VBox {
     private ItemField translators;
     private ItemField tags;
 
-    private ListView<ItemFieldBody> authorsList;
-    private ListView<ItemFieldBody> translatorsList;
-    private ListView<ItemFieldBody> tagsList;
+    private ListView<ItemFieldBody> authorsListView;
+    private ListView<ItemFieldBody> translatorsListView;
+    private ListView<ItemFieldBody> tagsListView;
 
 
     
@@ -80,17 +86,19 @@ public class DetailsPage extends VBox {
         publisher= new BookField("Publisher", book.getPublisher(), isEditable, true);
         date = new BookField("Date", book.getDate(), isEditable, true);
         isbn= new BookField("ISBN", book.getIsbn(), isEditable, true);
-
-       
-        
-        
         language = new BookField("Language",  book.getLanguage() , isEditable, true);
  
         String editionNumber = book.getEdition() == 0 ? ""  : Integer.toString(book.getEdition());
-
         edition = new BookField("Edition", editionNumber, isEditable, true);
 
-        leftBookFields.getChildren().addAll(title,subtitle,publisher,date,isbn,language,edition);
+        // Rating Spinner
+        ratingSpinner = new Spinner<>(0.0, 5.0, book.getRating(), 0.5);
+        ratingSpinner.setEditable(false);
+        ratingSpinner.setPrefWidth(150);
+        rateLabel.setPrefWidth(60);
+        rateBox.getChildren().addAll(rateLabel,ratingSpinner);
+
+        leftBookFields.getChildren().addAll(title,subtitle,publisher,date,isbn,language,edition,rateBox);
         leftBookFields.setSpacing(10);
         leftBookFields.setPadding(new Insets(20)); 
 
@@ -98,18 +106,18 @@ public class DetailsPage extends VBox {
         ArrayList<String> translatorsArrayList = new ArrayList<>(book.getTranslators());
         ArrayList<String> tagsArrayList = new ArrayList<>(book.getTags());
 
-        authorsList = new ListView<ItemFieldBody>();
-        authorsList.setPrefHeight(120);
+        authorsListView = new ListView<ItemFieldBody>();
+        authorsListView.setPrefHeight(120);
 
-        translatorsList = new ListView<ItemFieldBody>();
-        translatorsList.setPrefHeight(120);
+        translatorsListView = new ListView<ItemFieldBody>();
+        translatorsListView.setPrefHeight(120);
 
-        tagsList = new ListView<ItemFieldBody>();
-        tagsList.setPrefHeight(120);
+        tagsListView = new ListView<ItemFieldBody>();
+        tagsListView.setPrefHeight(120);
  
-        authors = populateList(authorsArrayList, authorsList,"Authors");
-        translators = populateList(translatorsArrayList, translatorsList,"translators");
-        tags = populateList(tagsArrayList, tagsList,"Tags");
+        authors = populateList(authorsArrayList, authorsListView,"Authors");
+        translators = populateList(translatorsArrayList, translatorsListView,"translators");
+        tags = populateList(tagsArrayList, tagsListView,"Tags");
 
 
         rightBookFields.getChildren().addAll( authors,translators,tags);
@@ -183,7 +191,6 @@ public class DetailsPage extends VBox {
                 listView.getItems().remove(itemField);
             });
 
-          
             ItemFieldBody newItemField = new ItemFieldBody( "" + (listView.getItems().size() + 1), newItem.getTextField().getText() , true, deleteFromList);
             listView.getItems().add(newItemField);
         
@@ -213,8 +220,10 @@ public class DetailsPage extends VBox {
         edition.getTextField().setEditable(isEditable);
         authors.getTextField().setEditable(isEditable);
         authors.getInputField().setVisible(isEditable);
+        ratingSpinner.setEditable(isEditable);
 
-        for(ItemFieldBody itemfield : authorsList.getItems()){
+
+        for(ItemFieldBody itemfield : authorsListView.getItems()){
             itemfield.getTextField().setEditable(isEditable);
             itemfield.getButton().setVisible(isEditable);
         }
@@ -223,7 +232,7 @@ public class DetailsPage extends VBox {
         translators.getInputField().setVisible(isEditable);
         
       
-        for(ItemFieldBody itemfield : translatorsList.getItems()){
+        for(ItemFieldBody itemfield : translatorsListView.getItems()){
             itemfield.getTextField().setEditable(isEditable);
             itemfield.getButton().setVisible(isEditable);
         }
@@ -232,7 +241,7 @@ public class DetailsPage extends VBox {
         tags.getInputField().setVisible(isEditable);
         
       
-        for(ItemFieldBody itemfield : tagsList.getItems()){
+        for(ItemFieldBody itemfield : tagsListView.getItems()){
             itemfield.getTextField().setEditable(isEditable);
             itemfield.getButton().setVisible(isEditable);
         }
@@ -281,7 +290,8 @@ public class DetailsPage extends VBox {
                 editedBook.setDate(date.getTextField().getText());
                 editedBook.setIsbn(this.book.getIsbn());
                 editedBook.setLanguage(language.getTextField().getText().toLowerCase());
-              
+                editedBook.setRating(ratingSpinner.getValue());
+
                 if (isbn.getTextField().getText() == null || isbn.getTextField().getText().trim().isEmpty()  || editedBook.getTitle() == null || editedBook.getTitle().trim().isEmpty() ) {
                     Alert alert = new Alert(Alert.AlertType.ERROR);
                     alert.setTitle("Error");
@@ -290,38 +300,38 @@ public class DetailsPage extends VBox {
                     alert.showAndWait();
                     return;
                 }
-    
-                String[] updatedAuthors = new String[authorsList.getItems().size()];
-            
-                for(int i = 0 ; i < authorsList.getItems().size() ; i++ ){
-                    updatedAuthors[i] =  authorsList.getItems().get(i).getTextField().getText().toLowerCase(); 
-                }
-        
-                List<String> authorsList = Arrays.asList(updatedAuthors);
-                editedBook.setAuthors(authorsList);
-
- 
-            
-                String[] updatedTranslators = new String[translatorsList.getItems().size()];
-            
-                for(int i = 0 ; i < translatorsList.getItems().size() ; i++ ){
-                    updatedTranslators[i] =  translatorsList.getItems().get(i).getTextField().getText().toLowerCase();
-                    
-                }
-            
                 
-                editedBook.setTranslators(Arrays.asList(updatedTranslators));
-
-                String[] updatedTags = new String[tagsList.getItems().size()];
+                // Authors
+                String[] updatedAuthors = new String[authorsListView.getItems().size()];
             
-                for(int i = 0 ; i < tagsList.getItems().size() ; i++ ){
-                    updatedTags[i] =  tagsList.getItems().get(i).getTextField().getText().toLowerCase();
+                for(int i = 0 ; i < authorsListView.getItems().size() ; i++ ){
+                    updatedAuthors[i] =  authorsListView.getItems().get(i).getTextField().getText(); 
+                }
+
+                Set<String> authorsSet = new HashSet<>(Arrays.asList(updatedAuthors));
+                editedBook.setAuthors(authorsSet);
+
+                // Translators
+                String[] updatedTranslators = new String[translatorsListView.getItems().size()];
+            
+                for(int i = 0 ; i < translatorsListView.getItems().size() ; i++ ){
+                    updatedTranslators[i] =  translatorsListView.getItems().get(i).getTextField().getText(); 
+                }
+            
+                Set<String> translatorsSet = new HashSet<>(Arrays.asList(updatedTranslators));
+                editedBook.setTranslators(translatorsSet);
+
+                // Tags
+                String[] updatedTags = new String[tagsListView.getItems().size()];
+            
+                for(int i = 0 ; i < tagsListView.getItems().size() ; i++ ){
+                    updatedTags[i] =  tagsListView.getItems().get(i).getTextField().getText();
                 
                 }
-                editedBook.setTags(Arrays.asList(updatedTags));
- 
 
-               
+                Set<String> tagsSet = new HashSet<>(Arrays.asList(updatedTags));
+                editedBook.setTags(tagsSet);
+ 
 
                 // String[] tagsInput = tags.getTextArea().getText().trim().split(",");
                 // List<String> tagsList = Arrays.asList(tagsInput);
@@ -341,8 +351,6 @@ public class DetailsPage extends VBox {
            
         
         }); 
-
-
 
         Button cancelButton = new Button("Cancel");
         cancelButton.setPrefWidth(100);
@@ -378,10 +386,11 @@ public class DetailsPage extends VBox {
         isbn.getTextField().setText(book.getIsbn());
         language.getTextField().setText(book.getLanguage()); 
         edition.getTextField().setText  (Integer.toString(book.getEdition()));
+    
 
-        authorsList.getItems().clear();
-        translatorsList.getItems().clear();
-        tagsList.getItems().clear();
+        authorsListView.getItems().clear();
+        translatorsListView.getItems().clear();
+        tagsListView.getItems().clear();
 
 
         // System.out.println(book.getTitle());

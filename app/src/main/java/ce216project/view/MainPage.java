@@ -128,6 +128,7 @@ public class MainPage extends VBox{
             });
         }
 
+        // Listeners for language checkboxes
         for (CheckBox langCheckBox : languageCheckboxes) {
             langCheckBox.selectedProperty().addListener(new ChangeListener<Boolean>() {
                 @Override
@@ -218,9 +219,15 @@ public class MainPage extends VBox{
 
     private void updateFilteredBooks() {
         System.out.println("Updating filtered books...");
-        ArrayList<Book> filteredBooks = Library.filterBooks(selectedTags, selectedLanguages);
-        System.out.println("Filtered books: " + filteredBooks);
-        fillBookTiles(filteredBooks);
+        
+        // Check if no filters are selected
+        if (selectedTags.isEmpty() && selectedLanguages.isEmpty()) {
+            fillBookTiles(Library.books); // Fill with all books
+        } else {
+            // Otherwise, filter the books based on selected tags and languages
+            ArrayList<Book> filteredBooks = Library.filterBooks(selectedTags, selectedLanguages);
+            System.out.println("Filtered Books :"+filteredBooks);
+            fillBookTiles(filteredBooks);
+        }
     }
-    
 }
