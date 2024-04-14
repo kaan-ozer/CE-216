@@ -85,14 +85,7 @@ public class Library {
         }
     }
     public static void createBook(Book book) {
-        if (book.getIsbn() == null || book.getIsbn().trim().isEmpty() || book.getTitle() == null || book.getTitle().trim().isEmpty()) {
-            Alert alert = new Alert(Alert.AlertType.ERROR);
-            alert.setTitle("Error");
-            alert.setHeaderText(null);
-            alert.setContentText("Creation failed: ISBN and Title are required.");
-            alert.showAndWait();
-            return;
-        }
+      
         books.add(book);
         saveBooksToJson();
     }

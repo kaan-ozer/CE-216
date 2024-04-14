@@ -1,1 +1,1 @@
-[{"authors":[],"coverImagePath":null,"date":" ","edition":0,"isbn":"1232124241","language":"english","publisher":" ","rating":0.0,"subtitle":" ","tags":["horror"],"title":"horrorBook","translators":[]}]
+[{"authors":[],"coverImagePath":null,"date":" ","edition":0,"isbn":"1232124241","language":"english","publisher":" ","rating":0.0,"subtitle":" ","tags":["horror"],"title":"horrorBook","translators":[]},{"authors":[],"coverImagePath":null,"date":"","edition":0,"isbn":"test","language":"","publisher":"","rating":5.0,"subtitle":"","tags":[],"title":"test","translators":[]}]
