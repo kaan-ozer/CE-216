@@ -24,8 +24,8 @@ public class Library {
     public static void loadBooksFromJson() {
         try {
 
-            //tags = new HashMap<>();
-            //languages = new HashMap<>();
+            tags = new HashMap<>();
+            languages = new HashMap<>();
 
             // Initial tags and languages
             if(languages.size() == 0){
@@ -44,12 +44,10 @@ public class Library {
             books = IOoperations.readFromJsonFile();
             String projectPath = System.getProperty("user.dir");
             String imagesPath = projectPath + File.separator + "shared" + File.separator + "images" + File.separator;
-            books.forEach(item ->{
-            if (item.getCoverImagePath() != null) {
-                item.setCoverImagePath(imagesPath + item.getCoverImagePath().trim().split(imagesPath)[1]);
-            }
-
             books.forEach(book ->{
+            if (book.getCoverImagePath() != null) {
+                book.setCoverImagePath(imagesPath + book.getCoverImagePath().trim().split(imagesPath)[1]);
+            }
 
                 addLanguages(book.getLanguage());
                 addTags(book.getTags());
@@ -59,7 +57,7 @@ public class Library {
                 }  
 
                
-            });
+         
         });
         } catch (Exception e) {
             e.printStackTrace();
@@ -67,9 +65,41 @@ public class Library {
         }
     }
 
+
+
+    public static void addTags(Set<String> bookTags){
+
+        //taglerini aldık bir kitabın
+        for(String tag : bookTags) {
+            if (tags.containsKey(tag)) {
+                int newCount = tags.get(tag) + 1;
+
+                
+                tags.put(tag, newCount);  
+            } else {
+              
+                tags.put(tag, 1);  
+                
+            }
+        }
+    }
+    public static void addLanguages(String languageInput) {
+
+        if (languageInput == null || languageInput.isEmpty()) {
+            return;
+        }
+
+        if(languages.containsKey(languageInput)) {
+            int newCount = languages.get(languageInput) + 1;
+            languages.put(languageInput, newCount);
+        } else {
+            languages.put(languageInput,1);
+        }
+    }
+
     public static void saveBooksToJson() {
         try {
-            System.out.println(books.get(0).getCoverImagePath());
+          
             IOoperations.writeToJsonFile("app/output/output.txt", books);
         } catch (Exception e) {
             e.printStackTrace();
@@ -78,17 +108,7 @@ public class Library {
     }
 
 
-    public static void addTags(Set<String> tagsInputList){
 
-        for(String tagInput : tagsInputList){
-            if (tags.containsKey(tagInput)) {
-                int newCount = tags.get(tagInput) + 1; 
-                tags.put(tagInput, newCount);
-            } else {
-                tags.put(tagInput, 1); // initialize count to 1 for new tags
-            }
-        }
-    }
 
     public static void createBook(Book book) {
       
@@ -144,37 +164,18 @@ public class Library {
                     books.remove(finalBookToDelete);
                     saveBooksToJson(); 
                     loadBooksFromJson();
-                    System.out.println("Book with ISBN '" + isbn + "' has been deleted.");
-                } else {
-                    System.out.println("Deletion canceled. Book with ISBN '" + isbn + "' was not deleted.");
-                }
+                    
+                }  
             });
-        } else {
-            System.out.println("Book with ISBN '" + isbn + "' not found.");
-        }
+        }  
     }
 
-    public static void addLanguages(String languageInput) {
-
-        if (languageInput == null || languageInput.isEmpty()) {
-            return;
-        }
-
-      
-
-        if(languages.containsKey(languageInput)) {
-            int newCount = languages.get(languageInput) + 1;
-            languages.put(languageInput, newCount);
-        } else {
-            languages.put(languageInput,1);
-        }
-    }
-
+  
     public static ArrayList<Book> filterBooks(ArrayList<String> tagFilters, ArrayList<String> languageFilters){
         
         ArrayList<Book> filteredBooks = new ArrayList<>();
         
-        System.out.println("Filter at Library class");
+        
         for (Book book : books) {
             boolean tagMatch = false;
             boolean languageMatch = false;

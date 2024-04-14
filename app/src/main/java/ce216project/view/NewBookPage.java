@@ -171,9 +171,7 @@ public class NewBookPage extends VBox{
             this.imageContainer.getChildren().remove(0);
             this.imageContainer.getChildren().add(0,imagePreview);
         } else {
-            System.out.println(this.coverImagePath);
-            System.out.println(imagesPath);
-            System.out.println(this.coverImagePath.startsWith(imagesPath)); 
+            
             Alert alert = new Alert(Alert.AlertType.ERROR);
             alert.setTitle("Error");
             alert.setHeaderText(null);

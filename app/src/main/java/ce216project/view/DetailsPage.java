@@ -393,9 +393,9 @@ public class DetailsPage extends VBox {
         tagsListView.getItems().clear();
 
 
-        // System.out.println(book.getTitle());
+       
         BookTileWidget updatedBookTile = new BookTileWidget(book, false);
-        // System.out.println(updatedBookTile.getBook().getTitle());
+       
         bookTileWidget = updatedBookTile;
 
         //leftContainer.getChildren().add(0, updatedBookTile);

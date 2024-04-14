@@ -117,7 +117,7 @@ public class MainPage extends VBox{
             tagCheckBox.selectedProperty().addListener(new ChangeListener<Boolean>() {
                 @Override
                 public void changed(ObservableValue<? extends Boolean> observable, Boolean oldValue, Boolean newValue) {
-                    System.out.println("Checkbox state changed: " + tagCheckBox.getText() + ", Selected: " + newValue);
+                    
                     if (newValue) {
                         selectedTags.add(tagCheckBox.getText());
                     } else {
@@ -177,7 +177,7 @@ public class MainPage extends VBox{
 
     public void fillBookTiles (ArrayList<Book> books) {
         booksContainer.getChildren().clear();
-        System.out.println("Filling");
+       
         for(Book book : books) {
             BookTileWidget bookTileWidget = new BookTileWidget(book,true);
             booksContainer.getChildren().add(bookTileWidget);
@@ -218,7 +218,7 @@ public class MainPage extends VBox{
     }
 
     private void updateFilteredBooks() {
-        System.out.println("Updating filtered books...");
+      
         
         // Check if no filters are selected
         if (selectedTags.isEmpty() && selectedLanguages.isEmpty()) {
@@ -226,7 +226,7 @@ public class MainPage extends VBox{
         } else {
             // Otherwise, filter the books based on selected tags and languages
             ArrayList<Book> filteredBooks = Library.filterBooks(selectedTags, selectedLanguages);
-            System.out.println("Filtered Books :"+filteredBooks);
+           
             fillBookTiles(filteredBooks);
         }
     }
