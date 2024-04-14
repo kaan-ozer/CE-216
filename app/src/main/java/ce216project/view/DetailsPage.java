@@ -149,7 +149,8 @@ public class DetailsPage extends VBox {
         // Main Layout
         mainLayout.getChildren().setAll(leftContainer,rightContainer);
         mainLayout.setSpacing(20);
-
+        mainLayout.setAlignment(Pos.CENTER);
+        
         this.getChildren().addAll(menuBar,mainLayout);
     }
 
@@ -346,6 +347,7 @@ public class DetailsPage extends VBox {
         
         buttonsContainer.getChildren().clear();
         buttonsContainer.getChildren().addAll(saveButton,cancelButton);
+
 
     }
 
