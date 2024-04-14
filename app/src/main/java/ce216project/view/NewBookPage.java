@@ -198,6 +198,7 @@ public class NewBookPage extends VBox{
             edition.getTextField().setText("0"); 
         }  
       
+    try {
         int editionInput =   Integer.parseInt(edition.getTextField().getText());
         double rateInput = ratingSpinner.getValue();
  
@@ -232,7 +233,26 @@ public class NewBookPage extends VBox{
         Book newBook = new Book(titleInput, subTitleInput, authorsList, translatorsList, isbnInput, publisherInput, dateInput, editionInput, languageInput, rateInput, tagsList,  this.coverImagePath);
         Library.createBook(newBook);
 
-        cancel(); 
+            if (newBook.getIsbn() == null || newBook.getIsbn().trim().isEmpty() || newBook.getTitle() == null || newBook.getTitle().trim().isEmpty()) {
+                Alert alert = new Alert(Alert.AlertType.ERROR);
+                alert.setTitle("Error");
+                alert.setHeaderText(null);
+                alert.setContentText("Creation failed: ISBN and Title are required.");
+                alert.showAndWait();
+                return;
+            }
+
+
+            cancel(); 
+        }
+        catch ( NumberFormatException e1) {
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setTitle("Error");
+            alert.setHeaderText(null);
+            alert.setContentText("Edition field must contain only number values.");
+            alert.showAndWait();
+            return;
+        }
     }
 
     private  ItemField populateList(Set<String> arrayList,ListView<ItemFieldBody> listView, String labelName) {
