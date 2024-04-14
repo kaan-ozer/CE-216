@@ -147,40 +147,50 @@ public class NewBookPage extends VBox{
         }  
 
     try {
-        int editionInput =   Integer.parseInt(edition.getTextField().getText());
-        double rateInput = ratingSpinner.getValue();
- 
-        // Authors
-        String[] updatedAuthors = new String[authorsListView.getItems().size()];
-          
-        for(int i = 0 ; i < authorsListView.getItems().size() ; i++ ){
-            updatedAuthors[i] =  authorsListView.getItems().get(i).getTextField().getText().toLowerCase(); 
-        }
+            int editionInput =   Integer.parseInt(edition.getTextField().getText());
+            double rateInput = ratingSpinner.getValue();
     
-        Set<String> authorsList = new HashSet<>(Arrays.asList(updatedAuthors));
-   
-        String[] updatedTranslators = new String[translatorsListView.getItems().size()];
+            // Authors
+            String[] updatedAuthors = new String[authorsListView.getItems().size()];
+            
+            for(int i = 0 ; i < authorsListView.getItems().size() ; i++ ){
+                updatedAuthors[i] =  authorsListView.getItems().get(i).getTextField().getText().toLowerCase(); 
+            }
         
-        // Translators
-        for(int i = 0 ; i < translatorsListView.getItems().size() ; i++ ){
-        updatedTranslators[i] =  translatorsListView.getItems().get(i).getTextField().getText().toLowerCase();
-        }
-        Set<String> translatorsList = new HashSet<>(Arrays.asList(updatedTranslators));
-        
-        // Tags
-        String[] updatedTags = new String[tagsListView.getItems().size()];
-        
-        for(int i = 0 ; i < tagsListView.getItems().size() ; i++ ){
-            updatedTags[i] =  tagsListView.getItems().get(i).getTextField().getText().toLowerCase(); 
-        }
+            Set<String> authorsList = new HashSet<>(Arrays.asList(updatedAuthors));
+    
+            String[] updatedTranslators = new String[translatorsListView.getItems().size()];
+            
+            // Translators
+            for(int i = 0 ; i < translatorsListView.getItems().size() ; i++ ){
+            updatedTranslators[i] =  translatorsListView.getItems().get(i).getTextField().getText().toLowerCase();
+            }
+            Set<String> translatorsList = new HashSet<>(Arrays.asList(updatedTranslators));
+            
+            // Tags
+            String[] updatedTags = new String[tagsListView.getItems().size()];
+            
+            for(int i = 0 ; i < tagsListView.getItems().size() ; i++ ){
+                updatedTags[i] =  tagsListView.getItems().get(i).getTextField().getText().toLowerCase(); 
+            }
 
-        Set<String> tagsList = new HashSet<>(Arrays.asList(updatedTags));
-        Library.addTags(tagsList);
-       
-        String coverImagePath = imagePicker.getImagePath();
+            Set<String> tagsList = new HashSet<>(Arrays.asList(updatedTags));
+            Library.addTags(tagsList);
+        
+            String coverImagePath = imagePicker.getImagePath();
 
-        Book newBook = new Book(titleInput, subTitleInput, authorsList, translatorsList, isbnInput, publisherInput, dateInput, editionInput, languageInput, rateInput, tagsList,coverImagePath);
- 
+            Book newBook = new Book(titleInput, subTitleInput, authorsList, translatorsList, isbnInput, publisherInput, dateInput, editionInput, languageInput, rateInput, tagsList,coverImagePath);
+    
+            String isbnRegex = "\\d{1,}-?\\d{0,}";
+
+            if (!newBook.getIsbn().matches(isbnRegex)) {
+                Alert alert = new Alert(Alert.AlertType.ERROR);
+                alert.setTitle("Error");
+                alert.setHeaderText(null);
+                alert.setContentText("Creation failed: Invalid ISBN format. ISBN must be in the format '0-9'.");
+                alert.showAndWait();
+                return;
+            }
 
             if (newBook.getIsbn() == null || newBook.getIsbn().trim().isEmpty() || newBook.getTitle() == null || newBook.getTitle().trim().isEmpty()) {
                 Alert alert = new Alert(Alert.AlertType.ERROR);

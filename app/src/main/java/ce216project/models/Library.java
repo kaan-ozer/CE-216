@@ -26,19 +26,7 @@ public class Library {
 
             tags = new HashMap<>();
             languages = new HashMap<>();
-
-            // Initial tags and languages
-            if(languages.size() == 0){
-                languages.put("english", 0);
-                languages.put("turkish", 0);
-                languages.put("german", 0);
-            }
-
-            if(tags.size() == 0){
-                tags.put("horror", 0);
-                tags.put("fiction", 0);
-                tags.put("thriller", 0);
-            }
+ 
     
             
             books = IOoperations.readFromJsonFile();
