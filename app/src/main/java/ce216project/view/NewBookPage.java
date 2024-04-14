@@ -59,17 +59,16 @@ public class NewBookPage extends VBox{
     // Buttons
     private Button saveButton = new Button("Save");
     private Button cancelButton = new Button("Cancel");
-    //private Button chooseCoverButton = new Button("Cover Image");
     private HBox buttonsContainer = new HBox();
     
     public NewBookPage() {
 
         // Left Book Fields
-        title = new BookField("Title", "", isEditable, true);
+        title = new BookField("Title*", "", isEditable, true);
         subtitle = new BookField("Subtitle", "", isEditable, true);
         publisher = new BookField("Publisher", "", isEditable, true);
         date = new BookField("Date", "", isEditable, true);
-        isbn = new BookField("ISBN", "", isEditable, true);
+        isbn = new BookField("ISBN*", "", isEditable, true);
         language = new BookField("Language", "", isEditable, true);
         edition = new BookField("Edition", "", isEditable, true);
         

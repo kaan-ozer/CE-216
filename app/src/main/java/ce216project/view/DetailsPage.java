@@ -120,7 +120,7 @@ public class DetailsPage extends VBox {
         tagsListView.setPrefHeight(120);
  
         authors = populateList(authorsArrayList, authorsListView,"Authors");
-        translators = populateList(translatorsArrayList, translatorsListView,"translators");
+        translators = populateList(translatorsArrayList, translatorsListView,"Translators");
         tags = populateList(tagsArrayList, tagsListView,"Tags");
 
 
