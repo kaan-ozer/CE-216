@@ -273,7 +273,7 @@ public class DetailsPage extends VBox {
                 editedBook.setPublisher(publisher.getTextField().getText());
                 editedBook.setDate(date.getTextField().getText());
                 editedBook.setIsbn(this.book.getIsbn());
-                editedBook.setLanguage(language.getTextField().getText());
+                editedBook.setLanguage(language.getTextField().getText().toLowerCase());
               
                 if (isbn.getTextField().getText() == null || isbn.getTextField().getText().trim().isEmpty()  || editedBook.getTitle() == null || editedBook.getTitle().trim().isEmpty() ) {
                     Alert alert = new Alert(Alert.AlertType.ERROR);
@@ -314,8 +314,6 @@ public class DetailsPage extends VBox {
                 Set<String> tagsSet = new HashSet<>(Arrays.asList(updatedTags));
                 editedBook.setTags(tagsSet);
  
-
-               
 
                 // String[] tagsInput = tags.getTextArea().getText().trim().split(",");
                 // List<String> tagsList = Arrays.asList(tagsInput);

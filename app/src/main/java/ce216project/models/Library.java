@@ -1,6 +1,7 @@
 package ce216project.models;
 
 import java.io.File;
+
 import java.util.*;
 
 import ce216project.utils.IOoperations;
@@ -22,6 +23,22 @@ public class Library {
 
     public static void loadBooksFromJson() {
         try {
+
+            tags = new HashMap<>();
+            languages = new HashMap<>();
+
+            if(languages.size() == 0){
+                languages.put("english", 0);
+                languages.put("turkish", 0);
+                languages.put("german", 0);
+            }
+
+            if(tags.size() == 0){
+                tags.put("horror", 0);
+                tags.put("fiction", 0);
+                tags.put("thriller", 0);
+            }
+    
             
             books = IOoperations.readFromJsonFile();
             String projectPath = System.getProperty("user.dir");
@@ -30,8 +47,19 @@ public class Library {
             if (item.getCoverImagePath() != null) {
                 item.setCoverImagePath(imagesPath + item.getCoverImagePath().trim().split(imagesPath)[1]);
             }
+
+            books.forEach(book ->{
+
+                addLanguages(book.getLanguage());
+                addTags(book.getTags());
+                    
+                if (book.getCoverImagePath() != null) {
+                    book.setCoverImagePath(imagesPath + book.getCoverImagePath().trim().split(imagesPath)[1]);
+                }
+
                
-            } );
+            });
+        });
         } catch (Exception e) {
             e.printStackTrace();
             System.err.println("Error loading books from JSON: " + e.getMessage());
@@ -44,7 +72,6 @@ public class Library {
 
     public static void saveBooksToJson() {
         try {
-
             System.out.println(books.get(0).getCoverImagePath());
             IOoperations.writeToJsonFile("app/output/output.txt", books);
         } catch (Exception e) {
@@ -55,6 +82,7 @@ public class Library {
 
 
     public static void addTags(Set<String> tagsInputList){
+
 
         for(String tagInput : tagsInputList){
             if (tags.containsKey(tagInput)) {
@@ -101,11 +129,9 @@ public class Library {
         }
 
         if (bookToEdit != null) {
-            saveBooksToJson();
-            System.out.println("Book with ISBN '" + editedBook.getIsbn() + "' has been updated.");
-        } else {
-            System.out.println("Book with ISBN '" + editedBook.getIsbn() + "' not found.");
-        }
+            saveBooksToJson(); 
+            loadBooksFromJson(); 
+        }  
     }
     public static void deleteBook(String isbn) {
         Book bookToDelete = null;
@@ -127,7 +153,8 @@ public class Library {
             alert.showAndWait().ifPresent(response -> {
                 if (response == ButtonType.OK) {
                     books.remove(finalBookToDelete);
-                    saveBooksToJson();
+                    saveBooksToJson(); 
+                    loadBooksFromJson();
                     System.out.println("Book with ISBN '" + isbn + "' has been deleted.");
                 } else {
                     System.out.println("Deletion canceled. Book with ISBN '" + isbn + "' was not deleted.");
@@ -140,6 +167,7 @@ public class Library {
 
     public static void addLanguages(String languageInput) {
 
+      
         if(languages.containsKey(languageInput)) {
             int newCount = languages.get(languageInput) + 1;
             languages.put(languageInput, newCount);
