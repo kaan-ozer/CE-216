@@ -1,5 +1,6 @@
 package ce216project.models;
 
+import java.io.File;
 import java.nio.file.Path;
 import java.util.Set;
 
@@ -126,7 +127,17 @@ public class Book {
     }
 
     public String getCoverImagePath(){
-        return coverImagePath;
+        if (coverImagePath != null) {
+            String projectPath = System.getProperty("user.dir");
+            String imagesPath = projectPath + File.separator + "shared" + File.separator + "images"   ;
+            String [] parsedImgPath = coverImagePath.trim().split("images");
+            String photoName = parsedImgPath[1].substring(1);
+            String finalPath = imagesPath + File.separator + photoName;
+            return finalPath;
+        }else{
+            return null;
+        }
+   
     }
 
     public void setCoverImagePath(String coverImagePath){

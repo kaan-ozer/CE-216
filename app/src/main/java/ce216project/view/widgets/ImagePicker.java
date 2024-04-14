@@ -64,8 +64,7 @@ public class ImagePicker extends VBox{
         if(ImagePathFile == null) return;
         
        
-        this.imagePath = ImagePathFile.toPath().toString();
-        System.out.println(imagePath);
+        this.imagePath = ImagePathFile.toPath().toString(); 
      
         if (this.imagePath.startsWith(imagesPath)) {
             image = new Image("file:" + imagePath,100,150,false,true);

@@ -290,8 +290,7 @@ public class DetailsPage extends VBox {
                 editedBook.setDate(date.getTextField().getText());
                 editedBook.setIsbn(this.book.getIsbn());
                 editedBook.setLanguage(language.getTextField().getText().toLowerCase());
-                editedBook.setRating(ratingSpinner.getValue());
-                System.out.println("Save:"+imagePicker.getImagePath());
+                editedBook.setRating(ratingSpinner.getValue()); 
                 editedBook.setCoverImagePath(imagePicker.getImagePath());
 
                 if (isbn.getTextField().getText() == null || isbn.getTextField().getText().trim().isEmpty()  || editedBook.getTitle() == null || editedBook.getTitle().trim().isEmpty() ) {
