@@ -93,7 +93,10 @@ public class DetailsPage extends VBox {
 
         // Rating Spinner
         ratingSpinner = new Spinner<>(0.0, 5.0, book.getRating(), 0.5);
-        ratingSpinner.setEditable(false);
+        ratingSpinner.setEditable(isEditable);
+        ratingSpinner.setDisable(!isEditable);
+        ratingSpinner.setStyle("-fx-opacity: 1.0;"); 
+        ratingSpinner.getEditor().setStyle("-fx-opacity: 1.0;");
         ratingSpinner.setPrefWidth(150);
         rateLabel.setPrefWidth(60);
         rateBox.getChildren().addAll(rateLabel,ratingSpinner);
@@ -221,6 +224,7 @@ public class DetailsPage extends VBox {
         authors.getTextField().setEditable(isEditable);
         authors.getInputField().setVisible(isEditable);
         ratingSpinner.setEditable(isEditable);
+        ratingSpinner.setDisable(!isEditable);
 
 
         for(ItemFieldBody itemfield : authorsListView.getItems()){
