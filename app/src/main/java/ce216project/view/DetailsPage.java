@@ -243,9 +243,7 @@ public class DetailsPage extends VBox {
         for(ItemFieldBody itemfield : tagsListView.getItems()){
             itemfield.getTextField().setEditable(isEditable);
             itemfield.getButton().setVisible(isEditable);
-        }
-       
-       
+        } 
     }
 
     public void setPageIndex (int pageIndex) {
@@ -277,11 +275,8 @@ public class DetailsPage extends VBox {
                     edition.getTextField().setText("0"); 
                 }  
                 
-               
                 editionNumber = Integer.parseInt(edition.getTextField().getText());
                   
-
-                
                 editedBook.setEdition(editionNumber);
               
                 editedBook.setTitle(title.getTextField().getText());
@@ -433,8 +428,6 @@ public class DetailsPage extends VBox {
             tagsListView.getItems().add(itemFieldBody);
         });
 
-
-       
         BookTileWidget updatedBookTile = new BookTileWidget(book, false);
        
         bookTileWidget = updatedBookTile;

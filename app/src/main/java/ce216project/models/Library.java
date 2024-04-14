@@ -197,7 +197,7 @@ public class Library {
             if (languageFilters.contains(book.getLanguage())) {
                 languageMatch = true;
             }
-    
+            
             if (tagMatch || languageMatch) {
                 filteredBooks.add(book);
             }

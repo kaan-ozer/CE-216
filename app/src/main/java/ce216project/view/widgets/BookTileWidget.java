@@ -9,13 +9,16 @@ import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.StackPane;
+import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
 
-public class BookTileWidget extends StackPane {
+public class BookTileWidget extends VBox {
 
     private static final int XSIZE = 100;
     private static final int YSIZE = 150;
+
+    private StackPane coverTile = new StackPane();
 
     private ImageView imageView = new ImageView();
     private Image coverImage;
@@ -38,7 +41,7 @@ public class BookTileWidget extends StackPane {
             imageView.setCache(true);
             imageView.setX(XSIZE);
             imageView.setY(YSIZE);
-            this.getChildren().add(imageView);
+            coverTile.getChildren().add(imageView);
             if(isClickable == true){
                 this.makeClickable();
             }
@@ -47,19 +50,23 @@ public class BookTileWidget extends StackPane {
             rectangle.setFill(Color.RED);
             if(!book.getTitle().isBlank() || !book.getTitle().isEmpty()){
                 titleLabel = new Label(book.getTitle());
-                this.setAlignment(Pos.CENTER);
-                this.getChildren().addAll(rectangle,titleLabel);
+                coverTile.setAlignment(Pos.CENTER);
+                coverTile.getChildren().addAll(rectangle,titleLabel);
                 if(isClickable == true){
                     this.makeClickable();
                 }
             }
             else{
-                this.getChildren().addAll(rectangle);
+                coverTile.getChildren().addAll(rectangle);
                 if(isClickable == true){
                     this.makeClickable();
                 }
             }
         }
+
+        this.getChildren().addAll(coverTile,new Label(book.getTitle()));
+        this.setAlignment(Pos.CENTER);
+        this.setSpacing(5);
     }
 
     private void makeClickable () {
@@ -68,7 +75,7 @@ public class BookTileWidget extends StackPane {
         detailsButton.setOpacity(0);
         detailsButton.setPrefSize(XSIZE, YSIZE);
         detailsButton.setOnAction(e -> openDetailsPage());
-        this.getChildren().add(detailsButton);
+        coverTile.getChildren().add(detailsButton);
     }
 
     private void openDetailsPage(){
