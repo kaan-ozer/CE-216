@@ -78,6 +78,7 @@ public class DetailsPage extends VBox {
         this.pageIndex = pageIndex;
 
         bookTileWidget = new BookTileWidget(book,false);
+        bookTileWidget.getChildren().remove(1);
 
         // Right Container Widgets
         // Left Book Fields Container
@@ -150,7 +151,7 @@ public class DetailsPage extends VBox {
         mainLayout.getChildren().setAll(leftContainer,rightContainer);
         mainLayout.setSpacing(20);
         mainLayout.setAlignment(Pos.CENTER);
-        
+
         this.getChildren().addAll(menuBar,mainLayout);
     }
 
