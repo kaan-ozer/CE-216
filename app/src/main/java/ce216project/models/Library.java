@@ -133,6 +133,7 @@ public class Library {
                 bookToEdit.setLanguage(editedBook.getLanguage());
                 bookToEdit.setRating(editedBook.getRating());
                 bookToEdit.setTags(editedBook.getTags()); 
+                bookToEdit.setCoverImagePath(editedBook.getCoverImagePath());
                 break;
             }
         }

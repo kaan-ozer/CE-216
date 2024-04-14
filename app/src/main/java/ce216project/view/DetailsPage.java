@@ -7,6 +7,7 @@ import ce216project.models.Book;
 import ce216project.models.Library;
 import ce216project.view.widgets.BookField;
 import ce216project.view.widgets.BookTileWidget;
+import ce216project.view.widgets.ImagePicker;
 import ce216project.view.widgets.ItemFieldBody;
 import ce216project.view.widgets.ItemField;
 import javafx.geometry.Insets;
@@ -16,7 +17,6 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.ListView;
 import javafx.scene.control.Spinner;
-import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Priority;
 import javafx.scene.layout.VBox;
@@ -264,11 +264,15 @@ public class DetailsPage extends VBox {
 
         Button saveButton = new Button("Save");
         saveButton.setPrefWidth(100);
-      
+        
+        ImagePicker imagePicker = new ImagePicker(true, book.getCoverImagePath());
+        imagePicker.setPadding(new Insets(0));
+        leftContainer.getChildren().remove(0);
+        leftContainer.getChildren().add(0,imagePicker);
+
 
         saveButton.setOnAction(e ->  { 
  
-
             int editionNumber;
             try {
                 Book editedBook = new Book();
@@ -279,12 +283,9 @@ public class DetailsPage extends VBox {
                 }  
                 
                
-
-                    editionNumber = Integer.parseInt(edition.getTextField().getText());
+                editionNumber = Integer.parseInt(edition.getTextField().getText());
                   
 
-                
-              
                 
                 editedBook.setEdition(editionNumber);
               
@@ -295,6 +296,8 @@ public class DetailsPage extends VBox {
                 editedBook.setIsbn(this.book.getIsbn());
                 editedBook.setLanguage(language.getTextField().getText().toLowerCase());
                 editedBook.setRating(ratingSpinner.getValue());
+                System.out.println("Save:"+imagePicker.getImagePath());
+                editedBook.setCoverImagePath(imagePicker.getImagePath());
 
                 if (isbn.getTextField().getText() == null || isbn.getTextField().getText().trim().isEmpty()  || editedBook.getTitle() == null || editedBook.getTitle().trim().isEmpty() ) {
                     Alert alert = new Alert(Alert.AlertType.ERROR);
@@ -330,17 +333,10 @@ public class DetailsPage extends VBox {
             
                 for(int i = 0 ; i < tagsListView.getItems().size() ; i++ ){
                     updatedTags[i] =  tagsListView.getItems().get(i).getTextField().getText();
-                
                 }
 
                 Set<String> tagsSet = new HashSet<>(Arrays.asList(updatedTags));
                 editedBook.setTags(tagsSet);
- 
-
-                // String[] tagsInput = tags.getTextArea().getText().trim().split(",");
-                // List<String> tagsList = Arrays.asList(tagsInput);
-                // editedBook.setTags(tagsList);
-
         
                 saveEdit(editedBook,isbn.getTextField().getText()); 
             } catch (NumberFormatException err) {
@@ -353,7 +349,6 @@ public class DetailsPage extends VBox {
                 return;
             }
            
-        
         }); 
 
         Button cancelButton = new Button("Cancel");
@@ -366,7 +361,6 @@ public class DetailsPage extends VBox {
     }
 
     private void saveEdit(Book editedBook,String newISBN){
-       
          
         Library.editBook(editedBook,newISBN);
         PageController.closeWindow(PageController.pagesArray.get(pageIndex),pageIndex);
@@ -379,7 +373,9 @@ public class DetailsPage extends VBox {
         isEditable = false;
         updateEditable();
 
-        //leftContainer.getChildren().remove(0);
+        leftContainer.getChildren().remove(0);
+        leftContainer.getChildren().add(0, bookTileWidget);
+        
         buttonsContainer.getChildren().clear();
         buttonsContainer.getChildren().addAll(editButton,deleteButton,backButton);
 
@@ -401,9 +397,6 @@ public class DetailsPage extends VBox {
         BookTileWidget updatedBookTile = new BookTileWidget(book, false);
        
         bookTileWidget = updatedBookTile;
-
-        //leftContainer.getChildren().add(0, updatedBookTile);
-        //leftContainer.getChildren().add(1,buttonsContainer);
         
     }
 

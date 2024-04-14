@@ -99,7 +99,6 @@ public class MainPage extends VBox{
             double width = newValue.getWidth();
             int columns = calculateColumns(width); 
             booksContainer.setPrefColumns(columns);
- 
         });
 
         booksContainer.prefWidthProperty().bind(booksScroll.widthProperty()); // Bind width to ScrollPane width
@@ -218,15 +217,13 @@ public class MainPage extends VBox{
     }
 
     private void updateFilteredBooks() {
-      
-        
+    
         // Check if no filters are selected
         if (selectedTags.isEmpty() && selectedLanguages.isEmpty()) {
             fillBookTiles(Library.books); // Fill with all books
         } else {
             // Otherwise, filter the books based on selected tags and languages
             ArrayList<Book> filteredBooks = Library.filterBooks(selectedTags, selectedLanguages);
-           
             fillBookTiles(filteredBooks);
         }
     }

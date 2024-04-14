@@ -4,6 +4,7 @@ import ce216project.controller.PageController;
 import ce216project.models.Book;
 import ce216project.models.Library;
 import ce216project.view.widgets.BookField;
+import ce216project.view.widgets.ImagePicker;
 import ce216project.view.widgets.ItemField;
 import ce216project.view.widgets.ItemFieldBody;
 
@@ -14,16 +15,10 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.ListView;
 import javafx.scene.control.Spinner;
-import javafx.scene.image.Image;
-import javafx.scene.image.ImageView;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Priority;
 import javafx.scene.layout.VBox;
-import javafx.scene.shape.Rectangle;
-import javafx.stage.FileChooser;
-import javafx.stage.Stage;
 
-import java.io.File;
 import java.util.*;
 
 
@@ -32,19 +27,11 @@ public class NewBookPage extends VBox{
 
     private final boolean isEditable = true;
 
-    private final String projectPath = System.getProperty("user.dir");
-    private final String imagesPath = projectPath + "/shared/images";
-    
-    private String coverImagePath;
 
     private AppMenuBar menuBar = new AppMenuBar();
     private HBox mainLayout = new HBox();
 
-    // Image Preview
-    private VBox imageContainer = new VBox();
-    private ImageView imagePreview = new ImageView();
-    private Rectangle imageRectangle = new Rectangle(100, 150);
-
+    private ImagePicker imagePicker;
 
     // Left Book Fields
     private VBox leftBookFields = new VBox();
@@ -72,18 +59,10 @@ public class NewBookPage extends VBox{
     // Buttons
     private Button saveButton = new Button("Save");
     private Button cancelButton = new Button("Cancel");
-    private Button chooseCoverButton = new Button("Cover Image");
+    //private Button chooseCoverButton = new Button("Cover Image");
     private HBox buttonsContainer = new HBox();
     
     public NewBookPage() {
-
-        // Image Preview
-        imageContainer.getChildren().addAll(imageRectangle,chooseCoverButton);
-        imageContainer.setSpacing(15);
-        imageContainer.setPadding(new Insets(20));
-        imageContainer.setAlignment(Pos.TOP_CENTER);
-        imagePreview.setX(100);
-        imagePreview.setY(150);
 
         // Left Book Fields
         title = new BookField("Title", "", isEditable, true);
@@ -93,6 +72,9 @@ public class NewBookPage extends VBox{
         isbn = new BookField("ISBN", "", isEditable, true);
         language = new BookField("Language", "", isEditable, true);
         edition = new BookField("Edition", "", isEditable, true);
+        
+        //Image Picker
+        imagePicker = new ImagePicker(isEditable,null);
 
         // Rating Spinner
         ratingSpinner = new Spinner<>(0.0, 5.0, 0.0, 0.5);
@@ -129,7 +111,7 @@ public class NewBookPage extends VBox{
         saveButton.setOnAction(e -> save());
         cancelButton.setPrefWidth(100);
         cancelButton.setOnAction(e -> cancel());
-        chooseCoverButton.setOnAction(e -> getCoverImage());
+        //chooseCoverButton.setOnAction(e -> getCoverImage());
         buttonsContainer.getChildren().addAll(saveButton,cancelButton);
         buttonsContainer.setSpacing(10);
         buttonsContainer.setPadding(new Insets(0,0,10,0));
@@ -138,7 +120,7 @@ public class NewBookPage extends VBox{
         mainLayout.setSpacing(15);
         mainLayout.setPadding(new Insets(10,10,20,10));
         mainLayout.setAlignment(Pos.CENTER);
-        mainLayout.getChildren().addAll(imageContainer,leftBookFields,rightBookFields);
+        mainLayout.getChildren().addAll(imagePicker,leftBookFields,rightBookFields);
  
         this.getChildren().addAll(menuBar,mainLayout,buttonsContainer);
 
@@ -147,35 +129,6 @@ public class NewBookPage extends VBox{
     private void cancel() {
         MainPage mainPage = new MainPage();
         PageController.changeScene(mainPage, PageController.pagesArray.get(0));
-    }
-
-    private void getCoverImage() {
-
-        FileChooser fileChooser = new FileChooser();
-        FileChooser.ExtensionFilter extFilter = new FileChooser.ExtensionFilter("Image files", "*.png","*.jpeg","*.jpg");
-        fileChooser.setTitle("Select Cover Image");
-        fileChooser.getExtensionFilters().add(extFilter);
-        File coverImagePathFile = fileChooser.showOpenDialog(new Stage());
-        if(coverImagePathFile == null) return;
-        
-       
-        this.coverImagePath = coverImagePathFile.toPath().toString();
-     
-        if (  this.coverImagePath != null &&   this.coverImagePath.startsWith(imagesPath)) {
-           
-            Image prewCoverImage = new Image("file:" + coverImagePath,100,150,false,true);
-            this.imagePreview.setImage(prewCoverImage);
-            this.imageContainer.getChildren().remove(0);
-            this.imageContainer.getChildren().add(0,imagePreview);
-        } else {
-            
-            Alert alert = new Alert(Alert.AlertType.ERROR);
-            alert.setTitle("Error");
-            alert.setHeaderText(null);
-            alert.setContentText("Selected photo must be inside of the project under images folder!");
-            alert.showAndWait();
-        }
-      
     }
 
     private void save(){
@@ -192,7 +145,7 @@ public class NewBookPage extends VBox{
         edition.getTextField().getText().isBlank()) {
             edition.getTextField().setText("0"); 
         }  
-      
+
     try {
         int editionInput =   Integer.parseInt(edition.getTextField().getText());
         double rateInput = ratingSpinner.getValue();
@@ -224,8 +177,9 @@ public class NewBookPage extends VBox{
         Set<String> tagsList = new HashSet<>(Arrays.asList(updatedTags));
         Library.addTags(tagsList);
        
+        String coverImagePath = imagePicker.getImagePath();
 
-        Book newBook = new Book(titleInput, subTitleInput, authorsList, translatorsList, isbnInput, publisherInput, dateInput, editionInput, languageInput, rateInput, tagsList,  this.coverImagePath);
+        Book newBook = new Book(titleInput, subTitleInput, authorsList, translatorsList, isbnInput, publisherInput, dateInput, editionInput, languageInput, rateInput, tagsList,coverImagePath);
         Library.createBook(newBook);
 
             if (newBook.getIsbn() == null || newBook.getIsbn().trim().isEmpty() || newBook.getTitle() == null || newBook.getTitle().trim().isEmpty()) {
