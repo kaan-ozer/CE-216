@@ -48,6 +48,7 @@ public class ImagePicker extends VBox{
         imagePreview.setX(100);
         imagePreview.setY(150);
 
+        imagePickButton.setPrefWidth(100);
         imagePickButton.setOnAction(e -> getCoverImage());
 
     }
@@ -80,7 +81,6 @@ public class ImagePicker extends VBox{
         }
       
     }
-
 
     public String getImagePath() {
         return imagePath;
