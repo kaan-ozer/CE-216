@@ -17,25 +17,38 @@ import java.util.ArrayList;
 import java.util.Arrays;  
 public class IOoperations {
 
+    private static File outputFile = null;
+
     private static Genson genson = new Genson();
 
- 
-    public static void writeToJsonFile(String filename, Object object) {
+    public static void isFileExists() {
         File outputDir = new File("output");
         if (!outputDir.exists()) {
             outputDir.mkdir();
         }
 
-        File outputFile = new File("output/output.txt");
+         outputFile = new File("output/output.txt");
 
         try {
             if (outputFile.createNewFile()) {
                 System.out.println("File Created: " + outputFile.getName());
+
+                try (FileWriter fileWriter = new FileWriter(outputFile)) {
+                    fileWriter.write("[]");
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
             } 
         } catch (IOException e) {
             System.out.println("File couldn't be created.");
             e.printStackTrace();
         }
+    }
+
+ 
+    public static void writeToJsonFile(String filename, Object object) {
+       
+        isFileExists();
 
         
         String json = genson.serialize(object);
@@ -48,12 +61,10 @@ public class IOoperations {
     }
      
     public static void appendToJsonFile(String filename, Object object) {
-         
 
-        File outputDir = new File("output");
-        if (!outputDir.exists()) {
-            outputDir.mkdir();
-        }
+        isFileExists();
+
+  
 
         String json = genson.serialize(object);
 
@@ -66,6 +77,8 @@ public class IOoperations {
 
     public static ArrayList<Book> readFromJsonFile() {
         try {
+
+            isFileExists();
              
             byte[] jsonData = Files.readAllBytes(Paths.get("output/output.txt"));
             String jsonString = new String(jsonData); 
@@ -86,6 +99,7 @@ public class IOoperations {
 
     public static void resetJsonFile(String filename) {
         try {
+ 
             Files.deleteIfExists(Paths.get(filename));
             Files.createFile(Paths.get(filename));
         } catch (IOException e) {
