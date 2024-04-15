@@ -126,13 +126,21 @@ public class Book {
     }
 
     public String getCoverImagePath(){
-        if (coverImagePath != null) {
-            String projectPath = System.getProperty("user.dir");
-            String imagesPath = projectPath + File.separator + "shared" + File.separator + "images"   ;
-            String [] parsedImgPath = coverImagePath.trim().split("images");
-            String photoName = parsedImgPath[1].substring(1);
-            String finalPath = imagesPath + File.separator + photoName;
-            return finalPath;
+        
+        if (coverImagePath != null) {        
+       
+            return separatorsToSystem(coverImagePath); 
+        }else{
+            return null;
+        }
+   
+    }
+
+    public String retrieveCoverImgFullPath(){
+        
+        if (coverImagePath != null) {        
+            String imagesPath = System.getProperty("user.dir").trim().split("app")[0] + "app" + separatorsToSystem(coverImagePath); 
+            return imagesPath;
         }else{
             return null;
         }
@@ -141,6 +149,17 @@ public class Book {
 
     public void setCoverImagePath(String coverImagePath){
         this.coverImagePath = coverImagePath;
+    }
+
+    private String separatorsToSystem(String path) {
+        if (path==null) return null;
+        if (File.separatorChar=='\\') {
+            // From Windows to Linux/Mac
+            return path.replace('/', File.separatorChar);
+        } else {
+            // From Linux/Mac to Windows
+            return path.replace('\\', File.separatorChar);
+        }
     }
 
     @Override

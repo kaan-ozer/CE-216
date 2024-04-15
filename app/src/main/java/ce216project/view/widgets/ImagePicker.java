@@ -35,8 +35,16 @@ public class ImagePicker extends VBox{
             // Initial state with no image
            this.getChildren().addAll(imageRectangle,imagePickButton);
         } else {
+            if (File.separatorChar=='\\') {
+                // From Windows to Linux/Mac
+                imagePath.replace('/', File.separatorChar);
+            } else {
+                // From Linux/Mac to Windows
+                 imagePath.replace('\\', File.separatorChar);
+            }
+            String fullPath = System.getProperty("user.dir").trim().split("app")[0] + "app" + imagePath;
             // Initial state with image for edit view
-            image = new Image("file:" + imagePath,100,150,false,true);
+            image = new Image("file:" + fullPath,100,150,false,true);
             imagePreview.setImage(image);
             this.getChildren().addAll(imagePreview,imagePickButton);
         }
@@ -56,18 +64,33 @@ public class ImagePicker extends VBox{
 
     private void getCoverImage() {
 
+
+      
+        String imagesFolderPath = System.getProperty("user.dir") + File.separator + "shared" + File.separator + "images";
         FileChooser fileChooser = new FileChooser();
+        File initialDirectory = new File(imagesFolderPath);
+        //PLEASE DON'T REMOVE THIS LINE AGAIN  !!!
+        fileChooser.setInitialDirectory(initialDirectory);
         FileChooser.ExtensionFilter extFilter = new FileChooser.ExtensionFilter("Image files", "*.png","*.jpeg","*.jpg");
         fileChooser.setTitle("Select Cover Image");
         fileChooser.getExtensionFilters().add(extFilter);
         File ImagePathFile = fileChooser.showOpenDialog(new Stage());
         if(ImagePathFile == null) return;
         
+        
+        String fullPath = ImagePathFile.toPath().toString().trim();
+
+        
        
-        this.imagePath = ImagePathFile.toPath().toString(); 
      
-        if (this.imagePath.startsWith(imagesPath)) {
-            image = new Image("file:" + imagePath,100,150,false,true);
+        if (fullPath.startsWith(System.getProperty("user.dir").trim().split("app")[0])) {
+
+            String [] parsedImgPath = ImagePathFile.toPath().toString().trim().split("app"); 
+            String relativePhotoPath = parsedImgPath[1]; 
+         
+            this.imagePath = relativePhotoPath; 
+
+            image = new Image("file:" + fullPath,100,150,false,true);
             this.imagePreview.setImage(image);
             this.getChildren().remove(0);
             this.getChildren().add(0,imagePreview);
@@ -75,13 +98,15 @@ public class ImagePicker extends VBox{
             Alert alert = new Alert(Alert.AlertType.ERROR);
             alert.setTitle("Error");
             alert.setHeaderText(null);
-            alert.setContentText("Selected photo must be inside of the project under images folder!");
+            alert.setContentText("Selected photo must be inside of the project under images or anywhere in app folder!");
             alert.showAndWait();
         }
       
     }
 
     public String getImagePath() {
+ 
+         
         return imagePath;
     }
 
