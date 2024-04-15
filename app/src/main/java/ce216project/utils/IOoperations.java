@@ -21,7 +21,7 @@ public class IOoperations {
 
     private static Genson genson = new Genson();
 
-    public static void isFileExists() {
+    private static void isFileExists() {
         File outputDir = new File("output");
         if (!outputDir.exists()) {
             outputDir.mkdir();

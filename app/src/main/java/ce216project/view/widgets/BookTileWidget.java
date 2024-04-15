@@ -35,7 +35,8 @@ public class BookTileWidget extends VBox {
         
         this.book = book;
         if(book.getCoverImagePath() != null){
-            coverImage = new Image("file:"+book.getCoverImagePath().toString(),XSIZE,YSIZE,false,true);
+ 
+            coverImage = new Image("file:"+book.retrieveCoverImgFullPath(),XSIZE,YSIZE,false,true);
             imageView.setImage(coverImage);
             imageView.setSmooth(true);
             imageView.setCache(true);

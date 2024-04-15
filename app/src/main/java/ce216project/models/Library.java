@@ -32,16 +32,6 @@ public class Library {
             books = IOoperations.readFromJsonFile();
         
             books.forEach(book ->{
-                if (book.getCoverImagePath() != null) {
-                    try {
-
-                        book.setCoverImagePath(book.getCoverImagePath());
-                    }catch(ArrayIndexOutOfBoundsException err) {
-
-                        // err.printStackTrace();
-                        System.err.println("Error loading book cover image: " + err.getMessage());
-                    }
-                }
 
                 addLanguages(book.getLanguage());
                 addTags(book.getTags());
@@ -90,6 +80,7 @@ public class Library {
     public static void saveBooksToJson() {
         try {
           
+ 
             IOoperations.writeToJsonFile("app/output/output.txt", books);
         } catch (Exception e) {
             e.printStackTrace();
@@ -101,13 +92,13 @@ public class Library {
 
 
     public static void createBook(Book book) {
-      
-        books.add(book);
+       
+        books.add(book);   
         saveBooksToJson();
     }
 
     public static void editBook(Book editedBook, String newISBN) {
-     
+ 
         Book bookToEdit = null;
         for (Book book : books) {
             if (book.getIsbn().equals(editedBook.getIsbn())) {
