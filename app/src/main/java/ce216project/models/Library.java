@@ -168,28 +168,12 @@ public class Library {
         
         
         for (Book book : books) {
-            boolean tagMatch = false;
-            boolean languageMatch = false;
+            boolean tagMatch = tagFilters.isEmpty() || book.getTags().stream().anyMatch(tagFilters::contains);
+            boolean languageMatch = languageFilters.isEmpty() || languageFilters.contains(book.getLanguage());
     
-            // Check if the book matches any of the selected tags
-            if (!tagFilters.isEmpty()) {
-                for (String tag : tagFilters) {
-                    if (book.getTags().contains(tag)) {
-                        tagMatch = true;
-                        break;
-                    }
-                }
-            }
-    
-            // Check if the book matches any of the selected languages
-            if (languageFilters.contains(book.getLanguage())) {
-                languageMatch = true;
-            }
-            
-            if (tagMatch || languageMatch) {
+            if (tagMatch && languageMatch) {
                 filteredBooks.add(book);
             }
-    
         }
     
         return filteredBooks;
