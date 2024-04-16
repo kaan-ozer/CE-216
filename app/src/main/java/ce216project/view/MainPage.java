@@ -178,15 +178,15 @@ public class MainPage extends VBox{
     }
 
     public void fillBookTiles (ArrayList<Book> books) {
-        
+
+        booksContainer.getChildren().clear();   
         if(books.isEmpty()){
             showEmptyView();
         } else {
-            booksContainer.getChildren().clear();
-
             for(Book book : books) {
             BookTileWidget bookTileWidget = new BookTileWidget(book,true);
             booksContainer.getChildren().add(bookTileWidget);
+            booksContainer.setAlignment(Pos.TOP_LEFT);
             }
         }
 
