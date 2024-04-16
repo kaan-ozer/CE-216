@@ -110,7 +110,6 @@ public class NewBookPage extends VBox{
         saveButton.setOnAction(e -> save());
         cancelButton.setPrefWidth(100);
         cancelButton.setOnAction(e -> cancel());
-        //chooseCoverButton.setOnAction(e -> getCoverImage());
         buttonsContainer.getChildren().addAll(saveButton,cancelButton);
         buttonsContainer.setSpacing(10);
         buttonsContainer.setPadding(new Insets(0,0,10,0));
@@ -213,7 +212,8 @@ public class NewBookPage extends VBox{
         }
     }
 
-    private  ItemField populateList(Set<String> arrayList,ListView<ItemFieldBody> listView, String labelName) {
+    // Bu metod sanki Item Field classına taşınabilir
+    private ItemField populateList(Set<String> arrayList,ListView<ItemFieldBody> listView, String labelName) {
     
         listView.setPrefHeight(120);
 

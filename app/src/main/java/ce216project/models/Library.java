@@ -1,8 +1,8 @@
 package ce216project.models;
 
-import java.io.File;
-
-import java.util.*;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Set;
 
 import ce216project.utils.IOoperations;
 import javafx.scene.control.Alert;
@@ -10,34 +10,25 @@ import javafx.scene.control.ButtonType;
 
 public class Library {
  
-   
     public static ArrayList<Book> books = new ArrayList<Book>();
     public static HashMap<String,Integer> tags = new HashMap<>();
     public static HashMap<String,Integer> languages = new HashMap<>();
-
- 
 
     public Library() {
         loadBooksFromJson();
     }
 
     public static void loadBooksFromJson() {
+        
         try {
-
             tags = new HashMap<>();
             languages = new HashMap<>();
- 
-    
-            
+
             books = IOoperations.readFromJsonFile();
         
             books.forEach(book ->{
-
                 addLanguages(book.getLanguage());
                 addTags(book.getTags());
-             
-               
-         
         });
         } catch (Exception e) {
             e.printStackTrace();
@@ -52,14 +43,10 @@ public class Library {
         //taglerini aldık bir kitabın
         for(String tag : bookTags) {
             if (tags.containsKey(tag)) {
-                int newCount = tags.get(tag) + 1;
-
-                
+                int newCount = tags.get(tag) + 1;   
                 tags.put(tag, newCount);  
             } else {
-              
-                tags.put(tag, 1);  
-                
+                tags.put(tag, 1);     
             }
         }
     }
@@ -70,6 +57,7 @@ public class Library {
         }
 
         if(languages.containsKey(languageInput)) {
+
             int newCount = languages.get(languageInput) + 1;
             languages.put(languageInput, newCount);
         } else {
@@ -78,9 +66,8 @@ public class Library {
     }
 
     public static void saveBooksToJson() {
+
         try {
-          
- 
             IOoperations.writeToJsonFile("app/output/output.txt", books);
         } catch (Exception e) {
             e.printStackTrace();
@@ -88,11 +75,8 @@ public class Library {
         }
     }
 
-
-
-
     public static void createBook(Book book) {
-       
+
         books.add(book);   
         saveBooksToJson();
     }

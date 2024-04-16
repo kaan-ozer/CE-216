@@ -64,8 +64,6 @@ public class ImagePicker extends VBox{
 
     private void getCoverImage() {
 
-
-      
         String imagesFolderPath = System.getProperty("user.dir") + File.separator + "shared" + File.separator + "images";
         FileChooser fileChooser = new FileChooser();
         File initialDirectory = new File(imagesFolderPath);
@@ -77,11 +75,7 @@ public class ImagePicker extends VBox{
         File ImagePathFile = fileChooser.showOpenDialog(new Stage());
         if(ImagePathFile == null) return;
         
-        
         String fullPath = ImagePathFile.toPath().toString().trim();
-
-        
-       
      
         if (fullPath.startsWith(System.getProperty("user.dir").trim().split("app")[0])) {
 
@@ -101,12 +95,9 @@ public class ImagePicker extends VBox{
             alert.setContentText("Selected photo must be inside of the project under images or anywhere in app folder!");
             alert.showAndWait();
         }
-      
     }
 
-    public String getImagePath() {
- 
-         
+    public String getImagePath() { 
         return imagePath;
     }
 
@@ -124,6 +115,5 @@ public class ImagePicker extends VBox{
     public void setEditable(boolean isEditable) {
         this.isEditable = isEditable;
     }
-
     
 }
