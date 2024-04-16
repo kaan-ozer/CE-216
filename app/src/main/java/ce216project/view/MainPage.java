@@ -22,6 +22,7 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.Priority;
 import javafx.scene.layout.TilePane;
 import javafx.scene.layout.VBox;
+import javafx.scene.text.Font;
 
 
 public class MainPage extends VBox{
@@ -91,8 +92,10 @@ public class MainPage extends VBox{
 
         // Resposive design
         VBox.setVgrow(mainLayout, Priority.ALWAYS);
+        VBox.setVgrow(booksScroll, Priority.ALWAYS);
         HBox.setHgrow(rightContainer, Priority.ALWAYS); 
         HBox.setHgrow(searchBar, Priority.ALWAYS);
+        
         
         // Books TileView Responsive Design
         booksScroll.viewportBoundsProperty().addListener((observable, oldValue, newValue) -> {
@@ -175,11 +178,16 @@ public class MainPage extends VBox{
     }
 
     public void fillBookTiles (ArrayList<Book> books) {
-        booksContainer.getChildren().clear();
-       
-        for(Book book : books) {
+        
+        if(books.isEmpty()){
+            showEmptyView();
+        } else {
+            booksContainer.getChildren().clear();
+
+            for(Book book : books) {
             BookTileWidget bookTileWidget = new BookTileWidget(book,true);
             booksContainer.getChildren().add(bookTileWidget);
+            }
         }
 
     }
@@ -226,5 +234,21 @@ public class MainPage extends VBox{
             ArrayList<Book> filteredBooks = Library.filterBooks(selectedTags, selectedLanguages);
             fillBookTiles(filteredBooks);
         }
+    }
+
+    private void showEmptyView (){
+
+        Label emptyMessage = new Label("There is no book!");
+        emptyMessage.setFont(new Font(30));
+        HBox emptyMessageBox = new HBox(emptyMessage);
+        emptyMessageBox.setAlignment(Pos.CENTER);
+        HBox.setHgrow(emptyMessageBox, Priority.ALWAYS);
+        
+        if(this.booksContainer.getChildren().isEmpty()) {
+            booksContainer.getChildren().add(emptyMessageBox);
+            booksContainer.setAlignment(Pos.TOP_CENTER);
+        }
+
+
     }
 }
