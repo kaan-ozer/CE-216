@@ -2,6 +2,7 @@ package ce216project.models;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Set;
 
 import ce216project.utils.IOoperations;
@@ -154,6 +155,16 @@ public class Library {
         return filteredBooks;
     }
 
+    public static List<Book> searchBooks(String query) {
+        List<Book> results = new ArrayList<>();
+        query = query.toLowerCase();
+        for (Book book : books) {
+            if (book.getTitle().toLowerCase().contains(query) || book.getAuthors().contains(query)) {
+                results.add(book);
+            }
+        }
+        return results;
+    }
 
 }
 
