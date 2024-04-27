@@ -151,7 +151,7 @@ public class Library {
                 filteredBooks.add(book);
             }
         }
-    
+
         return filteredBooks;
     }
 
@@ -159,13 +159,31 @@ public class Library {
         List<Book> results = new ArrayList<>();
         query = query.toLowerCase();
         for (Book book : books) {
-            if (book.getTitle().toLowerCase().contains(query) || book.getAuthors().contains(query)) {
+            if (book.getTitle().toLowerCase().contains(query) ||
+                    book.getSubtitle().toLowerCase().contains(query) ||
+                    containsIgnoreCase(book.getAuthors(), query) ||
+                    book.getPublisher().toLowerCase().contains(query) ||
+                    containsIgnoreCase(book.getTranslators(), query)) {
                 results.add(book);
             }
         }
         return results;
     }
 
+    // Method to iterate over authors and translators query
+    private static boolean containsIgnoreCase(Set<String> set, String query) {
+        for (String element : set) {
+            if (element.toLowerCase().contains(query)) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+
 }
+
+
+
 
 
