@@ -21,14 +21,16 @@ repositories {
 dependencies {
     // Use JUnit Jupiter for testing.
     testImplementation 'org.junit.jupiter:junit-jupiter:5.9.1'
-
+  
     // This dependency is used by the application.
     implementation 'com.google.guava:guava:31.1-jre'
 
     // JavaFX for GUI
     implementation 'org.openjfx:javafx-controls:21'
     implementation 'org.openjfx:javafx-fxml:21'
-
+ 
+    implementation 'org.json:json:20240303' 
+  
     // Genson for JSON files
     implementation 'com.owlike:genson:1.6'
 

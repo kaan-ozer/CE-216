@@ -1,1 +1,0 @@
-[{"authors":[],"coverImagePath":null,"date":"","edition":0,"isbn":"12345","language":"lang1","publisher":"","rating":0.0,"subtitle":"","tags":["tag1"],"title":"test","translators":[]},{"authors":[],"coverImagePath":null,"date":"","edition":0,"isbn":"123123","language":"lang2","publisher":"","rating":0.0,"subtitle":"","tags":["sdfdsfdsf"],"title":"test2","translators":[]}]
