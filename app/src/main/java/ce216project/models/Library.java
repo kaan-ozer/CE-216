@@ -65,23 +65,20 @@ public class Library {
             languages.put(languageInput,1);
         }
     }
-
     public static void saveBooksToJson() {
 
         try {
-            IOoperations.writeToJsonFile("app/output/output.txt", books);
+            IOoperations.writeToJsonFile("app/output/output.json", books);
         } catch (Exception e) {
             e.printStackTrace();
             System.err.println("Error saving books to JSON: " + e.getMessage() );
         }
     }
-
     public static void createBook(Book book) {
 
         books.add(book);   
         saveBooksToJson();
     }
-
     public static void editBook(Book editedBook, String newISBN) {
  
         Book bookToEdit = null;
