@@ -47,7 +47,7 @@ public class MainPage extends VBox {
     private HBox searchBarContainer = new HBox();
     private Label searchLabel = new Label("Search");
     private TextField searchBar = new TextField();
-    private Button searchButton = new Button("Search");
+    //private Button searchButton = new Button("Search");
 
     // Books Views
     private ScrollPane booksScroll = new ScrollPane();
@@ -75,7 +75,7 @@ public class MainPage extends VBox {
 
         // Search Bar at Right Container
         searchLabel.setPadding(new Insets(5, 0, 0, 0));
-        searchBarContainer.getChildren().addAll(searchLabel, searchBar, searchButton);
+        searchBarContainer.getChildren().addAll(searchLabel, searchBar);
         searchBarContainer.setSpacing(10);
         searchBarContainer.setPadding(new Insets(5, 10, 5, 10));
 
@@ -148,6 +148,7 @@ public class MainPage extends VBox {
 
         updateFilteredBooks();
 
+        // Search bar
         searchBar.textProperty().addListener(new ChangeListener<String>() {
             @Override
             public void changed(ObservableValue<? extends String> observable, String oldValue, String newValue) {
