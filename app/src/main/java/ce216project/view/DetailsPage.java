@@ -283,12 +283,12 @@ public class DetailsPage extends VBox {
                   
                 editedBook.setEdition(editionNumber);
               
-                editedBook.setTitle(title.getTextField().getText());
-                editedBook.setSubtitle(subtitle.getTextField().getText());
-                editedBook.setPublisher(publisher.getTextField().getText());
-                editedBook.setDate(date.getTextField().getText());
-                editedBook.setIsbn(this.book.getIsbn());
-                editedBook.setLanguage(language.getTextField().getText().toLowerCase());
+                editedBook.setTitle(title.getTextField().getText().trim());
+                editedBook.setSubtitle(subtitle.getTextField().getText().trim());
+                editedBook.setPublisher(publisher.getTextField().getText().trim());
+                editedBook.setDate(date.getTextField().getText().trim());
+                editedBook.setIsbn(this.book.getIsbn().trim());
+                editedBook.setLanguage(language.getTextField().getText().toLowerCase().trim());
                 editedBook.setRating(ratingSpinner.getValue()); 
                 editedBook.setCoverImagePath(imagePicker.getImagePath());
 
@@ -305,7 +305,7 @@ public class DetailsPage extends VBox {
                 String[] updatedAuthors = new String[authorsListView.getItems().size()];
             
                 for(int i = 0 ; i < authorsListView.getItems().size() ; i++ ){
-                    updatedAuthors[i] =  authorsListView.getItems().get(i).getTextField().getText(); 
+                    updatedAuthors[i] =  authorsListView.getItems().get(i).getTextField().getText().trim(); 
                 }
 
                 Set<String> authorsSet = new HashSet<>(Arrays.asList(updatedAuthors));
@@ -315,7 +315,7 @@ public class DetailsPage extends VBox {
                 String[] updatedTranslators = new String[translatorsListView.getItems().size()];
             
                 for(int i = 0 ; i < translatorsListView.getItems().size() ; i++ ){
-                    updatedTranslators[i] =  translatorsListView.getItems().get(i).getTextField().getText(); 
+                    updatedTranslators[i] =  translatorsListView.getItems().get(i).getTextField().getText().trim(); 
                 }
             
                 Set<String> translatorsSet = new HashSet<>(Arrays.asList(updatedTranslators));
@@ -325,7 +325,7 @@ public class DetailsPage extends VBox {
                 String[] updatedTags = new String[tagsListView.getItems().size()];
             
                 for(int i = 0 ; i < tagsListView.getItems().size() ; i++ ){
-                    updatedTags[i] =  tagsListView.getItems().get(i).getTextField().getText();
+                    updatedTags[i] =  tagsListView.getItems().get(i).getTextField().getText().trim();
                 }
 
                 Set<String> tagsSet = new HashSet<>(Arrays.asList(updatedTags));
