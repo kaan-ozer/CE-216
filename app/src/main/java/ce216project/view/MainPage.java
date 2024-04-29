@@ -18,8 +18,6 @@ import javafx.scene.control.Label;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.control.TextField;
 import javafx.scene.control.TitledPane;
-import javafx.scene.image.Image;
-import javafx.scene.image.ImageView;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Priority;
 import javafx.scene.layout.TilePane;
@@ -67,7 +65,7 @@ public class MainPage extends VBox {
         //Checkbox Lists at Left Container
         tagsList.setMinWidth(100);
         checkBoxListContainer.getChildren().addAll(tagsList, languagesList);
-        checkBoxListContainer.setPadding(new Insets(0, 0, 0, 5));
+        checkBoxListContainer.setPadding(new Insets(0, 5, 0, 5));
 
         // Book add button
         addBookButton.setPrefWidth(100);
@@ -150,7 +148,7 @@ public class MainPage extends VBox {
 
         updateFilteredBooks();
 
-        // Search bar
+        // Listener for search bar
         searchBar.textProperty().addListener(new ChangeListener<String>() {
             @Override
             public void changed(ObservableValue<? extends String> observable, String oldValue, String newValue) {
@@ -176,8 +174,6 @@ public class MainPage extends VBox {
 
 
     }
-
-
 
     public void fillCheckLists(HashMap<String, Integer> hashmap, TitledPane checkBoxList, String type) {
 
@@ -266,6 +262,7 @@ public class MainPage extends VBox {
             fillBookTiles(filteredBooks);
         }
     }
+
     private void performSearch(String query) {
         if (query.isEmpty()) {
             // If the search query is empty, fill with all books
