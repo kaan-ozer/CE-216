@@ -28,7 +28,8 @@ dependencies {
     // JavaFX for GUI
     implementation 'org.openjfx:javafx-controls:21'
     implementation 'org.openjfx:javafx-fxml:21'
- 
+    
+    // JSON Library
     implementation 'org.json:json:20240303' 
   
     // Genson for JSON files
