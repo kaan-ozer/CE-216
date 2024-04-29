@@ -184,7 +184,7 @@ public static ArrayList<Book> readFromJsonFile() {
                 JSONArray tagsArray = jsonObject.optJSONArray("tags");
                 if (tagsArray != null) {
                     for (int j = 0; j < tagsArray.length(); j++) {
-                        authors.add(tagsArray.optString(j));
+                        tags.add(tagsArray.optString(j));
                     }
                 }
             } else {  

@@ -51,6 +51,7 @@ public class AppMenuBar extends MenuBar {
         mAbout.setAccelerator(KeyCombination.keyCombination("Ctrl+A"));
         // mCheckForUpdates.setAccelerator(KeyCombination.keyCombination("Ctrl+U"));
 
+        mNewBook.setOnAction(e -> add());
         mExport.setOnAction(e -> exportFile()); 
         mImportAppend.setOnAction(e -> appendFile());
         mImport.setOnAction(e -> importFile());
@@ -198,6 +199,13 @@ public class AppMenuBar extends MenuBar {
         e.printStackTrace();
     }
 }
+
+    
+    private void add() {
+        NewBookPage newBookPage = new NewBookPage();
+        PageController.changeScene(newBookPage, PageController.pagesArray.get(0));
+    }
+
 
     
         

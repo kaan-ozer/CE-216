@@ -65,7 +65,7 @@ public class MainPage extends VBox {
         //Checkbox Lists at Left Container
         tagsList.setMinWidth(100);
         checkBoxListContainer.getChildren().addAll(tagsList, languagesList);
-        checkBoxListContainer.setPadding(new Insets(5, 0, 0, 5));
+        checkBoxListContainer.setPadding(new Insets(0, 5, 0, 5));
 
         // Book add button
         addBookButton.setPrefWidth(100);
@@ -86,7 +86,7 @@ public class MainPage extends VBox {
         booksContainer.setPadding(new Insets(10, 10, 10, 10));
 
         // Main Containers
-        rightContainer.getChildren().addAll(searchBarContainer, booksScroll);
+        rightContainer.getChildren().addAll(booksScroll);
         leftContainer.getChildren().addAll(checkBoxListContainer, addBookButtonBox);
         mainLayout.getChildren().addAll(leftContainer, rightContainer);
 
@@ -107,7 +107,7 @@ public class MainPage extends VBox {
         booksContainer.prefWidthProperty().bind(booksScroll.widthProperty()); // Bind width to ScrollPane width
         booksContainer.maxWidthProperty().bind(booksScroll.widthProperty());
 
-        this.getChildren().addAll(menuBar, mainLayout);
+        this.getChildren().addAll(menuBar, searchBarContainer, mainLayout);
 
         // Update Main Page
         this.fillBookTiles(Library.books);
@@ -148,7 +148,7 @@ public class MainPage extends VBox {
 
         updateFilteredBooks();
 
-        // Search bar
+        // Listener for search bar
         searchBar.textProperty().addListener(new ChangeListener<String>() {
             @Override
             public void changed(ObservableValue<? extends String> observable, String oldValue, String newValue) {
@@ -174,8 +174,6 @@ public class MainPage extends VBox {
 
 
     }
-
-
 
     public void fillCheckLists(HashMap<String, Integer> hashmap, TitledPane checkBoxList, String type) {
 
@@ -264,6 +262,7 @@ public class MainPage extends VBox {
             fillBookTiles(filteredBooks);
         }
     }
+
     private void performSearch(String query) {
         if (query.isEmpty()) {
             // If the search query is empty, fill with all books
