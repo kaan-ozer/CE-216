@@ -4,6 +4,7 @@ import ce216project.controller.PageController;
 import ce216project.models.Book;
 import ce216project.view.DetailsPage;
 import javafx.geometry.Pos;
+import javafx.scene.Cursor;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.image.Image;
@@ -12,6 +13,10 @@ import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
+import javafx.scene.text.Font;
+import javafx.scene.text.FontWeight;
+import javafx.scene.input.MouseEvent;
+
 
 public class BookTileWidget extends VBox {
 
@@ -68,6 +73,8 @@ public class BookTileWidget extends VBox {
         this.getChildren().addAll(coverTile,new Label(book.getTitle()));
         this.setAlignment(Pos.CENTER);
         this.setSpacing(5);
+
+        
     }
 
     private void makeClickable () {
@@ -77,12 +84,29 @@ public class BookTileWidget extends VBox {
         detailsButton.setPrefSize(XSIZE, YSIZE);
         detailsButton.setOnAction(e -> openDetailsPage());
         coverTile.getChildren().add(detailsButton);
+
+        this.setOnMouseEntered(e -> applyHoverEffect(e));
+        this.setOnMouseExited(e -> removeHoverEffect(e));
     }
 
     private void openDetailsPage(){
         int i = PageController.pagesArray.size();
         PageController.openNewWindow(new DetailsPage(book,false,i));
 
+    }
+
+    private void applyHoverEffect(MouseEvent event) {
+        this.setScaleX(1.1); // Increase size slightly
+        this.setScaleY(1.1);
+        titleLabel.setFont(Font.font(titleLabel.getFont().getFamily(), FontWeight.BOLD, titleLabel.getFont().getSize()));
+        this.setCursor(Cursor.HAND); // Change cursor to clickable
+    }
+
+    private void removeHoverEffect(MouseEvent event) {
+        this.setScaleX(1); // Restore original size
+        this.setScaleY(1);
+        titleLabel.setFont(Font.font(titleLabel.getFont().getFamily(), FontWeight.NORMAL, titleLabel.getFont().getSize()));
+        this.setCursor(Cursor.DEFAULT); // Change cursor back to default
     }
 
     public boolean isClickable() {
