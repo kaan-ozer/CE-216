@@ -28,7 +28,7 @@ public class ImagePicker extends VBox{
     private boolean isEditable;
 
     public ImagePicker(boolean isEditable, String imagePath) {
-        
+        createImagesDir();
         this.imagePath = imagePath;
 
         if(imagePath == null){
@@ -114,6 +114,14 @@ public class ImagePicker extends VBox{
 
     public void setEditable(boolean isEditable) {
         this.isEditable = isEditable;
+    }
+
+    private void createImagesDir() {
+
+        File imagesDir = new File("shared/images");
+        if (!imagesDir.exists()) {
+            imagesDir.mkdirs();
+        }
     }
     
 }

@@ -70,7 +70,7 @@ public class AppMenuBar extends MenuBar {
 
     private void showUserGuide() {
         try {
-            File userGuide = new File("src/main/resources/userGuide.pdf");
+            File userGuide = new File("shared/userGuide.pdf");
             if (userGuide.exists()) {
                 Desktop.getDesktop().open(userGuide);
             } else {
