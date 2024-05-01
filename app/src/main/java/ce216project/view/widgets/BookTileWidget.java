@@ -5,6 +5,7 @@ import ce216project.models.Book;
 import ce216project.view.DetailsPage;
 import javafx.geometry.Pos;
 import javafx.scene.Cursor;
+import javafx.scene.Node;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.image.Image;
@@ -30,7 +31,7 @@ public class BookTileWidget extends VBox {
     private Button detailsButton = new Button();
 
     private Rectangle rectangle = new Rectangle(XSIZE,YSIZE);
-    private Label titleLabel = new Label();
+    private VBox coverTitle = new VBox();
     private Book book;
 
     private boolean isClickable;
@@ -55,9 +56,9 @@ public class BookTileWidget extends VBox {
         else{
             rectangle.setFill(Color.RED);
             if(!book.getTitle().isBlank() || !book.getTitle().isEmpty()){
-                titleLabel = new Label(book.getTitle());
+                coverTitle = formatBookCoverTitle(book.getTitle());
                 coverTile.setAlignment(Pos.CENTER);
-                coverTile.getChildren().addAll(rectangle,titleLabel);
+                coverTile.getChildren().addAll(rectangle,coverTitle);
                 if(isClickable == true){
                     this.makeClickable();
                 }
@@ -98,15 +99,39 @@ public class BookTileWidget extends VBox {
     private void applyHoverEffect(MouseEvent event) {
         this.setScaleX(1.1); // Increase size slightly
         this.setScaleY(1.1);
-        titleLabel.setFont(Font.font(titleLabel.getFont().getFamily(), FontWeight.BOLD, titleLabel.getFont().getSize()));
+        for (Node wordNode : coverTitle.getChildren()) {
+            if (wordNode instanceof Label) {
+                Label wordLabel = (Label) wordNode;
+                wordLabel.setStyle("-fx-font-weight: bold;");
+            }
+        }
+
         this.setCursor(Cursor.HAND); // Change cursor to clickable
     }
 
     private void removeHoverEffect(MouseEvent event) {
         this.setScaleX(1); // Restore original size
         this.setScaleY(1);
-        titleLabel.setFont(Font.font(titleLabel.getFont().getFamily(), FontWeight.NORMAL, titleLabel.getFont().getSize()));
+        for (Node wordNode : coverTitle.getChildren()) {
+            if (wordNode instanceof Label) {
+                Label wordLabel = (Label) wordNode;
+                wordLabel.setStyle(null); // Remove the style
+            }
+        }
         this.setCursor(Cursor.DEFAULT); // Change cursor back to default
+    }
+
+    private VBox formatBookCoverTitle(String title) {
+        VBox bookCoverTitle = new VBox();
+        bookCoverTitle.setAlignment(Pos.CENTER);
+        String[] titleWords = title.split(" ");
+        
+        for(String word : titleWords) {
+            Label lword = new Label(word.trim());
+            bookCoverTitle.getChildren().add(lword);
+        }
+
+        return bookCoverTitle;
     }
 
     public boolean isClickable() {
@@ -139,14 +164,6 @@ public class BookTileWidget extends VBox {
 
     public void setCoverImage(Image coverImage) {
         this.coverImage = coverImage;
-    }
-
-    public Label getTitleLabel() {
-        return titleLabel;
-    }
-
-    public void setTitleLabel(Label titleLabel) {
-        this.titleLabel = titleLabel;
     }
 
     public Book getBook() {
