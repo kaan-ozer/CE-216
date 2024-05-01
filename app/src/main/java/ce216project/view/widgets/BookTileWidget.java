@@ -14,11 +14,7 @@ import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
-import javafx.scene.text.Font;
-import javafx.scene.text.FontWeight;
-import javafx.scene.text.Text;
 import javafx.scene.input.MouseEvent;
-
 
 public class BookTileWidget extends VBox {
 
@@ -31,61 +27,56 @@ public class BookTileWidget extends VBox {
     private Image coverImage;
     private Button detailsButton = new Button();
 
-    private Rectangle rectangle = new Rectangle(XSIZE,YSIZE);
+    private Rectangle rectangle = new Rectangle(XSIZE, YSIZE);
     private VBox coverTitle = new VBox();
     private Label bottomTitle = new Label();
     private Book book;
 
     private boolean isClickable;
 
+    public BookTileWidget(Book book, boolean isClickable) {
 
-    public BookTileWidget (Book book, boolean isClickable) {
-        
         this.book = book;
-        if(book.getCoverImagePath() != null){
- 
-            coverImage = new Image("file:"+book.retrieveCoverImgFullPath(),XSIZE,YSIZE,false,true);
+        if (book.getCoverImagePath() != null) {
+
+            coverImage = new Image("file:" + book.retrieveCoverImgFullPath(), XSIZE, YSIZE, false, true);
             imageView.setImage(coverImage);
             imageView.setSmooth(true);
             imageView.setCache(true);
             imageView.setX(XSIZE);
             imageView.setY(YSIZE);
             coverTile.getChildren().add(imageView);
-            if(isClickable == true){
+            if (isClickable == true) {
                 this.makeClickable();
             }
-        }
-        else{
+        } else {
             rectangle.setFill(Color.RED);
-            if(!book.getTitle().isBlank() || !book.getTitle().isEmpty()){
+            if (!book.getTitle().isBlank() || !book.getTitle().isEmpty()) {
                 coverTitle = formatBookCoverTitle(book.getTitle());
                 coverTile.setAlignment(Pos.CENTER);
-                coverTile.getChildren().addAll(rectangle,coverTitle);
-                if(isClickable == true){
+                coverTile.getChildren().addAll(rectangle, coverTitle);
+                if (isClickable == true) {
                     this.makeClickable();
                 }
-            }
-            else{
+            } else {
                 coverTile.getChildren().addAll(rectangle);
-                if(isClickable == true){
+                if (isClickable == true) {
                     this.makeClickable();
                 }
             }
         }
 
-        
         bottomTitle.setText(book.getTitle());
-        bottomTitle.setMaxWidth(140);
+        bottomTitle.setMaxWidth(120);
         bottomTitle.setAlignment(Pos.CENTER);
 
-        this.getChildren().addAll(coverTile,bottomTitle);
+        this.getChildren().addAll(coverTile, bottomTitle);
         this.setAlignment(Pos.CENTER);
         this.setSpacing(5);
 
-        
     }
 
-    private void makeClickable () {
+    private void makeClickable() {
 
         Button detailsButton = new Button("button");
         detailsButton.setOpacity(0);
@@ -97,9 +88,9 @@ public class BookTileWidget extends VBox {
         this.setOnMouseExited(e -> removeHoverEffect(e));
     }
 
-    private void openDetailsPage(){
+    private void openDetailsPage() {
         int i = PageController.pagesArray.size();
-        PageController.openNewWindow(new DetailsPage(book,false,i));
+        PageController.openNewWindow(new DetailsPage(book, false, i));
 
     }
 
@@ -135,13 +126,13 @@ public class BookTileWidget extends VBox {
         VBox bookCoverTitle = new VBox();
         bookCoverTitle.setAlignment(Pos.CENTER);
         String[] titleWords = title.split(" ");
-        
-        for(String word : titleWords) {
+
+        for (String word : titleWords) {
             Label lword = new Label(word.trim());
             bookCoverTitle.getChildren().add(lword);
             ++labelCount;
 
-            if(labelCount > MAX_LABEL){
+            if (labelCount > MAX_LABEL) {
                 Label ellipsisLabel = new Label("...");
                 bookCoverTitle.getChildren().add(ellipsisLabel);
                 break;
@@ -191,7 +182,5 @@ public class BookTileWidget extends VBox {
     public void setBook(Book book) {
         this.book = book;
     }
-
-    
 
 }

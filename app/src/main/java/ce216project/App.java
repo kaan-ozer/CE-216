@@ -1,9 +1,6 @@
 package ce216project;
 
-import java.util.ArrayList;
-
 import ce216project.controller.PageController;
-import ce216project.models.Book;
 import ce216project.models.Library;
 import ce216project.view.MainPage;
 
