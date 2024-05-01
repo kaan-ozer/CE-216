@@ -16,6 +16,7 @@ import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
 import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
+import javafx.scene.text.Text;
 import javafx.scene.input.MouseEvent;
 
 
@@ -32,6 +33,7 @@ public class BookTileWidget extends VBox {
 
     private Rectangle rectangle = new Rectangle(XSIZE,YSIZE);
     private VBox coverTitle = new VBox();
+    private Label bottomTitle = new Label();
     private Book book;
 
     private boolean isClickable;
@@ -71,7 +73,12 @@ public class BookTileWidget extends VBox {
             }
         }
 
-        this.getChildren().addAll(coverTile,new Label(book.getTitle()));
+        
+        bottomTitle.setText(book.getTitle());
+        bottomTitle.setMaxWidth(140);
+        bottomTitle.setAlignment(Pos.CENTER);
+
+        this.getChildren().addAll(coverTile,bottomTitle);
         this.setAlignment(Pos.CENTER);
         this.setSpacing(5);
 
@@ -122,6 +129,9 @@ public class BookTileWidget extends VBox {
     }
 
     private VBox formatBookCoverTitle(String title) {
+        final int MAX_LABEL = 6;
+        int labelCount = 0;
+
         VBox bookCoverTitle = new VBox();
         bookCoverTitle.setAlignment(Pos.CENTER);
         String[] titleWords = title.split(" ");
@@ -129,6 +139,14 @@ public class BookTileWidget extends VBox {
         for(String word : titleWords) {
             Label lword = new Label(word.trim());
             bookCoverTitle.getChildren().add(lword);
+            ++labelCount;
+
+            if(labelCount > MAX_LABEL){
+                Label ellipsisLabel = new Label("...");
+                bookCoverTitle.getChildren().add(ellipsisLabel);
+                break;
+            }
+
         }
 
         return bookCoverTitle;
