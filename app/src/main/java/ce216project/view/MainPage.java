@@ -180,6 +180,11 @@ public class MainPage extends VBox {
         VBox checkBoxVBox = new VBox();
         ScrollPane checkBoxScrollPane = new ScrollPane(checkBoxVBox);
         checkBoxScrollPane.setMaxHeight(800);
+        checkBoxScrollPane.setMaxWidth(120);
+
+        if (hashmap.isEmpty()) {
+            checkBoxList.setExpanded(false); // Close the titled pane if the hashmap is empty
+        }
 
         for (String key : hashmap.keySet()) {
             HBox checkBoxItemBox = new HBox();
