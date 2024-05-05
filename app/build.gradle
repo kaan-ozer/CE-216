@@ -35,7 +35,6 @@ dependencies {
     // Genson for JSON files
     implementation 'com.owlike:genson:1.6'
 
-
 }
 
 application {
