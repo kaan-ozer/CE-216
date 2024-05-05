@@ -166,7 +166,7 @@ public static ArrayList<Book> readFromJsonFile() {
                 JSONArray translatorsArray = jsonObject.optJSONArray("translators");
                 if (translatorsArray != null) {
                     for (int j = 0; j < translatorsArray.length(); j++) {
-                        authors.add(translatorsArray.optString(j));
+                        translators.add(translatorsArray.optString(j));
                     }
                 }
             } else {  
