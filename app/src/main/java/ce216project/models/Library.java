@@ -52,16 +52,16 @@ public class Library {
 
     public static void addLanguages(String languageInput) {
 
-        if (languageInput == null || languageInput.isEmpty()) {
+        if (languageInput == null || languageInput.isEmpty() || languageInput.isBlank()) {
             return;
         }
 
         if (languages.containsKey(languageInput)) {
 
             int newCount = languages.get(languageInput) + 1;
-            languages.put(languageInput, newCount);
+            languages.put(languageInput.trim(), newCount);
         } else {
-            languages.put(languageInput, 1);
+            languages.put(languageInput.trim(), 1);
         }
     }
 
