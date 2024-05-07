@@ -47,7 +47,6 @@ public class MainPage extends VBox {
     private HBox searchBarContainer = new HBox();
     private Label searchLabel = new Label("Search");
     private TextField searchBar = new TextField();
-    //private Button searchButton = new Button("Search");
 
     // Books Views
     private ScrollPane booksScroll = new ScrollPane();
