@@ -24,7 +24,6 @@ public class App extends Application {
         mainPage.fillBookTiles(Library.books);
            
         Scene scene = new Scene(mainPage,800,450);
-        System.out.println("Filling");
         primaryStage.setScene(scene);
         primaryStage.setTitle("Librarian");
         PageController.pagesArray.add(primaryStage);
