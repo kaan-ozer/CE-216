@@ -138,7 +138,6 @@ public class NewBookPage extends VBox{
         String isbnInput = isbn.getTextField().getText();
         String languageInput = language.getTextField().getText().toLowerCase();
  
-        Library.addLanguages(languageInput);
         if ( edition.getTextField().getText().isEmpty() ||
         edition.getTextField().getText().isBlank()) {
             edition.getTextField().setText("0"); 
@@ -173,7 +172,6 @@ public class NewBookPage extends VBox{
             }
 
             Set<String> tagsList = new HashSet<>(Arrays.asList(updatedTags));
-            Library.addTags(tagsList);
         
             String coverImagePath = imagePicker.getImagePath();
 
@@ -199,6 +197,8 @@ public class NewBookPage extends VBox{
                 return;
             }
 
+            Library.addTags(tagsList);
+            Library.addLanguages(languageInput);
             Library.createBook(newBook);
             cancel(); 
         }
