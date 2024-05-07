@@ -14,6 +14,7 @@ import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
+import javafx.scene.text.Text;
 import javafx.scene.input.MouseEvent;
 
 public class BookTileWidget extends VBox {
@@ -121,6 +122,7 @@ public class BookTileWidget extends VBox {
 
     private VBox formatBookCoverTitle(String title) {
         final int MAX_LABEL = 6;
+        final int MAX_LETTER_COUNT = 13;
         int labelCount = 0;
 
         VBox bookCoverTitle = new VBox();
@@ -128,16 +130,22 @@ public class BookTileWidget extends VBox {
         String[] titleWords = title.split(" ");
 
         for (String word : titleWords) {
-            Label lword = new Label(word.trim());
-            bookCoverTitle.getChildren().add(lword);
-            ++labelCount;
+            word = word.trim();
+            if (!word.isEmpty()) {
+                if (word.length() >= MAX_LETTER_COUNT) {
+                    word = word.substring(0, MAX_LETTER_COUNT) + "..."; // Truncate word if it's too long
+                }
+                Label lword = new Label(word);
+                bookCoverTitle.getChildren().add(lword);
+                ++labelCount;
 
-            if (labelCount > MAX_LABEL) {
-                Label ellipsisLabel = new Label("...");
-                bookCoverTitle.getChildren().add(ellipsisLabel);
-                break;
+                if (labelCount > MAX_LABEL) {
+                    Label ellipsisLabel = new Label("...");
+                    bookCoverTitle.getChildren().add(ellipsisLabel);
+                    break;
+                }
+
             }
-
         }
 
         return bookCoverTitle;
