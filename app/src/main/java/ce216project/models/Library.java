@@ -41,27 +41,30 @@ public class Library {
 
         // taglerini aldık bir kitabın
         for (String tag : bookTags) {
+            if (tag == null || tag.isEmpty() || tag.isBlank()) {
+                return;
+            }
             if (tags.containsKey(tag)) {
                 int newCount = tags.get(tag) + 1;
-                tags.put(tag, newCount);
+                tags.put(tag.trim(), newCount);
             } else {
-                tags.put(tag, 1);
+                tags.put(tag.trim(), 1);
             }
         }
     }
 
     public static void addLanguages(String languageInput) {
 
-        if (languageInput == null || languageInput.isEmpty()) {
+        if (languageInput == null || languageInput.isEmpty() || languageInput.isBlank()) {
             return;
         }
 
         if (languages.containsKey(languageInput)) {
 
             int newCount = languages.get(languageInput) + 1;
-            languages.put(languageInput, newCount);
+            languages.put(languageInput.trim(), newCount);
         } else {
-            languages.put(languageInput, 1);
+            languages.put(languageInput.trim(), 1);
         }
     }
 
@@ -88,14 +91,14 @@ public class Library {
             if (book.getIsbn().equals(editedBook.getIsbn())) {
                 bookToEdit = book;
                 bookToEdit.setIsbn(newISBN);
-                bookToEdit.setTitle(editedBook.getTitle());
-                bookToEdit.setSubtitle(editedBook.getSubtitle());
+                bookToEdit.setTitle(editedBook.getTitle().trim());
+                bookToEdit.setSubtitle(editedBook.getSubtitle().trim());
                 bookToEdit.setAuthors(editedBook.getAuthors());
                 bookToEdit.setTranslators(editedBook.getTranslators());
-                bookToEdit.setPublisher(editedBook.getPublisher());
-                bookToEdit.setDate(editedBook.getDate());
+                bookToEdit.setPublisher(editedBook.getPublisher().trim());
+                bookToEdit.setDate(editedBook.getDate().trim());
                 bookToEdit.setEdition(editedBook.getEdition());
-                bookToEdit.setLanguage(editedBook.getLanguage());
+                bookToEdit.setLanguage(editedBook.getLanguage().trim());
                 bookToEdit.setRating(editedBook.getRating());
                 bookToEdit.setTags(editedBook.getTags());
                 bookToEdit.setCoverImagePath(editedBook.getCoverImagePath());

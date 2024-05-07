@@ -131,14 +131,13 @@ public class NewBookPage extends VBox{
 
     private void save(){
         
-        String titleInput = title.getTextField().getText();
-        String subTitleInput = subtitle.getTextField().getText();
-        String publisherInput = publisher.getTextField().getText();
-        String dateInput = date.getTextField().getText();
-        String isbnInput = isbn.getTextField().getText();
-        String languageInput = language.getTextField().getText().toLowerCase();
+        String titleInput = title.getTextField().getText().trim();
+        String subTitleInput = subtitle.getTextField().getText().trim();
+        String publisherInput = publisher.getTextField().getText().trim();
+        String dateInput = date.getTextField().getText().trim();
+        String isbnInput = isbn.getTextField().getText().trim();
+        String languageInput = language.getTextField().getText().toLowerCase().trim();
  
-        Library.addLanguages(languageInput);
         if ( edition.getTextField().getText().isEmpty() ||
         edition.getTextField().getText().isBlank()) {
             edition.getTextField().setText("0"); 
@@ -152,7 +151,7 @@ public class NewBookPage extends VBox{
             String[] updatedAuthors = new String[authorsListView.getItems().size()];
             
             for(int i = 0 ; i < authorsListView.getItems().size() ; i++ ){
-                updatedAuthors[i] =  authorsListView.getItems().get(i).getTextField().getText().toLowerCase(); 
+                updatedAuthors[i] =  authorsListView.getItems().get(i).getTextField().getText().toLowerCase().trim(); 
             }
         
             Set<String> authorsList = new HashSet<>(Arrays.asList(updatedAuthors));
@@ -161,7 +160,7 @@ public class NewBookPage extends VBox{
             
             // Translators
             for(int i = 0 ; i < translatorsListView.getItems().size() ; i++ ){
-            updatedTranslators[i] =  translatorsListView.getItems().get(i).getTextField().getText().toLowerCase();
+            updatedTranslators[i] =  translatorsListView.getItems().get(i).getTextField().getText().toLowerCase().trim();
             }
             Set<String> translatorsList = new HashSet<>(Arrays.asList(updatedTranslators));
             
@@ -169,11 +168,10 @@ public class NewBookPage extends VBox{
             String[] updatedTags = new String[tagsListView.getItems().size()];
             
             for(int i = 0 ; i < tagsListView.getItems().size() ; i++ ){
-                updatedTags[i] =  tagsListView.getItems().get(i).getTextField().getText().toLowerCase(); 
+                updatedTags[i] =  tagsListView.getItems().get(i).getTextField().getText().toLowerCase().trim(); 
             }
 
             Set<String> tagsList = new HashSet<>(Arrays.asList(updatedTags));
-            Library.addTags(tagsList);
         
             String coverImagePath = imagePicker.getImagePath();
 
@@ -199,6 +197,8 @@ public class NewBookPage extends VBox{
                 return;
             }
 
+            Library.addTags(tagsList);
+            Library.addLanguages(languageInput);
             Library.createBook(newBook);
             cancel(); 
         }
@@ -230,7 +230,7 @@ public class NewBookPage extends VBox{
                 listView.getItems().remove(itemField);
             });
 
-            ItemFieldBody itemFieldBody = new ItemFieldBody( "" + (id + 1), item, isEditable, deleteButton);
+            ItemFieldBody itemFieldBody = new ItemFieldBody( "" + (id + 1), item.trim(), isEditable, deleteButton);
             HBox.setHgrow(itemFieldBody, Priority.ALWAYS); 
             listView.getItems().add(itemFieldBody);
   
@@ -249,7 +249,7 @@ public class NewBookPage extends VBox{
                 listView.getItems().remove(itemField);
             });
 
-            ItemFieldBody newItemField = new ItemFieldBody( "" + (listView.getItems().size() + 1), newItem.getTextField().getText() , true, deleteFromList);
+            ItemFieldBody newItemField = new ItemFieldBody( "" + (listView.getItems().size() + 1), newItem.getTextField().getText().trim() , true, deleteFromList);
             listView.getItems().add(newItemField);
 
             newItem.getTextField().clear();
