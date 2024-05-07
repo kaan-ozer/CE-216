@@ -41,6 +41,9 @@ public class Library {
 
         // taglerini aldık bir kitabın
         for (String tag : bookTags) {
+            if (tag == null || tag.isEmpty() || tag.isBlank()) {
+                return;
+            }
             if (tags.containsKey(tag)) {
                 int newCount = tags.get(tag) + 1;
                 tags.put(tag, newCount);
