@@ -121,7 +121,7 @@ public class AppMenuBar extends MenuBar {
 
                 Files.copy(selectedFile.toPath(), destFile.toPath(), StandardCopyOption.REPLACE_EXISTING);
 
-                System.out.println("File imported and saved as: " + destFile.getAbsolutePath());
+               
 
                 Alert alert = new Alert(AlertType.INFORMATION);
                 alert.setTitle("Imported");
@@ -154,26 +154,44 @@ public class AppMenuBar extends MenuBar {
                 String selectedFileContent = new String(selectedFileData);
 
                 if (selectedFileContent.startsWith("[")) {
-                    selectedFileContent = selectedFileContent.substring(1);
+                    selectedFileContent = selectedFileContent.trim().substring(1);
+               
+                 
+                    if(selectedFileContent.trim().length() - 1 == 0) {
+                        selectedFileContent = "";
+                    } else {
+                        selectedFileContent = selectedFileContent.trim().substring(0, selectedFileContent.trim().length() - 1);
+                    }
                 }
-
-                if (selectedFileContent.endsWith("]")) {
-                    selectedFileContent = selectedFileContent.substring(0, selectedFileContent.length() - 1);
-                }
+ 
 
                 byte[] destFileData = Files.readAllBytes(destFile.toPath());
                 String destFileContent = new String(destFileData);
-
+                String test = "";
                 if (destFileContent.startsWith("[")) {
-                    destFileContent = destFileContent.substring(1);
+                  
+                    destFileContent = destFileContent.trim().substring(1);
+
+                    if(destFileContent.trim().length() - 1 == 0) {
+                        destFileContent = "";
+                    } else {
+                        destFileContent = destFileContent.trim().substring(0, destFileContent.trim().length() - 1);
+                    }
+                    
                 }
 
-                if (destFileContent.endsWith("]")) {
-                    destFileContent = destFileContent.substring(0, destFileContent.length() - 1);
-                }
+               
 
                 FileWriter fileWriter = new FileWriter(destFile);
-                fileWriter.write("[" + destFileContent + "," + selectedFileContent + "]");
+
+ 
+
+                String text =  "" ;
+                text +=  "[" ;
+                text +=  !Library.books.isEmpty() ? destFileContent + "," + selectedFileContent : selectedFileContent;
+                text +=  "]" ;
+
+                fileWriter.write(text);
                 fileWriter.close();
 
                 Alert alert = new Alert(AlertType.INFORMATION);
@@ -197,46 +215,7 @@ public class AppMenuBar extends MenuBar {
         PageController.changeScene(newBookPage, PageController.pagesArray.get(0));
     }
 
-    /*
-     * private void checkForUpdates() {
-     * String updateUrl = "http://yourappserver.com/api/check-updates";
-     * try {
-     * 
-     * @SuppressWarnings("deprecation")
-     * URL url = new URL(updateUrl);
-     * HttpURLConnection conn = (HttpURLConnection) url.openConnection();
-     * conn.setRequestMethod("GET");
-     * int responseCode = conn.getResponseCode();
-     * if (responseCode == HttpURLConnection.HTTP_OK) {
-     * BufferedReader in = new BufferedReader(new
-     * InputStreamReader(conn.getInputStream()));
-     * String inputLine;
-     * StringBuilder response = new StringBuilder();
-     * while ((inputLine = in.readLine()) != null) {
-     * response.append(inputLine);
-     * }
-     * in.close();
-     * 
-     * String currentVersion = "1.0";
-     * String latestVersion = response.toString();
-     * if (!currentVersion.equals(latestVersion)) {
-     * 
-     * JOptionPane.showMessageDialog(null, "A new version is available!",
-     * "Update Available",
-     * JOptionPane.INFORMATION_MESSAGE);
-     * } else {
-     * JOptionPane.showMessageDialog(null, "You have the latest version.",
-     * "No Updates",
-     * JOptionPane.INFORMATION_MESSAGE);
-     * }
-     * } else {
-     * System.out.println("No response from update server.");
-     * }
-     * } catch (IOException e) {
-     * e.printStackTrace();
-     * }
-     * }
-     */
+    
 
     private void quit() {
         System.exit(0);
