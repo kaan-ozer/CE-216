@@ -1,1 +1,30 @@
-[{"authors":[],"coverImagePath":null,"date":"","edition":0,"isbn":"123123","language":"","publisher":"","rating":0.0,"subtitle":"","tags":[],"title":"rfergergergýuerhgýuerhgýuherýugherýugh ýurehguýerhguýherýughýeru ýurehgýuerhýugherýug ýurehgýuerhgýuher","translators":[]},{"authors":[],"coverImagePath":null,"date":"","edition":0,"isbn":"123213","language":"","publisher":"","rating":0.0,"subtitle":"","tags":[],"title":"sgfewrfwef      fwefewfewf","translators":[]},{"authors":[],"coverImagePath":null,"date":"","edition":0,"isbn":"123123123","language":"","publisher":"","rating":0.0,"subtitle":"","tags":[],"title":"sdvdsfdsf      dsfsdfsdfdsf    sdfdsfdsf dsfdsfsdf sdfdsfsdf","translators":[]}]
+[
+  {
+    "authors": [],
+    "coverImagePath": null,
+    "date": "",
+    "edition": 0,
+    "isbn": "123213",
+    "language": "",
+    "publisher": "",
+    "rating": 0.0,
+    "subtitle": "",
+    "tags": [],
+    "title": "sgfewrfwef      fwefewfewf",
+    "translators": []
+  },
+  {
+    "authors": [],
+    "coverImagePath": null,
+    "date": "",
+    "edition": 0,
+    "isbn": "123123123",
+    "language": "",
+    "publisher": "",
+    "rating": 0.0,
+    "subtitle": "",
+    "tags": [],
+    "title": "sdvdsfdsf      dsfsdfsdfdsf    sdfdsfdsf dsfdsfsdf sdfdsfsdf",
+    "translators": []
+  }
+]
